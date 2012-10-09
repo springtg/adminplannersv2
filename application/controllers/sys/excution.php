@@ -54,7 +54,11 @@ class excution extends CI_Controller  {
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
-        
+        function getAlias(){
+            $code=1;
+            $msg= converturl($_POST["string"]);
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
 }
 
 /* End of file welcome.php */

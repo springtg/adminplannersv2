@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.7, created on 2012-10-08 17:06:34
+<?php /* Smarty version Smarty-3.1.7, created on 2012-10-09 10:02:42
          compiled from "application\views\admin-planners\00_template.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:683050728d05473e41-64485915%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '2289a30779cd35e3961f24bb3e04fab626908a86' => 
     array (
       0 => 'application\\views\\admin-planners\\00_template.tpl',
-      1 => 1349687176,
+      1 => 1349769593,
       2 => 'file',
     ),
   ),
@@ -78,16 +78,6 @@ syslib/syscss/sysstyle.css" type="text/css" rel="stylesheet"/>
 </span>
 
 <div style="min-width: 960px">
-    <!--    <div class="head" style="position: absolute;top: 0px;bottom: 0;left: 0;right: 0;background: #000;height: 40px">
-            <div class="abc"></div>
-            <span onclick="$( '#dialog' ).dialog( 'open' )">Đăng n</span>
-            <input type="button" class="classic-button" value="Show Error Dialog Message" onclick="ShowErrorDialogMessage('ghjjadadjadjakdladldkjdkjalkdjladj adljladj adlkjlajd dalknaldj');"/>
-            <input type="button" class="classic-button" value="Show Notice Dialog Message" onclick="ShowNoticeDialogMessage('ghjjadadjadjakdladldkjdkjalkdjladj adljladj adlkjlajd dalknaldj');"/>
-            <input type="button" class="classic-button" value="Show Confirm Dialog Message" 
-                   onclick="ShowConfirmDialogMessage('ghjjadadjadjakdladldkjdkjalkdjladj adljladj adlkjlajd dalknaldj','Đăng nhập',function(){alert(0);});"/>
-            <input type="text" class="classic-input"/>
-            <input type="button" class="classic-button" value="Đăng Nhập" onclick="login.Show();"/>
-        </div>-->
     <div class="content" style="">
         <div style="">
             <div class="pets tab4">
@@ -117,13 +107,6 @@ syslib/syscss/sysstyle.css" type="text/css" rel="stylesheet"/>
     </div>
 </div>
 <script>
-    //            $('.content').slimscroll({
-    //            width: '100%',
-    //            height: '100%',
-    //            railVisible: true,
-    //            allowPageScroll: true
-    //        });
-    //ShowLoadding();
     var login=new ConfirmDialogMessage($('.dialog-login'),'Đăng Nhập',submitToLogin );
     function submitToLogin(){
         if(isrunning) return;
