@@ -2,19 +2,18 @@
 Navicat MySQL Data Transfer
 
 Source Server         : MySQL
-Source Server Version : 50141
+Source Server Version : 50516
 Source Host           : localhost:3306
 Source Database       : adminplanners
 
 Target Server Type    : MYSQL
-Target Server Version : 50141
+Target Server Version : 50516
 File Encoding         : 65001
 
-Date: 2012-10-09 07:55:18
+Date: 2012-10-09 17:42:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
-
 -- ----------------------------
 -- Table structure for `adp_account`
 -- ----------------------------
@@ -118,11 +117,15 @@ CREATE TABLE `tbl_video` (
   `Insert` datetime DEFAULT NULL,
   `Update` datetime DEFAULT NULL,
   `Delete` datetime DEFAULT NULL,
-  `Status` varchar(20) DEFAULT NULL,
+  `Status` varchar(20) DEFAULT 'Private',
   `Thumbs` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`VideoID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `VideoName` varchar(200) DEFAULT NULL,
+  `Alias` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`VideoID`),
+  UNIQUE KEY `videoalias` (`Alias`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_video
 -- ----------------------------
+INSERT INTO `tbl_video` VALUES ('1', 'SYTYCD 2012 - Season 9 Top 14 - Mia Michaels Emmy-Winning Choreography', ',Music,,FilmEntertainment,,Gamming,,Animation,,Blogs,,Lifestyle,', '&lt;object width=\"560\" height=\"315\"&gt;&lt;param name=\"movie\" value=\"http://www.youtube.com/v/oMr8mNfpBIQ?versi></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param>&lt;embed src=\"http://www.youtube.com/v/oMr8mNfpBIQ?versi type=\"application/x-shockwave-flash\" width=\"560\" height=\"315\" allowscriptaccess=\"always\" allowfullscreen=\"true\"&gt;&lt;/embed>&lt;/object&gt;', 'YouTube', 'Amelia Lowe Audrey Case Chehon Wespi-Tschopp Cole Horibe Cyrus \"Glitch\" Spencer Dareian \"Dare\" Kujawa Eliana Girard George Lawrence II anelle Issis Lindsay Arnold Matthew Kazmierczak Tiffany Maher Will Thomas Witney Carson Nigel Lythgoe Mary Murphy Mia Michaels', 'So You Think You Can Dance 2012 top 14 dancers performed live on August 15, 2012! This week featured choreography by Mia Michaels, including Emmy-winning and nominated dances like the Addiction Piece, the Mia Michaels Time Piece, the Bed Piece, the Door Piece, the Butt Dance, Hometown Glory and of course, the Bench Piece. SYTYCD guest judges, Balletboyz Michael Nunn and Billy Trevitt of Ovation\'s upcoming series A Chance to Dance. Host Cat Deeley. \n\nSYTYCD Top 20 Dancers 2012\nAlexa Anderson - Contemporary (eliminated)\nAmber Jackson - Contemporary (eliminated)\nAmelia Lowe - Contemporary (eliminated)\nAudrey Case - Jazz\nBrandon Mitchell - Stepping (eliminated)\nChehon Wespi-Tschopp - Ballet\nCole Horibe - Martial Arts Fusion\nCyrus \"Glitch\" Spencer - Animation, Popping & Robotics\nDaniel Baker - Ballet (eliminated)\nDareian \"Dare\" Kujawa - Contemporary (eliminated)\nEliana Girard - Contemporary Ballet\nGeorge Lawrence II - Contemporary\nJanaya French - Lyrical Contemporary (eliminated)\nJanelle Is', '2012-10-09 11:28:57', '2012-10-09 15:21:31', null, 'Private', null, 'SYTYCD 2012 - Season 9 Top 14 - Mia Michaels Emmy-Winning Choreography', 'sytycd-2012-season-9-top-14-mia-michaels-emmy-winning-choreography');
