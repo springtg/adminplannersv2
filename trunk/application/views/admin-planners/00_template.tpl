@@ -41,16 +41,6 @@
 </span>
 
 <div style="min-width: 960px">
-    <!--    <div class="head" style="position: absolute;top: 0px;bottom: 0;left: 0;right: 0;background: #000;height: 40px">
-            <div class="abc"></div>
-            <span onclick="$( '#dialog' ).dialog( 'open' )">Đăng n</span>
-            <input type="button" class="classic-button" value="Show Error Dialog Message" onclick="ShowErrorDialogMessage('ghjjadadjadjakdladldkjdkjalkdjladj adljladj adlkjlajd dalknaldj');"/>
-            <input type="button" class="classic-button" value="Show Notice Dialog Message" onclick="ShowNoticeDialogMessage('ghjjadadjadjakdladldkjdkjalkdjladj adljladj adlkjlajd dalknaldj');"/>
-            <input type="button" class="classic-button" value="Show Confirm Dialog Message" 
-                   onclick="ShowConfirmDialogMessage('ghjjadadjadjakdladldkjdkjalkdjladj adljladj adlkjlajd dalknaldj','Đăng nhập',function(){alert(0);});"/>
-            <input type="text" class="classic-input"/>
-            <input type="button" class="classic-button" value="Đăng Nhập" onclick="login.Show();"/>
-        </div>-->
     <div class="content" style="">
         <div style="">
             <div class="pets tab4">
@@ -78,13 +68,6 @@
     </div>
 </div>
 <script>
-    //            $('.content').slimscroll({
-    //            width: '100%',
-    //            height: '100%',
-    //            railVisible: true,
-    //            allowPageScroll: true
-    //        });
-    //ShowLoadding();
     var login=new ConfirmDialogMessage($('.dialog-login'),'Đăng Nhập',submitToLogin );
     function submitToLogin(){
         if(isrunning) return;

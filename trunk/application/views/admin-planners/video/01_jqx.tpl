@@ -30,6 +30,7 @@
                 datatype: "json",
                 datafields: [
                     { name: 'Video', type: 'string'},
+                    { name: 'VideoName', type: 'string'},
                     { name: 'Title', type: 'string'},
                     { name: 'Category',type:'string'},
                     { name: 'Source',type:'string'},
@@ -66,13 +67,24 @@
             var linkrenderer = function (row, column, value) {
                 var str="<span style='margin: 4px; float: left;'>";
                 try{
-                    Authority = $.parseJSON(value);
+                    Video = $.parseJSON(value);
+                    if(Video.Delete==null){
                     str+="\
-                <div onclick=\"jqxGrid.HistoryDetail('"+Authority.AuthorityID+"');\" \
-                class='icon16 detail_icon hover50' title='Lịch sử quay số'></div>\
+                <div onclick=\"jqxGrid.Edit('"+Video.VideoID+"');\" \
+                class='icon16 edit_icon hover50' title='Chỉnh sửa video'></div>\
             ";
                     str+="\
-                <div onclick=\"jqxGrid.LogDetail('"+Authority.AuthorityID+"');\" \
+                <div onclick=\"jqxGrid.Delete('"+Video.VideoID+"');\" \
+                class='icon16 delete_icon hover50' title='Xóa'></div>\
+            ";
+                }else{
+                    str+="\
+                <div onclick=\"jqxGrid.Retore('"+Video.VideoID+"');\" \
+                class='icon16 retore_icon hover50' title='Khôi phục'></div>\
+            ";
+                    }
+                    str+="\
+                <div onclick=\"jqxGrid.Detail('"+Video.VideoID+"');\" \
                 class='icon16 log_icon hover50' title='Lịch sử ghi vết'></div>\
             ";
                 }catch(e){ }
@@ -104,6 +116,7 @@
                 virtualmode: true,
                 columns: [
                     { text: ''          , datafield: 'Video',cellsrenderer: linkrenderer  ,width:80       },
+                    { text: 'VideoName' , datafield: 'VideoName'       },
                     { text: 'Title'     , datafield: 'Title'       },
                     { text: 'Category'  , datafield: 'Category'    ,width:200},
                     { text: 'Status'    , datafield: 'Status'    ,width:100 },
@@ -127,60 +140,59 @@
                 //Attaching event listeners
                 _addEventListeners();
             },
-            EditVideo:function (id){
-                if(id==undefined){
-                    $("#frmDetail").show();
-                    $("#jqxWidget").hide();
-                    $(".tab-nav li.hover .tabdes").html(" → Thêm mới");
-                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{},$("#frmDetail"));
-                }
+            Refresh:function (){
+                $("#jqxgrid").jqxGrid('updatebounddata');
             },
-            CancelEditVideo:function (){
+            Delete:function (){
+                $("#jqxgrid").jqxGrid('updatebounddata');
+            },
+            Retore:function (){
+                $("#jqxgrid").jqxGrid('updatebounddata');
+            },
+            Edit:function (VideoID){
+                $("#frmDetail").show();
+                $("#jqxWidget").hide();
+                if(id==undefined){
+                    $(".tab-nav li.hover .tabdes").html(" → Cập nhật");
+                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{VideoID:VideoID},$("#frmDetail"));
+                }else{
+                    }
+            },
+            CancelEdit:function (){
                 $("#frmDetail").hide();
                 $("#jqxWidget").show();
                 $(".tab-nav li.hover .tabdes").html("");
             },
-            SaveVideo:function (){
+            Save:function (){
                 _SaveVideo();
             }
         };
     } ());
     function _SaveVideo(){
         if(isrunning)return;
+        var VideoName   =   $("#VideoName"  ).val();
         var Title       =   $("#Title"      ).val();
         var Thumbs      =   $("#Thumbs"     ).val();
         var Source      =   $("#Source"     ).val();
         var Description =   $("#Description").val();
         var Tag         =   $("#Tag"        ).val();
         var Embel       =   $("#Embel"      ).val();
-        //var Thumbs=$("#Thumbs").val();
-        //var Thumbs=$("#Thumbs").val();
         
         var Categorys=$(".Categorys input[type=checkbox]");
         var strCategorys="";
         for(var i=0;i<Categorys.length;i++)
         {
-            //var chkbox = document.getElementById(chkStaffBonus[i]);
             if(Categorys[i].checked)
             {
                 strCategorys+=","+Categorys[i].value+",";
             }
         }
-        if(!_FcheckFilled(  Title   )){ $(  "#Title"    ).focus();return; }
-        if(!_FcheckFilled(  Thumbs  )){ $(  "#Thumbs"   ).focus();return; }
-        if(strCategorys==""){
-            ShowNoticeDialogMessage("Bạn chưa chọn danh mục cho video.<br/>Hãy chọn ít nhất 1 danh mục.");
-            return;
-        }
-        if(!_FcheckFilled(  Description )){ $(  "#Description"  ).focus();return; }
-        if(!_FcheckFilled(  Tag         )){ $(  "#Tag"          ).focus();return; }
-        if(!_FcheckFilled(  Embel       )){ $(  "#Embel"        ).focus();return; }
-        
         isrunning=true;
         
         var url=baseurl+"admin-planners/video/savevideo";
         var data={
             Params:{
+                VideoName:VideoName,
                 Title:Title,
                 Thumbs:Thumbs,
                 Categorys:strCategorys,
@@ -190,23 +202,38 @@
                 Embel:Embel
             }
         };
+        if($("#VideoID").val()!=""){
+            data.Params.VideoID=$("#VideoID").val();
+        }
         jqxAjax(url,data,function(result){
             isrunning=false;
             try{
                 if(result.code<0){
-                    
-                    var notice=new NoticeDialogMessage(result.msg,"Thông Báo",function(){ login.Show(); });
-                    //notice.SetCallBack=function(){ login.Show(); }
-                    notice.Show();
-                    //ShowNoticeDialogMessage(result.msg);
+                    ShowNoticeDialogMessage(result.msg);
                 }else{
-                    ShowNoticeDialogMessage("Thành công",function(){
-                        location.reload();
+                    ShowNoticeDialogMessage("Thành công","Thông báo !",function(){
+                        jqxGrid.CancelEdit();
+                        jqxGrid.Refresh();
                     });
                 }
             }catch(err){
-                showUIWindowloginmsg("Lỗi",err.message);
-            
+                ShowErrorDialogMessage("Lỗi",err);
+            }
+        });
+    }
+    
+    function getAlias(){
+        var url=baseurl+"sys/excution/getAlias";
+        var data={
+            string:$("#VideoName").val()
+        };
+        jqxAjax(url,data,function(result){
+            isrunning=false;
+            try{
+                if(result.code>=0){
+                    $("#Alias").val(result.msg);
+                }
+            }catch(err){
                 
             }
         });
@@ -223,7 +250,7 @@
              style="padding: 0px; margin-top: 0px; margin-right: 3px; width: 27px; 
              position: absolute;bottom: 4px;left: 4px;
              cursor: pointer; " title="Tạo Deal Mới" 
-             onclick="jqxGrid.EditVideo();"
+             onclick="jqxGrid.Edit();"
              class="jqx-rc-all jqx-rc-all-classic jqx-button jqx-button-classic jqx-widget jqx-widget-classic jqx-fill-state-hover jqx-fill-state-hover-classic">
             <div style="margin-left: 6px; width: 15px; height: 15px;
 

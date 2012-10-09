@@ -45,22 +45,108 @@ class video extends CI_Controller  {
             $this->smarty->display("admin-planners/00_template");
 	}
         public function EditVideo(){
+            $Data["categorys"]=array(
+                "Music"=>"Music",
+                "Comedy"=>"Comedy",
+                "FilmEntertainment"=>"Film & Entertainment",
+                "Gamming"=>"Gamming",
+                "BeautyFashion"=>"Beauty & Fashion",
+                "FromTV"=>"FromTV",
+                "Automotive"=>"Automotive",
+                "Animation"=>"Animation",
+                "Sports"=>"Sports",
+                "Blogs"=>"Blogs",
+                "CookingHealth"=>"Cooking & Health",
+                "Science"=>"Science",
+                "News"=>"News",
+                "Lifestyle"=>"Lifestyle"
+                
+                
+            );
+            if(isset($_POST["VideoID"])){
+                $video=$this->video_model->getVideo($_POST["VideoID"]);
+                if(count($video)>0){
+                    $Data["video"]=  objectToArray($video[0]);
+                    $this->smarty->assign('Data', $Data);
+                }
+            }
+            $this->smarty->assign('Data', $Data);
             $this->smarty->display('admin-planners/video/02_edit');
         }
+        
         public function savevideo(){
             $Params=$_POST["Params"];
-            
-            echo json_encode($Params);
+            $msgs=array();
+            if( (!isset($Params["VideoName"])) || $Params["VideoName"]==""){
+                $msgs[]="Tên video không được để trống.";
+            }
+            if( (!isset($Params["Title"])) || $Params["Title"]==""){
+                $msgs[]="Tiêu đề không được để trống.";
+            }
+            if( (!isset($Params["Categorys"])) || $Params["Categorys"]==""){
+                $msgs[]="Bạn chưa chọn danh mục.";
+            }
+            if( (!isset($Params["Source"])) || $Params["Source"]==""){
+                $msgs[]="Bạn chưa chọn nguồn của video.";
+            }
+            if( (!isset($Params["Description"])) || $Params["Description"]==""){
+                $msgs[]="Ghi chú không được để trống.";
+            }
+            if( (!isset($Params["Tag"])) || $Params["Tag"]==""){
+                $msgs[]="Tag không được để trống.";
+            }
+            if( (!isset($Params["Embel"])) || $Params["Embel"]==""){
+                $msgs[]="Mã nhúng không được để trống.";
+            }
+            //echo"<pre>";print_r($Params);echo"</pre>";return;
+            if(count($msgs)>0){
+                $code=-44;
+                $msg="";
+                foreach ($msgs as $m){
+                    $msg.="$m<br/>";
+                }
+            }else{
+                $VideoParams=array(
+                    "VideoName"=>$Params["VideoName"],
+                    "Alias"=>  converturl($Params["VideoName"]),
+                    "Title"=>$Params["Title"],
+                    "Category"=>$Params["Categorys"],
+                    "Description"=>$Params["Description"],
+                    "Source"=>$Params["Source"],
+                    "Tag"=>$Params["Tag"],
+                    "Embel"=>$Params["Embel"],
+                );
+                if(isset($Params["VideoID"]) && $Params["VideoID"]!=""){
+                    if($this->video_model->updateVideo($Params["VideoID"],$VideoParams)){
+                        $code=1;
+                        $msg="Thành công";
+                    }else{
+                        $code=-1;
+                        $msg="Thất bại. Không cập nhật thông tin video được.";
+                    }
+                }else{
+                    if($this->video_model->insertVideo($VideoParams)){
+                        $code=1;
+                        $msg="Thành công";
+                    }else{
+                        $code=-1;
+                        $msg="Thất bại. Không thêm video mới được.";
+                    }
+                }
+                //echo"<pre>";print_r($VideoParams);echo"</pre>";return;
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
         public function jqxgrid_video(){
             $products=array();
             $result['total_rows']=0;
             //if($this->checkauthority()>=0){
-                $result=$this->video_model->jqxgrid_authority();
+                $result=$this->video_model->jqxgrid_video();
                 $rows=$result['rows'];
                 // get data and store in a json array
                 foreach ($rows as $row) {
                     $products[] = array(
+                            'VideoName'     => $row->VideoName,
                             'Title'     => $row->Title,
                             'Category'    => $row->Category,
                             'Source'     => $row->Source,
@@ -68,7 +154,7 @@ class video extends CI_Controller  {
                             'Insert'   => $row->Insert,
                             'Update'   => $row->Update,
                             'Video'   => json_encode(array(
-                                            "VideoID"=>$row->AuthorityID,
+                                            "VideoID"=>$row->VideoID,
                                             "Delete"=>$row->Delete
                                         ))
                     );
