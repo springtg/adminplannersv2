@@ -1,0 +1,58 @@
+.showandhide .hideifhover{display: block}
+.showandhide .showifhover{display: none}
+.showandhide:hover .hideifhover{display: none}
+.showandhide:hover .showifhover{display: block}
+.edit_icon{
+    background: url(../../images/icon/icon_edit.png) center no-repeat;
+}
+.delete_icon{
+    background: url(../../images/icon/16/delete.png) center no-repeat;
+}
+.restore_icon{
+    background: url(../../images/icon/16/sprite_black2.png) no-repeat 0 -64px;;
+}
+
+.new_icon{
+    background: url(../../images/icon/sw_add.png) center no-repeat;
+}
+.setting_icon{
+    background: url(../../images/icon/16/option.gif) center no-repeat;
+}
+.detail_icon{
+    background: url(../../images/icon/16/text_list_bullets.png) center no-repeat;
+}
+.log_icon{
+    background: url(../../images/icon/16/log.png) center no-repeat;
+}
+.preview_icon{
+    background: url(../../images/icon/16/stock_toggle-preview.png) center no-repeat;
+}
+.hover50{
+    opacity: 0.5;
+}
+.hover50:hover{
+    opacity: 1;
+}
+.icon16{
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    padding: 0;margin: 0;
+    display: inline-block;
+}
+.hidden{display: none}
+.w100pc{width: 100%}
+.w100{width: 100px}
+.w120{width: 120px}
+.w240{width: 240px}
+.w320{width: 320px}
+.w80{width: 80px}
+.pl20{padding-left: 20px}
+.pl60{padding-left: 60px}
+.pr8{padding-right: 8px}
+.pr10{padding-right: 10px}
+th,td{text-align: left}
+.mh32{min-height: 32px}
+.pr{position: relative}
+.pa{position: absolute}
+.rsv{resize: vertical}

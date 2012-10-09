@@ -1,0 +1,94 @@
+body{background: #ebebeb;margin: 0;padding: 0}
+.content{
+    overflow: auto;
+    overflow-x: hidden;
+    position: relative;top: 40px;bottom: 0;left: 0;right: 0;
+}
+ul, li {
+margin: 0;
+padding: 0;
+}
+ul, ol {
+list-style: none;
+}
+body{font-family:tahoma;font-size:11px}
+a{color:#333;text-decoration:none;}
+a:hover,a:active{color:#E40451;text-decoration:underline;}
+
+
+.servers .hd li {
+float: left;
+cursor: pointer;
+font-weight: bold;
+text-align: center;
+margin: 0 3px 0 0;
+width: 76px;
+height: 25px;
+line-height: 25px;
+color: #AD976B;
+background: #5B3E18;
+border: 1px solid #7C603E;
+border-bottom: none;
+}
+ul, li {
+margin: 0;
+padding: 0;
+}
+ul, ol {
+list-style: none;
+}
+.servers .hot-tab{width:100%; position:relative}
+.servers .hot-tab .moer{position:absolute; top:8px; right:16px; color:#8c543b}
+.servers .hot-tab .hd{height:26px;line-height:26px; padding:5px 0 0 10px;background:#c5ad85; border-bottom:1px solid #ae9063}
+.servers .hot-tab .hd li{color:#573506; background:#b39970; border:1px solid #ae9063; border-bottom:none}
+.servers .hot-tab .hd li.hover{color:#940000; background:#f1e3c3; width:76px;height:26px; line-height:26px; border:1px solid #ae9063; border-bottom:none}
+.hot-tab .list{padding:6px 10px}
+.hot-tab .list li{height:23px; line-height:23px}
+.servers .hot-tab .bd div{display:none;padding:0 5px;}
+.servers .hot-tab .bd div.show{display:block;}
+.list li {overflow: hidden;height: 24px;line-height: 24px;padding-left: 8px;background: url(img/icon_li.gif) no-repeat 0 11px;border-bottom: 1px dotted #BAB399;}
+.list li span {float: right;margin-left: 5px;color: #826F6F;}
+.servers{background: url(img/serverbox.png) no-repeat;width: 639px;height: 414px;position:relative;}
+.servers .bot{position:absolute;bottom:5px;left:5px;right:5px;top:5px;background:url(img/bg_hot.jpg) repeat-x left bottom}
+.servers.sty1 .hd{background: url(img/hot_tab.png);}
+.servers.sty2 .bot{background:url(img/bg_1.jpg) repeat-x left bottom}
+.servers.sty2{background:#F1E3C3}
+.servers.sty2 .hed{background:#C5AD85}
+
+.servers.sty3 .hot-tab{width:100%; position:relative}
+.servers.sty3 .hot-tab .moer{position:absolute; top:-13px; right:-3px}
+.servers.sty3 .hot-tab .hd{overflow:hidden;height:25px;line-height:25px; padding-left:5px}
+.servers.sty3 .hot-tab .list{padding:8px 10px}
+.servers.sty3 .hot-tab .hd li{float:left;cursor:pointer;text-align:center; margin:0 3px 0 0;width:76px;height:25px;line-height:25px;color:#676568;border:1px solid #bea787;}
+.servers.sty3 .hot-tab .hd li.hover{font-weight:bold;color:#920000; background:url(img/bg_hot_tab.gif) repeat-x; border:1px solid #bea787;height:25px; line-height:25px}
+.servers.sty3 .hot-tab .bd div{display:none;padding:5px;}
+.servers.sty3 .hot-tab .bd div.show{display:block;}
+
+
+.pets{width: 100%;height: auto;position:relative;
+     border: 1px solid #BEA787;
+}
+pets .left{width:278px; float:left; padding:13px 0 0 10px; position:relative}
+.pets .left h4{height:30px; line-height:30px; padding-left:5px; margin:0 0 5px 48px; color:#ffbf00; font-weight:bold; background:url(../img/icon.gif) no-repeat 0 -43px}
+.pets .left .hd{height:25px;line-height:25px; padding-left:5px; margin-right:5px; }
+.pets .left .hd li{float:left;cursor:pointer;text-align:center; position:relative; margin:0 3px 0 0;
+/*      width:62px;*/padding: 0 12px;
+      height:24px;line-height:24px;color:#676568;border:1px solid #bea787;}
+.pets .left .hd li.hover,.pets .left .hd li:hover{font-weight:bold;color:#920000; background:#fff; border:1px solid #bea787; border-bottom:none;height:25px; line-height:25px}
+.pets .left .hd li:hover{font-weight:normal}
+.pets .left .hd li.hover:hover{font-weight:bold}
+.pets .left .bd{padding:5px;border-top:1px solid #bca887; _margin-top:-1px;background: #fff}
+.pets .left .list li{background:url(img/icon_li.gif) no-repeat 0 11px; border:none; height:23px; line-height:23px}
+.pets .left .moer{margin:0; color:#666; position:absolute; top:16px; right:0}
+.pets .hed{height:60px}
+.item-sv{float:left;border: 1px solid #BEA787;width: 180px;height: 36px;margin: 4px 20px;position: relative;}
+.item-sv .o{background:url(http://webpic.my4399.com/frxz2/20120608/server/ico100.gif) no-repeat left top;width:55px;height:22px;position:absolute;bottom:-2px;left:40px;padding-left: 58px;line-height:16px}
+.item-sv span{position:absolute;left:40px;top:4px;font-weight:bold}
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
