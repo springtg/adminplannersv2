@@ -170,10 +170,11 @@
     } ());
     function _SaveVideo(){
         if(isrunning)return;
-        var VideoName   =   $("#VideoName"  ).val();
+        var VideoKey   =   $("#VideoKey"  ).val();
+        var Author   =   $("#Author"  ).val();
         var Title       =   $("#Title"      ).val();
         var Thumbs      =   $("#Thumbs"     ).val();
-        var Source      =   $("#Source"     ).val();
+        var Source      =   $("#Link"     ).val();
         var Description =   $("#Description").val();
         var Tag         =   $("#Tag"        ).val();
         var Embel       =   $("#Embel"      ).val();
@@ -192,7 +193,8 @@
         var url=baseurl+"admin-planners/video/savevideo";
         var data={
             Params:{
-                VideoName:VideoName,
+                VideoKey:VideoKey,
+                Author:Author,
                 Title:Title,
                 Thumbs:Thumbs,
                 Categorys:strCategorys,
@@ -233,6 +235,27 @@
                 if(result.code>=0){
                     $("#Alias").val(result.msg);
                 }
+            }catch(err){
+                
+            }
+        });
+    }
+    function getYoutubeInfo(){
+        var url=baseurl+"admin-planners/video/YoutubeInfo";
+        var data={
+            url:$("#Link").val()
+        };
+        jqxAjax(url,data,function(video){
+            isrunning=false;
+            try{
+                
+                $("#Title").val(video.title);
+                $("#Alias").val(video.alias);
+                $("#VideoKey").val(video.key);
+                $("#Author").val(video.author);
+                $("#Thumbs").val(video.thumbnail);
+                $("#Description").val(video.description);
+                $("#Embel").val(video.embed);
             }catch(err){
                 
             }
