@@ -26,6 +26,7 @@ class video extends CI_Controller  {
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/video_model','video_model');
+            $this->load->model('admin-planners/youtube','youtube');
         }
         public function index()
 	{
@@ -44,6 +45,14 @@ class video extends CI_Controller  {
             $this->smarty->view('admin-planners/video/01_jqx',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
+        public function YoutubeInfo(){
+            $url=$_POST["url"];
+            $video=$this->youtube->getVideo($url);
+            if($video!=null){
+                $video["alias"]=converturl($video["title"]);
+            }
+            echo json_encode($video);
+        }
         public function EditVideo(){
             $Data["categorys"]=array(
                 "Music"=>"Music",
@@ -77,26 +86,33 @@ class video extends CI_Controller  {
         public function savevideo(){
             $Params=$_POST["Params"];
             $msgs=array();
-            if( (!isset($Params["VideoName"])) || $Params["VideoName"]==""){
-                $msgs[]="Tên video không được để trống.";
+            
+            if( (!isset($Params["Source"])) || $Params["Source"]==""){
+                $msgs[]="Link does not empty.";
+            }
+            if( (!isset($Params["VideoKey"])) || $Params["VideoKey"]==""){
+                $msgs[]="Key does not empty.";
+            }
+            if( (!isset($Params["Author"])) || $Params["Author"]==""){
+                $msgs[]="Author does not empty.";
             }
             if( (!isset($Params["Title"])) || $Params["Title"]==""){
-                $msgs[]="Tiêu đề không được để trống.";
+                $msgs[]="Title does not empty.";
             }
             if( (!isset($Params["Categorys"])) || $Params["Categorys"]==""){
-                $msgs[]="Bạn chưa chọn danh mục.";
+                $msgs[]="Please, choose the Categorys.";
             }
-            if( (!isset($Params["Source"])) || $Params["Source"]==""){
-                $msgs[]="Bạn chưa chọn nguồn của video.";
+            if( (!isset($Params["Thumbs"])) || $Params["Thumbs"]==""){
+                $msgs[]="Thumbs does not empty.";
             }
             if( (!isset($Params["Description"])) || $Params["Description"]==""){
-                $msgs[]="Ghi chú không được để trống.";
+                $msgs[]="Description does not empty.";
             }
             if( (!isset($Params["Tag"])) || $Params["Tag"]==""){
-                $msgs[]="Tag không được để trống.";
+                $msgs[]="Tag does not empty.";
             }
             if( (!isset($Params["Embel"])) || $Params["Embel"]==""){
-                $msgs[]="Mã nhúng không được để trống.";
+                $msgs[]="Embel does not empty.";
             }
             //echo"<pre>";print_r($Params);echo"</pre>";return;
             if(count($msgs)>0){
@@ -107,10 +123,12 @@ class video extends CI_Controller  {
                 }
             }else{
                 $VideoParams=array(
-                    "VideoName"=>$Params["VideoName"],
-                    "Alias"=>  converturl($Params["VideoName"]),
+                    "VideoKey"=>$Params["VideoKey"],
+                    "Author"=>$Params["Author"],
+                    "Alias"=>  converturl($Params["Title"]),
                     "Title"=>$Params["Title"],
                     "Category"=>$Params["Categorys"],
+                    "Thumbs"=>$Params["Thumbs"],
                     "Description"=>$Params["Description"],
                     "Source"=>$Params["Source"],
                     "Tag"=>$Params["Tag"],

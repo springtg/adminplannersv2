@@ -13,10 +13,8 @@
                 try{
                 
                     var result=JSON.parse(data);
-                    if(result.code==undefined){
-                        ShowErrorDialogMessage(data);
-                        return;
-                    }else if (callback && typeof(callback) === "function") { 
+                    
+                    if (callback && typeof(callback) === "function") { 
                         try{
                             callback(result);  
                         }catch(e){

@@ -2,21 +2,50 @@
 
 <table>
     <tr>
-        <td class="w100">Tên video</td>
-
-        <td class="w320">
+        <td class="w100">Youtube link</td>
+        <td colspan="3">
             <div class="pr10">
-                <input id="VideoName" type="text"  class="classic-input w100pc" placeholder=""
-                       onblur="getAlias();"
-                       value="{{if isset($Data["video"])}}{{$Data["video"]["VideoName"]}}{{/if}}"
+                <input id="Link" type="text"  class="classic-input w100pc"
+                       value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]}}{{/if}}"
                        />
             </div>
         </td>
-        <td class="pl60 w100">Nguồn</td>
+    </tr>
+    <tr>
+        <td class="w100"></td>
+        <td colspan="3" style="padding-bottom: 30px" >
+            <input type="button" class="classic-button" value="Get Video Infomartion " onclick="getYoutubeInfo();"/>
+        </td>
+    </tr>
+    <tr>
+        <td class="w100">Youtube Key</td>
+
         <td class="w320">
-            <select id="Source" class="classic-select w100pc">
-                <option value="YouTube">YouTube</option>
-            </select>
+            <div class="pr10">
+                <input id="VideoKey" type="text"  class="classic-input w100pc" placeholder=""
+                       value="{{if isset($Data["video"])}}{{$Data["video"]["VideoKey"]}}{{/if}}"
+                       />
+            </div>
+        </td>
+        <td class="pl60 w100">Author</td>
+        <td class="w320">
+            <div class="pr10">
+                <input id="Author" type="text"  class="classic-input w100pc" placeholder=""
+                       
+                       value="{{if isset($Data["video"])}}{{$Data["video"]["Author"]}}{{/if}}"
+                       />
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="w100">Title</td>
+        <td colspan="3">
+            <div class="pr10">
+                <input type="hidden" id="VideoID" value="{{if isset($Data["video"])}}{{$Data["video"]["VideoID"]}}{{/if}}"/>
+                <input id="Title" type="text"  class="classic-input w100pc"
+                       value="{{if isset($Data["video"])}}{{$Data["video"]["Title"]}}{{/if}}"
+                       />
+            </div>
         </td>
     </tr>
     <tr>
@@ -30,18 +59,7 @@
         </td>
     </tr>
     <tr>
-        <td class="w100">Tiêu đề</td>
-        <td colspan="3">
-            <div class="pr10">
-                <input type="hidden" id="VideoID" value="{{if isset($Data["video"])}}{{$Data["video"]["VideoID"]}}{{/if}}"/>
-                <input id="Title" type="text"  class="classic-input w100pc"
-                       value="{{if isset($Data["video"])}}{{$Data["video"]["Title"]}}{{/if}}"
-                       />
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="w100">Danh mục</td>
+        <td class="w100">Category</td>
         <td colspan="3">
             <div class="Categorys">
                 <ul class="classic-list w800">
@@ -63,7 +81,7 @@
         </td>
     </tr>
     <tr>
-        <td class="w100">Hình ảnh</td>
+        <td class="w100">Thumbs</td>
         <td colspan="3">
             <div class="pr10">
                 <input id="Thumbs" type="text"  class="classic-input w100pc" placeholder="Tự động lấy từ video ( YouTube )"
@@ -73,21 +91,23 @@
         </td>
     </tr>
     <tr>
-        <td class="w100">Ghi chú</td>
-        <td class="w320">
+        <td class="w100">Description</td>
+        <td colspan="3">
             <div class="pr10">
                 <textarea id="Description" class="classic-input w100pc rsv">{{if isset($Data["video"])}}{{$Data["video"]["Description"]}}{{/if}}</textarea>
             </div>
         </td>
-        <td class="pl60 w100">Tag</td>
-        <td class="w320">
+    </tr>
+    <tr>
+        <td class="w100">Tag</td>
+        <td colspan="3">
             <div class="pr10">
                 <textarea id="Tag" class="classic-input w100pc rsv">{{if isset($Data["video"])}}{{$Data["video"]["Tag"]}}{{/if}}</textarea>
             </div>
         </td>
     </tr>
     <tr>
-        <td class="w100">Mã nhúng</td>
+        <td class="w100">Embel</td>
         <td colspan="3">
             <div class="pr10">
                 <textarea id="Embel" class="classic-input w100pc rsv">{{if isset($Data["video"])}}{{$Data["video"]["Embel"]}}{{/if}}</textarea>
@@ -97,17 +117,17 @@
     <tr>
         <td class="w100"></td>
         <td colspan="3">
-            <input type="checkbox"/><label>Xem trước</label>
+            <input type="checkbox"/><label>Preview</label>
             <div style="min-height:  200px;background: #ddd"></div>
         </td>
     </tr>
 </table>
 
 <div>
-    <input type="button" class="classic-button" value="Trở về" onclick="jqxGrid.CancelEdit();"/>
+    <input type="button" class="classic-button" value="Back" onclick="jqxGrid.CancelEdit();"/>
     {{if isset($Data["video"])}}
-    <input type="button" class="classic-button" value="Cập nhật" onclick="jqxGrid.Save();"/>
+    <input type="button" class="classic-button" value="Update" onclick="jqxGrid.Save();"/>
     {{else}}
-    <input type="button" class="classic-button" value="Thêm" onclick="jqxGrid.Save();"/>
+    <input type="button" class="classic-button" value="Insert" onclick="jqxGrid.Save();"/>
     {{/if}}
 </div>
