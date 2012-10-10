@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.7, created on 2012-10-09 01:38:04
+<?php /* Smarty version Smarty-3.1.7, created on 2012-10-10 03:15:18
          compiled from "application\views\sys\02_script.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:2869450705086779986-31862795%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'b96619793366a31c86c8750a65871aba9d06b1fb' => 
     array (
       0 => 'application\\views\\sys\\02_script.tpl',
-      1 => 1349717868,
+      1 => 1349831593,
       2 => 'file',
     ),
   ),
@@ -34,10 +34,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
                 try{
                 
                     var result=JSON.parse(data);
-                    if(result.code==undefined){
-                        ShowErrorDialogMessage(data);
-                        return;
-                    }else if (callback && typeof(callback) === "function") { 
+                    
+                    if (callback && typeof(callback) === "function") { 
                         try{
                             callback(result);  
                         }catch(e){

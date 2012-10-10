@@ -50,9 +50,9 @@
         ></iframe>
     <div id="loadding-dialog" class="uidialog" title="Loadding...">Đang xử lý. Vui lòng đợi một chút...</div>
     <div id="dialog" class="uidialog" title="Dialog Title">I'm in a dialog</div>
-    <div id="error-dialog-message" title="Cảnh Báo Lỗi !"></div>
-    <div id="notice-dialog-message" title="Thông báo !"></div>
-    <div id="confirm-dialog-message" title="Xác Nhận !"></div>
+    <div id="error-dialog-message" title="Error !"></div>
+    <div id="notice-dialog-message" title="Notice !"></div>
+    <div id="confirm-dialog-message" title="Confirm !"></div>
 </span>
 <script>
     var isrunning=false,baseurl="{{base_url()}}";
@@ -130,7 +130,7 @@
             this.ndm.dialog({
                 modal       : true,
                 hide        : "explode",
-                title: title==undefined?"Thông Báo":title,
+                title: title==undefined?"Notice Message":title,
                 buttons: {
                     Ok: function() {
                         $( this ).dialog( "close" );
@@ -186,7 +186,7 @@
             //height      :140,
             modal       : true,
             hide        : "explode",
-            title: title==undefined?"Dialog Title":title,
+            title: title==undefined?"Confirm Dialog":title,
             buttons: {
                 Ok: function() {
                     //$( this ).dialog( "close" );

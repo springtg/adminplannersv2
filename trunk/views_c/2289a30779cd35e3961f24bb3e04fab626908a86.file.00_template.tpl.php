@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.7, created on 2012-10-09 10:02:42
+<?php /* Smarty version Smarty-3.1.7, created on 2012-10-10 03:48:01
          compiled from "application\views\admin-planners\00_template.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:683050728d05473e41-64485915%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '2289a30779cd35e3961f24bb3e04fab626908a86' => 
     array (
       0 => 'application\\views\\admin-planners\\00_template.tpl',
-      1 => 1349769593,
+      1 => 1349833678,
       2 => 'file',
     ),
   ),
@@ -30,6 +30,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 <?php if ($_valid && !is_callable('content_50728d057dce6')) {function content_50728d057dce6($_smarty_tpl) {?><!DOCTYPE html>
 <html>
     <head>
+        <title>Admin Planners!</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <script src="<?php echo base_url();?>
 js/jquery-1.7.2.js"></script>
@@ -66,7 +67,9 @@ syslib/syscss/sysstyle.css" type="text/css" rel="stylesheet"/>
                         <td><input type="text" id="txtpassword"  name="txtpassword" class="classic-input"/></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><input type="submit" value="Đăng nhập" class="classic-button"/></td>
+                        <td colspan="2">
+                            <input type="submit" style="width: 0;height: 0;border: none;padding: 0;margin: 0" />
+                        </td>
                     </tr>
                 </table>
 

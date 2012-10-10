@@ -58,3 +58,9 @@ th,td{text-align: left}
 .pa{position: absolute}
 .rsv{resize: vertical}
 ul.classic-list li{float: left;min-width: 120px}
+.mlr2{margin-left: 2px;margin-right: 2px}
+.bgceb{background-color: #ebebeb}
+.showandhide .hideifhover{display: block}
+.showandhide .showifhover{display: none}
+.showandhide:hover .hideifhover{display: none}
+.showandhide:hover .showifhover{display: block}

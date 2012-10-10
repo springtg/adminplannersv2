@@ -16,6 +16,9 @@ class youtube extends jqxGrid_CI_Model {
             $vid = stripslashes($url);
             $string = $vid;
             $url = parse_url($string);
+            if(!isset($url['query'])){
+                return null;
+            }
             parse_str($url['query']);
         }
         // set video data feed URL 
@@ -38,15 +41,57 @@ class youtube extends jqxGrid_CI_Model {
         }
         // parse video entry 
         $video = $this->parseVideoEntry($entry);
+        $video->title = stripslashes($video->title);
+        $video->description = stripslashes($video->description);
+        $video->thumbnail = stripslashes($video->thumbnail);
+        $video->author = stripslashes($video->author);
+        $video->key = $v;
+        $video->embed = '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/' . $v . '&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' . $v . '&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>';
+        return $video;
+    }
+    function getVideoInfo($url) {
+        //echo $url;
+        // get video ID from $_GET  
+        if (!isset($url)) {
+            return null;
+        } else {
+            $vid = stripslashes($url);
+            $string = $vid;
+            $url = parse_url($string);
+            if(!isset($url['query'])){
+                return null;
+            }
+            parse_str($url['query']);
+        }
+        // set video data feed URL 
+        $feedURL = 'http://gdata.youtube.com/feeds/api/videos/' . $v;
 
-        //These variables include the video information 
-        $videos["title"] = stripslashes($video->title);
-        $videos["description"] = stripslashes($video->description);
-        $videos["thumbnail"] = stripslashes($video->thumbnailURL);
-        $videos["author"] = stripslashes($video->author);
-        $videos["embed"] = '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/' . $v . '&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' . $v . '&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>';
-        $videos["key"] = $v;
-        return $videos;
+
+        //Since allow_url_fopens is off  use curl to get 
+        //the xml document from youtube. ;) 
+        //Added by DNI Web Design, June 11, 2010 
+        $ch = curl_init();    // initialize curl handle 
+        curl_setopt($ch, CURLOPT_URL, $feedURL); // set url to post to 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable 
+        curl_setopt($ch, CURLOPT_TIMEOUT, 4); // times out after 4s 
+
+        $result = curl_exec($ch); // run the whole process*/ 
+        // read feed into SimpleXML object 
+        $entry = @simplexml_load_string($result);
+        if($entry==null){
+            return null;
+        }else{
+            return $entry;
+        }
+        // parse video entry 
+        $video = $this->parseVideoEntry($entry);
+        $video->title = stripslashes($video->title);
+        $video->description = stripslashes($video->description);
+        $video->thumbnail = stripslashes($video->thumbnail);
+        $video->author = stripslashes($video->author);
+        $video->key = $v;
+        $video->embed = '<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/' . $v . '&hl=en&fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' . $v . '&hl=en&fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>';
+        return $video;
     }
 
     function parseVideoEntry($entry) {
@@ -56,20 +101,20 @@ class youtube extends jqxGrid_CI_Model {
         $media = $entry->children('http://search.yahoo.com/mrss/');
         $obj->title = $media->group->title;
         $obj->description = $media->group->description;
-
+        $obj->category=$media->group->category->attributes();//->attributes();
 // get video player URL
         $attrs = $media->group->player->attributes();
         $obj->watchURL = $attrs['url'];
 
 // get video thumbnail
         $attrs = $media->group->thumbnail[0]->attributes();
-        $obj->thumbnailURL = $attrs['url'];
-
+        $obj->thumbnail = $attrs['url'];
+        
 // get <yt:duration> node for video length
         $yt = $media->children('http://gdata.youtube.com/schemas/2007');
         $attrs = $yt->duration->attributes();
         $obj->length = $attrs['seconds'];
-
+        
 // get <yt:stats> node for viewer statistics
         $yt = $entry->children('http://gdata.youtube.com/schemas/2007');
         $attrs = $yt->statistics->attributes();

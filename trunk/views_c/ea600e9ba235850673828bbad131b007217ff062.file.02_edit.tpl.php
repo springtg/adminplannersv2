@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.7, created on 2012-10-09 10:23:24
+<?php /* Smarty version Smarty-3.1.7, created on 2012-10-10 12:28:23
          compiled from "application\views\admin-planners\video\02_edit.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:296435072a8e34ec813-08555980%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'ea600e9ba235850673828bbad131b007217ff062' => 
     array (
       0 => 'application\\views\\admin-planners\\video\\02_edit.tpl',
-      1 => 1349771000,
+      1 => 1349864425,
       2 => 'file',
     ),
   ),
@@ -29,22 +29,56 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 
 <table>
     <tr>
-        <td class="w100">Tên video</td>
-
-        <td class="w320">
+        <td class="w100">Youtube link</td>
+        <td colspan="3">
             <div class="pr10">
-                <input id="VideoName" type="text"  class="classic-input w100pc" placeholder=""
-                       onblur="getAlias();"
-                       value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["VideoName"];?>
+                <input id="Link" type="text"  class="classic-input w100pc"
+                       placeholder="Please using YouTube Watch Link"
+                       value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Source"];?>
 <?php }?>"
                        />
             </div>
         </td>
-        <td class="pl60 w100">Nguồn</td>
+    </tr>
+    <tr>
+        <td class="w100"></td>
+        <td colspan="3" style="padding-bottom: 30px" >
+            <input type="button" class="classic-button" value="Get Video Infomartion " onclick="getYoutubeInfo();"/>
+        </td>
+    </tr>
+    <tr>
+        <td class="w100">Youtube Key</td>
+
         <td class="w320">
-            <select id="Source" class="classic-select w100pc">
-                <option value="YouTube">YouTube</option>
-            </select>
+            <div class="pr10">
+                <input id="VideoKey" type="text"  class="classic-input w100pc" placeholder=""
+                       value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["VideoKey"];?>
+<?php }?>"
+                       />
+            </div>
+        </td>
+        <td class="pl60 w100">Author</td>
+        <td class="w320">
+            <div class="pr10">
+                <input id="Author" type="text"  class="classic-input w100pc" placeholder=""
+                       
+                       value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Author"];?>
+<?php }?>"
+                       />
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="w100">Title</td>
+        <td colspan="3">
+            <div class="pr10">
+                <input type="hidden" id="VideoID" value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["VideoID"];?>
+<?php }?>"/>
+                <input id="Title" type="text"  class="classic-input w100pc"
+                       value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Title"];?>
+<?php }?>"
+                       />
+            </div>
         </td>
     </tr>
     <tr>
@@ -59,20 +93,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         </td>
     </tr>
     <tr>
-        <td class="w100">Tiêu đề</td>
-        <td colspan="3">
-            <div class="pr10">
-                <input type="hidden" id="VideoID" value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["VideoID"];?>
-<?php }?>"/>
-                <input id="Title" type="text"  class="classic-input w100pc"
-                       value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Title"];?>
-<?php }?>"
-                       />
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td class="w100">Danh mục</td>
+        <td class="w100">Category</td>
         <td colspan="3">
             <div class="Categorys">
                 <ul class="classic-list w800">
@@ -106,7 +127,7 @@ $_smarty_tpl->tpl_vars['Value']->_loop = true;
         </td>
     </tr>
     <tr>
-        <td class="w100">Hình ảnh</td>
+        <td class="w100">Thumbs</td>
         <td colspan="3">
             <div class="pr10">
                 <input id="Thumbs" type="text"  class="classic-input w100pc" placeholder="Tự động lấy từ video ( YouTube )"
@@ -117,26 +138,28 @@ $_smarty_tpl->tpl_vars['Value']->_loop = true;
         </td>
     </tr>
     <tr>
-        <td class="w100">Ghi chú</td>
-        <td class="w320">
+        <td class="w100">Description</td>
+        <td colspan="3">
             <div class="pr10">
-                <textarea id="Description" class="classic-input w100pc rsv"><?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Description"];?>
-<?php }?></textarea>
-            </div>
-        </td>
-        <td class="pl60 w100">Tag</td>
-        <td class="w320">
-            <div class="pr10">
-                <textarea id="Tag" class="classic-input w100pc rsv"><?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Tag"];?>
+                <textarea id="Description" style="min-height: 96px" class="classic-input w100pc rsv"><?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Description"];?>
 <?php }?></textarea>
             </div>
         </td>
     </tr>
     <tr>
-        <td class="w100">Mã nhúng</td>
+        <td class="w100">Tag</td>
         <td colspan="3">
             <div class="pr10">
-                <textarea id="Embel" class="classic-input w100pc rsv"><?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Embel"];?>
+                <textarea id="Tag" style="min-height: 64px;" class="classic-input w100pc rsv"><?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Tag"];?>
+<?php }?></textarea>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="w100">Embel</td>
+        <td colspan="3">
+            <div class="pr10">
+                <textarea id="Embel" style="min-height: 64px;" class="classic-input w100pc rsv"><?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Embel"];?>
 <?php }?></textarea>
             </div>
         </td>
@@ -144,18 +167,21 @@ $_smarty_tpl->tpl_vars['Value']->_loop = true;
     <tr>
         <td class="w100"></td>
         <td colspan="3">
-            <input type="checkbox"/><label>Xem trước</label>
-            <div style="min-height:  200px;background: #ddd"></div>
+            <input type="checkbox"/><label>Preview</label>
+            <div style="min-height:  200px;background: #ddd">
+                <img class="thumbs" src="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Thumbs"];?>
+<?php }?>"/>
+            </div>
         </td>
     </tr>
 </table>
 
 <div>
-    <input type="button" class="classic-button" value="Trở về" onclick="jqxGrid.CancelEdit();"/>
+    <input type="button" class="classic-button" value="Back" onclick="jqxGrid.CancelEdit();"/>
     <?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?>
-    <input type="button" class="classic-button" value="Cập nhật" onclick="jqxGrid.Save();"/>
+    <input type="button" class="classic-button" value="Update" onclick="jqxGrid.Save();"/>
     <?php }else{ ?>
-    <input type="button" class="classic-button" value="Thêm" onclick="jqxGrid.Save();"/>
+    <input type="button" class="classic-button" value="Insert" onclick="jqxGrid.Save();"/>
     <?php }?>
 </div>
 <?php }} ?>
