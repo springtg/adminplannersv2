@@ -31,9 +31,23 @@ class video extends CI_Controller  {
         public function index()
 	{
             $Data["tab_config"]["tabs"]=array(
-                "content"   =>array("display"=>"Nội Dung"     ,"value"=>"content"   ,"link"=>""),
-                "video"     =>array("display"=>"Video"        ,"value"=>"video"     ,"link"=>""),
-                "contact"   =>array("display"=>"Liên Hệ"      ,"value"=>"contact"       ,"link"=>"")
+                "content"   =>array(
+                    "display"=>"Nội Dung"     
+                    ,"value"=>"content"   
+                    ,"link"=>  base_url("admin-planners/content")
+                    ),
+                "video"     =>array(
+                    "display"=>"Video"        
+                    ,"value"=>"video"     
+                    ,"link"=>base_url("admin-planners/video")),
+                "slider"    =>array(
+                    "display"=>"Slider in Home Page" 
+                    ,"value"=>"slider"     
+                    ,"link"=>base_url("admin-planners/slider")),
+                "contact"   =>array(
+                    "display"=>"Liên Hệ"      
+                    ,"value"=>"contact"       
+                    ,"link"=>base_url("admin-planners/contact"))
             );
             $Data["tab_config"]["tabindex"]="video";
             $this->smarty->assign('_SESSION', $_SESSION);
@@ -49,9 +63,19 @@ class video extends CI_Controller  {
             $url=$_POST["url"];
             $video=$this->youtube->getVideo($url);
             if($video!=null){
-                $video["alias"]=converturl($video["title"]);
+                $video->alias=converturl($video->title);
             }
             echo json_encode($video);
+        }
+        public function YoutubeVideoInfo(){
+            //$url=$_POST["url"];
+            $url="http://www.youtube.com/watch?v=NbncKVDgfio&feature=g-all-shu";
+            $video=$this->youtube->getVideoInfo($url);
+            if($video!=null){
+                print_r($video);
+                $video->alias=converturl($video->title);
+            }
+            //echo json_encode($video);
         }
         public function EditVideo(){
             $Data["categorys"]=array(
@@ -155,6 +179,25 @@ class video extends CI_Controller  {
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
+        public function ChangeStatus(){
+            
+            if(isset($_POST["Status"]) && isset($_POST["VideoID"])){
+                $VideoParams=array(
+                    "Status"=>$_POST["Status"]
+                );
+                    if($this->video_model->updateVideo($_POST["VideoID"],$VideoParams)){
+                        $code=1;
+                        $msg="Status' video have been changed.";
+                    }else{
+                        $code=-1;
+                        $msg="Fail. Cant change status of this video";
+                    }
+            }else{  
+                $code=-1;
+                $msg="Fail.";
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
         public function jqxgrid_video(){
             $products=array();
             $result['total_rows']=0;
@@ -163,15 +206,24 @@ class video extends CI_Controller  {
                 $rows=$result['rows'];
                 // get data and store in a json array
                 foreach ($rows as $row) {
+                    $ca_value="";
+                    $ca_arr=  explode(",,", ",".$row->Category.",");
+                    foreach ($ca_arr as $ca){
+                        if($ca!=null && $ca!="")
+                        $ca_value.="<span class=\"mlr2 bgceb\">$ca</span>";
+                    }
                     $products[] = array(
-                            'VideoName'     => $row->VideoName,
-                            'Title'     => $row->Title,
-                            'Category'    => $row->Category,
-                            'Source'     => $row->Source,
-                            'Status'   => $row->Status,
-                            'Insert'   => $row->Insert,
-                            'Update'   => $row->Update,
-                            'Video'   => json_encode(array(
+                            'VideoKey'      => $row->VideoKey,
+                            'Title'         => $row->Title,
+                            'Category'      => $ca_value,
+                            'Source'        => $row->Source,
+                            'Status'        => json_encode(array(
+                                            "VideoID"=>$row->VideoID,
+                                            "Status"=>$row->Status
+                                        )),
+                            'Insert'        => $row->Insert,
+                            'Update'        => $row->Update,
+                            'Video'         => json_encode(array(
                                             "VideoID"=>$row->VideoID,
                                             "Delete"=>$row->Delete
                                         ))

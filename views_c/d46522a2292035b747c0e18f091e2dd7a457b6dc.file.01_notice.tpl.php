@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.7, created on 2012-10-09 00:28:16
+<?php /* Smarty version Smarty-3.1.7, created on 2012-10-10 04:10:31
          compiled from "application\views\sys\01_notice.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:7045070489d076447-44977447%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'd46522a2292035b747c0e18f091e2dd7a457b6dc' => 
     array (
       0 => 'application\\views\\sys\\01_notice.tpl',
-      1 => 1349713693,
+      1 => 1349834989,
       2 => 'file',
     ),
   ),
@@ -73,9 +73,9 @@ syslib/ui/jquery.ui.min.js"></script>
         ></iframe>
     <div id="loadding-dialog" class="uidialog" title="Loadding...">Đang xử lý. Vui lòng đợi một chút...</div>
     <div id="dialog" class="uidialog" title="Dialog Title">I'm in a dialog</div>
-    <div id="error-dialog-message" title="Cảnh Báo Lỗi !"></div>
-    <div id="notice-dialog-message" title="Thông báo !"></div>
-    <div id="confirm-dialog-message" title="Xác Nhận !"></div>
+    <div id="error-dialog-message" title="Error !"></div>
+    <div id="notice-dialog-message" title="Notice !"></div>
+    <div id="confirm-dialog-message" title="Confirm !"></div>
 </span>
 <script>
     var isrunning=false,baseurl="<?php echo base_url();?>
@@ -154,7 +154,7 @@ syslib/ui/jquery.ui.min.js"></script>
             this.ndm.dialog({
                 modal       : true,
                 hide        : "explode",
-                title: title==undefined?"Thông Báo":title,
+                title: title==undefined?"Notice Message":title,
                 buttons: {
                     Ok: function() {
                         $( this ).dialog( "close" );
@@ -210,7 +210,7 @@ syslib/ui/jquery.ui.min.js"></script>
             //height      :140,
             modal       : true,
             hide        : "explode",
-            title: title==undefined?"Dialog Title":title,
+            title: title==undefined?"Confirm Dialog":title,
             buttons: {
                 Ok: function() {
                     //$( this ).dialog( "close" );

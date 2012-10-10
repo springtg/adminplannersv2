@@ -6,6 +6,7 @@
         <td colspan="3">
             <div class="pr10">
                 <input id="Link" type="text"  class="classic-input w100pc"
+                       placeholder="Please using YouTube Watch Link"
                        value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]}}{{/if}}"
                        />
             </div>
@@ -94,7 +95,7 @@
         <td class="w100">Description</td>
         <td colspan="3">
             <div class="pr10">
-                <textarea id="Description" class="classic-input w100pc rsv">{{if isset($Data["video"])}}{{$Data["video"]["Description"]}}{{/if}}</textarea>
+                <textarea id="Description" style="min-height: 96px" class="classic-input w100pc rsv">{{if isset($Data["video"])}}{{$Data["video"]["Description"]}}{{/if}}</textarea>
             </div>
         </td>
     </tr>
@@ -102,7 +103,7 @@
         <td class="w100">Tag</td>
         <td colspan="3">
             <div class="pr10">
-                <textarea id="Tag" class="classic-input w100pc rsv">{{if isset($Data["video"])}}{{$Data["video"]["Tag"]}}{{/if}}</textarea>
+                <textarea id="Tag" style="min-height: 64px;" class="classic-input w100pc rsv">{{if isset($Data["video"])}}{{$Data["video"]["Tag"]}}{{/if}}</textarea>
             </div>
         </td>
     </tr>
@@ -110,7 +111,7 @@
         <td class="w100">Embel</td>
         <td colspan="3">
             <div class="pr10">
-                <textarea id="Embel" class="classic-input w100pc rsv">{{if isset($Data["video"])}}{{$Data["video"]["Embel"]}}{{/if}}</textarea>
+                <textarea id="Embel" style="min-height: 64px;" class="classic-input w100pc rsv">{{if isset($Data["video"])}}{{$Data["video"]["Embel"]}}{{/if}}</textarea>
             </div>
         </td>
     </tr>
@@ -118,7 +119,9 @@
         <td class="w100"></td>
         <td colspan="3">
             <input type="checkbox"/><label>Preview</label>
-            <div style="min-height:  200px;background: #ddd"></div>
+            <div style="min-height:  200px;background: #ddd">
+                <img class="thumbs" src="{{if isset($Data["video"])}}{{$Data["video"]["Thumbs"]}}{{/if}}"/>
+            </div>
         </td>
     </tr>
 </table>

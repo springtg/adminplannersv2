@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.7, created on 2012-10-09 10:24:53
+<?php /* Smarty version Smarty-3.1.7, created on 2012-10-10 12:28:20
          compiled from "application\views\admin-planners\video\01_jqx.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:2081250729df1c5d9e7-18343379%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '538a3b2480319c50a21dc56966c820ff5bb9c106' => 
     array (
       0 => 'application\\views\\admin-planners\\video\\01_jqx.tpl',
-      1 => 1349771091,
+      1 => 1349864357,
       2 => 'file',
     ),
   ),
@@ -56,7 +56,7 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
                 datatype: "json",
                 datafields: [
                     { name: 'Video', type: 'string'},
-                    { name: 'VideoName', type: 'string'},
+                    { name: 'VideoKey', type: 'string'},
                     { name: 'Title', type: 'string'},
                     { name: 'Category',type:'string'},
                     { name: 'Source',type:'string'},
@@ -88,23 +88,22 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
                     //alert("<b>Status</b>:"+xhr.status+"<br/><b>ThrownError</b>:"+error+"<br/>");
                                 
                 }
-            }
-        );
+            });
             var linkrenderer = function (row, column, value) {
                 var str="<span style='margin: 4px; float: left;'>";
                 try{
                     Video = $.parseJSON(value);
                     if(Video.Delete==null){
-                    str+="\
+                        str+="\
                 <div onclick=\"jqxGrid.Edit('"+Video.VideoID+"');\" \
                 class='icon16 edit_icon hover50' title='Chỉnh sửa video'></div>\
             ";
-                    str+="\
+                        str+="\
                 <div onclick=\"jqxGrid.Delete('"+Video.VideoID+"');\" \
                 class='icon16 delete_icon hover50' title='Xóa'></div>\
             ";
-                }else{
-                    str+="\
+                    }else{
+                        str+="\
                 <div onclick=\"jqxGrid.Retore('"+Video.VideoID+"');\" \
                 class='icon16 retore_icon hover50' title='Khôi phục'></div>\
             ";
@@ -113,6 +112,25 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
                 <div onclick=\"jqxGrid.Detail('"+Video.VideoID+"');\" \
                 class='icon16 log_icon hover50' title='Lịch sử ghi vết'></div>\
             ";
+                }catch(e){ }
+                str+="</span>";
+                return str;
+            }
+            var statusrenderer = function (row, column, value) {
+                var str="<span class='showandhide' style='margin: 4px; float: left;'>";
+                try{
+                    Status = $.parseJSON(value);
+                    if(Status.Status=="Public"){
+                        str+="\
+                <span class='hideifhover' style='color:blue;'>Public</span>\
+                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.VideoID+"','Private');\"><span style='color:blue;'>Public </span> <span style='color:#000;'>→ Private</span></a></span>\
+                ";
+                    }else if(Status.Status=="Private"){
+                        str+="\
+                <span class='hideifhover'>Private</span>\
+                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.VideoID+"','Public');\"><span style='color:#000;'>Private → </span> <span style='color:blue;'>Public</span></a></span>\
+                ";
+                    }
                 }catch(e){ }
                 str+="</span>";
                 return str;
@@ -142,10 +160,10 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
                 virtualmode: true,
                 columns: [
                     { text: ''          , datafield: 'Video',cellsrenderer: linkrenderer  ,width:80       },
-                    { text: 'VideoName' , datafield: 'VideoName'       },
+                    { text: 'Key' , datafield: 'VideoKey'       },
                     { text: 'Title'     , datafield: 'Title'       },
                     { text: 'Category'  , datafield: 'Category'    ,width:200},
-                    { text: 'Status'    , datafield: 'Status'    ,width:100 },
+                    { text: 'Status'    , datafield: 'Status'   ,cellsrenderer:statusrenderer ,width:100 },
                     { text: 'Insert'    , datafield: 'Insert'   ,cellsformat: 'yyyy-MM-dd',width:100},
                     { text: 'Update'    , datafield: 'Update'   ,cellsformat: 'yyyy-MM-dd',width:100}
                 ]
@@ -169,14 +187,22 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
             Refresh:function (){
                 $("#jqxgrid").jqxGrid('updatebounddata');
             },
+            Delete:function (){
+                $("#jqxgrid").jqxGrid('updatebounddata');
+            },
+            Retore:function (){
+                $("#jqxgrid").jqxGrid('updatebounddata');
+            },
             Edit:function (VideoID){
                 $("#frmDetail").show();
                 $("#jqxWidget").hide();
-                if(id==undefined){
-                    $(".tab-nav li.hover .tabdes").html(" → Cập nhật");
-                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{VideoID:VideoID},$("#frmDetail"));
+                if(VideoID==undefined){
+                    $(".tab-nav li.hover .tabdes").html(" → Insert");
+                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{},$("#frmDetail"));
                 }else{
-                    }
+                    $(".tab-nav li.hover .tabdes").html(" → Update");
+                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{VideoID:VideoID},$("#frmDetail"));
+                }
             },
             CancelEdit:function (){
                 $("#frmDetail").hide();
@@ -185,15 +211,43 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
             },
             Save:function (){
                 _SaveVideo();
+            },
+            ChangeStatus:function (VideoID,Status){
+                _ChangeStatus(VideoID,Status);
+                
             }
         };
     } ());
+    function _ChangeStatus(VideoID,Status){
+        if(isrunning)return;
+        isrunning=true;
+        var url=baseurl+"admin-planners/video/ChangeStatus";
+        var data={
+            VideoID:VideoID,
+            Status:Status
+        };
+        jqxAjax(url,data,function(result){
+            isrunning=false;
+            try{
+                if(result.code<0){
+                    ShowNoticeDialogMessage(result.msg);
+                }else{
+                    ShowNoticeDialogMessage("Video' Status have been Changed!","Notice Message !",function(){
+                        jqxGrid.Refresh();
+                    });
+                }
+            }catch(err){
+                ShowErrorDialogMessage(err);
+            }
+        });
+    }
     function _SaveVideo(){
         if(isrunning)return;
-        var VideoName   =   $("#VideoName"  ).val();
+        var VideoKey   =   $("#VideoKey"  ).val();
+        var Author   =   $("#Author"  ).val();
         var Title       =   $("#Title"      ).val();
         var Thumbs      =   $("#Thumbs"     ).val();
-        var Source      =   $("#Source"     ).val();
+        var Source      =   $("#Link"     ).val();
         var Description =   $("#Description").val();
         var Tag         =   $("#Tag"        ).val();
         var Embel       =   $("#Embel"      ).val();
@@ -212,7 +266,8 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
         var url=baseurl+"admin-planners/video/savevideo";
         var data={
             Params:{
-                VideoName:VideoName,
+                VideoKey:VideoKey,
+                Author:Author,
                 Title:Title,
                 Thumbs:Thumbs,
                 Categorys:strCategorys,
@@ -231,13 +286,13 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
                 if(result.code<0){
                     ShowNoticeDialogMessage(result.msg);
                 }else{
-                    ShowNoticeDialogMessage("Thành công","Thông báo !",function(){
+                    ShowNoticeDialogMessage("Video have been added!","Notice Message !",function(){
                         jqxGrid.CancelEdit();
                         jqxGrid.Refresh();
                     });
                 }
             }catch(err){
-                ShowErrorDialogMessage("Lỗi",err);
+                ShowErrorDialogMessage(err);
             }
         });
     }
@@ -255,6 +310,28 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
                 }
             }catch(err){
                 
+            }
+        });
+    }
+    function getYoutubeInfo(){
+        var url=baseurl+"admin-planners/video/YoutubeInfo";
+        var data={
+            url:$("#Link").val()
+        };
+        jqxAjax(url,data,function(video){
+            isrunning=false;
+            try{
+                
+                $("#Title").val(video.title);
+                $("#Alias").val(video.alias);
+                $("#VideoKey").val(video.key);
+                $("#Author").val(video.author);
+                $("#Thumbs").val(video.thumbnail);
+                $("#Description").val(video.description);
+                $("#Embel").val(video.embed);
+                $("img.thumbs").attr("src",video.thumbnail);
+            }catch(err){
+                ShowErrorDialogMessage("Cant get video information. Please check your link.");
             }
         });
     }

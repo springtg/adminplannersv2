@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Admin Planners!</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <script src="{{base_url()}}js/jquery-1.7.2.js"></script>
         <script src="{{base_url()}}js/vadilation.js"></script>
@@ -29,7 +30,9 @@
                         <td><input type="text" id="txtpassword"  name="txtpassword" class="classic-input"/></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><input type="submit" value="Đăng nhập" class="classic-button"/></td>
+                        <td colspan="2">
+                            <input type="submit" style="width: 0;height: 0;border: none;padding: 0;margin: 0" />
+                        </td>
                     </tr>
                 </table>
 
