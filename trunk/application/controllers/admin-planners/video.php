@@ -87,6 +87,16 @@ class video extends CI_Controller  {
             }
             //echo json_encode($video);
         }
+        function tokenProduct(){
+            $q=isset($_POST["q"])?$_POST["q"]:"";
+            
+            $arr= ($this->video_model->getToken($q));
+            $json_response = json_encode($arr);
+            if(isset($_GET["callback"])) {
+                $json_response = $_GET["callback"] . "(" . $json_response . ")";
+            }
+            echo $json_response;
+        }
         public function EditVideo(){
             $Data["categorys"]=array(
                 "Music"=>"Music",

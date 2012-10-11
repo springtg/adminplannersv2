@@ -40,6 +40,10 @@
 
 $route['default_controller'] = "home";
 $route['scaffolding_trigger'] = "scaffolding";
+$route['about'] = "video/pagecontent";
+$route['home'] = "video/home";
+$route['stories'] = "video/stories";
+$route['stories-detail/(:any)'] = "video/storiesdetail/detail/$1";
 
 $route['404_override'] = '';
 

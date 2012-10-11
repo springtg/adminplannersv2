@@ -28,6 +28,17 @@ class slider extends CI_Controller  {
             $this->load->model('admin-planners/video_model','video_model');
             $this->load->model('admin-planners/slider_model','slider_model');
         }
+        public function Edit(){
+            $Data=null;
+            if(isset($_POST["ID"])){
+                $slider=$this->slider_model->get($_POST["ID"]);
+                if(count($slider)>0){
+                    $Data["slider"]=  objectToArray($slider[0]);
+                }
+            }
+            $this->smarty->assign('Data', $Data);
+            $this->smarty->display('admin-planners/slider/02_edit');
+        }
         public function index()
 	{
             $Data["tab_config"]["tabs"]=array(
@@ -63,37 +74,15 @@ class slider extends CI_Controller  {
             $Params=$_POST["Params"];
             $msgs=array();
             
-            if( (!isset($Params["Source"])) || $Params["Source"]==""){
-                $msgs[]="Link does not empty.";
+            if( (!isset($Params["VideoID"])) || $Params["VideoID"]==""){
+                $msgs[]="Please choose the video.";
             }
-            if( (!isset($Params["VideoKey"])) || $Params["VideoKey"]==""){
-                $msgs[]="Key does not empty.";
+            if( (!isset($Params["Position"])) || $Params["Position"]=="" || !is_numeric($Params["Position"])){
+                $Params["Position"]=0;
             }
-            if( (!isset($Params["Length"])) || $Params["Length"]=="" || !is_numeric($Params["Length"])){
-                $msgs[]="Length does not empty and Length must be numeric.";
+            if( (!isset($Params["Image"])) || $Params["Image"]==""){
+                $msgs[]="Image does not empty.";
             }
-            if( (!isset($Params["Author"])) || $Params["Author"]==""){
-                $msgs[]="Author does not empty.";
-            }
-            if( (!isset($Params["Title"])) || $Params["Title"]==""){
-                $msgs[]="Title does not empty.";
-            }
-            if( (!isset($Params["Categorys"])) || $Params["Categorys"]==""){
-                $msgs[]="Please, choose the Categorys.";
-            }
-            if( (!isset($Params["Thumbs"])) || $Params["Thumbs"]==""){
-                $msgs[]="Thumbs does not empty.";
-            }
-            if( (!isset($Params["Description"])) || $Params["Description"]==""){
-                $msgs[]="Description does not empty.";
-            }
-            if( (!isset($Params["Tag"])) || $Params["Tag"]==""){
-                $msgs[]="Tag does not empty.";
-            }
-            if( (!isset($Params["Embel"])) || $Params["Embel"]==""){
-                $msgs[]="Embel does not empty.";
-            }
-            //echo"<pre>";print_r($Params);echo"</pre>";return;
             if(count($msgs)>0){
                 $code=-44;
                 $msg="";
@@ -101,34 +90,29 @@ class slider extends CI_Controller  {
                     $msg.="$m<br/>";
                 }
             }else{
-                $VideoParams=array(
-                    "VideoKey"=>$Params["VideoKey"],
-                    "Author"=>$Params["Author"],
-                    "Alias"=>  converturl($Params["Title"]),
+                $SliderParams=array(
+                    "VideoID"=>$Params["VideoID"],
                     "Title"=>$Params["Title"],
-                    "Category"=>$Params["Categorys"],
-                    "Thumbs"=>$Params["Thumbs"],
-                    "Description"=>$Params["Description"],
-                    "Source"=>$Params["Source"],
-                    "Tag"=>$Params["Tag"],
-                    "Embel"=>$Params["Embel"],
-                    "Length"=>$Params["Length"]
+                    "Image"=>  $Params["Image"]
+                    ,"Position"=>$Params["Position"]
                 );
-                if(isset($Params["VideoID"]) && $Params["VideoID"]!=""){
-                    if($this->video_model->updateVideo($Params["VideoID"],$VideoParams)){
+                if(isset($Params["ID"]) && $Params["ID"]!=""){
+                    //echo "aaa";return;
+                    if($this->slider_model->update($Params["ID"],$SliderParams)){
                         $code=1;
-                        $msg="Success. Video have been updated.";
+                        $msg="Success. Slider have been updated.";
                     }else{
                         $code=-1;
-                        $msg="Fail. Cant update video information.";
+                        $msg="Fail. Cant update Slider information.";
                     }
                 }else{
-                    if($this->video_model->insertVideo($VideoParams)){
+                    //print_r($SliderParams);return;
+                    if($this->slider_model->insert($SliderParams)){
                         $code=1;
-                        $msg="Success. Video have been added to database.";
+                        $msg="Success. Slider have been added to database.";
                     }else{
                         $code=-1;
-                        $msg="Fail. Cant insert video to database.";
+                        $msg="Fail. Cant insert Slider to database.";
                     }
                 }
                 //echo"<pre>";print_r($VideoParams);echo"</pre>";return;
@@ -137,16 +121,16 @@ class slider extends CI_Controller  {
         }
         public function ChangeStatus(){
             
-            if(isset($_POST["Status"]) && isset($_POST["VideoID"])){
-                $VideoParams=array(
+            if(isset($_POST["Status"]) && isset($_POST["ID"])){
+                $Params=array(
                     "Status"=>$_POST["Status"]
                 );
-                    if($this->video_model->updateVideo($_POST["VideoID"],$VideoParams)){
+                    if($this->slider_model->update($_POST["ID"],$Params)){
                         $code=1;
-                        $msg="Status' video have been changed.";
+                        $msg="Status' have been changed.";
                     }else{
                         $code=-1;
-                        $msg="Fail. Cant change status of this video";
+                        $msg="Fail. Cant change Status of this slider.";
                     }
             }else{  
                 $code=-1;
@@ -158,7 +142,7 @@ class slider extends CI_Controller  {
             $jqx_data=array();
             $result['total_rows']=0;
             //if($this->checkauthority()>=0){
-                $result=$this->video_slider->jqxgrid();
+                $result=$this->slider_model->jqxgrid();
                 $rows=$result['rows'];
                 // get data and store in a json array
                 foreach ($rows as $row) {
@@ -168,13 +152,13 @@ class slider extends CI_Controller  {
                             'Position'      => $row->Position,
                             'Image'        => $row->Image,
                             'Status'        => json_encode(array(
-                                            "ID"=>$row->VideoID,
+                                            "ID"=>$row->ID,
                                             "Status"=>$row->Status
                                         )),
                             'Insert'        => $row->Insert,
                             'Update'        => $row->Update,
                             'Slider'         => json_encode(array(
-                                            "ID"=>$row->VideoID,
+                                            "ID"=>$row->ID,
                                             "Delete"=>$row->Delete
                                         ))
                     );

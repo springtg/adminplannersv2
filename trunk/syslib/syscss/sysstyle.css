@@ -95,6 +95,7 @@ ul.classic-list li{float: left;min-width: 120px}
 .MrKhuong p{color: red;padding: 8px 12px;margin: 0}
 .MrKhuong .back{color: red;padding: 8px 32px;margin: 0;position: absolute;bottom: 0;left: 0}
 .MrKhuong .home{color: red;padding: 8px 32px;margin: 0;position: absolute;bottom: 0;right: 0}
+.MrKhuong .back:hover,.MrKhuong .home:hover{font-weight: bold}
 .MrKhuong.blue{border: 1px solid blue;}
 .MrKhuong.blue .tit{background: blue;}
 .MrKhuong.blue .back,.MrKhuong.blue .home,.MrKhuong.blue p{color: blue;}

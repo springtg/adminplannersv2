@@ -3,60 +3,52 @@
 <head>
 <title>404 Page Not Found</title>
 <style type="text/css">
-
-::selection{ background-color: #E13300; color: white; }
-::moz-selection{ background-color: #E13300; color: white; }
-::webkit-selection{ background-color: #E13300; color: white; }
-
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
+ 
+.MrKhuong{
+    border: 1px solid red;
+    padding: 1px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -50px 0 0 -160px;
+    width: 320px;
+    height: 100px;
+    z-index: 9999;
+    background: #fff;
+    -moz-box-shadow: 0 4px 10px #666;
+    -webkit-box-shadow: 0 4px 10px #666;
+    box-shadow: 0 4px 10px #666;
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, direction=270, strength=7)';
+    filter: progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, direction=270, strength=7);
+    font-family: tahoma;font-size: 11px;
 }
-
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
+.MrKhuong .tit{
+    text-align: center;
+    padding: 8px 12px;
+    background: red;
+    color: #fff;
+    
 }
+.MrKhuong .tit span{font-weight: bold;padding-right: 12px}
+.MrKhuong p{color: red;padding: 8px 12px;margin: 0}
+.MrKhuong .back{color: red;padding: 8px 32px;margin: 0;position: absolute;bottom: 0;left: 0}
+.MrKhuong .home{color: red;padding: 8px 32px;margin: 0;position: absolute;bottom: 0;right: 0}
+.MrKhuong .back:hover,.MrKhuong .home:hover{font-weight: bold}
+.MrKhuong.blue{border: 1px solid blue;}
+.MrKhuong.blue .tit{background: blue;}
+.MrKhuong.blue .back,.MrKhuong.blue .home,.MrKhuong.blue p{color: blue;}
+.MrKhuong.orange{border: 1px solid orange;}
+.MrKhuong.orange .tit{background: orange;}
+.MrKhuong.orange .back,.MrKhuong.orange .home,.MrKhuong.orange p{color: orange;}
 
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 0px 0;
-	padding: 10px 15px 10px 15px;
-}
-
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
-
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	-webkit-box-shadow: 0 0 8px #D0D0D0;
-}
-
-p {
-	margin: 12px 15px 12px 15px;
-}
 </style>
 </head>
 <body>
-	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
-	</div>
+    <div class="MrKhuong">
+        <div class="tit"><span>404</span>Webpage not found.</div>
+        <p>The 404 or Not Found, the server could not find what was requested</p>
+        <a href="" class="back">Go back</a>
+        <a href="" class="home">Go home</a>
+    </div>
 </body>
 </html>

@@ -38,7 +38,7 @@
                     { name: 'Update',type: 'date'}
                     
                 ],
-                url: baseurl+'admin-planners/slider/jqxgrid_video/',
+                url: baseurl+'admin-planners/slider/jqxgrid/',
                 filter: function(){
                     $("#jqxgrid").jqxGrid('updatebounddata');
                     //$('#grid').jqxGrid('refreshdata');
@@ -65,24 +65,24 @@
             var linkrenderer = function (row, column, value) {
                 var str="<span style='margin: 4px; float: left;'>";
                 try{
-                    Video = $.parseJSON(value);
-                    if(Video.Delete==null){
+                    RowOBJ = $.parseJSON(value);
+                    if(RowOBJ.Delete==null){
                         str+="\
-                <div onclick=\"jqxGrid.Edit('"+Video.VideoID+"');\" \
+                <div onclick=\"jqxGrid.Edit('"+RowOBJ.ID+"');\" \
                 class='icon16 edit_icon hover50' title='Chỉnh sửa video'></div>\
             ";
                         str+="\
-                <div onclick=\"jqxGrid.Delete('"+Video.VideoID+"');\" \
+                <div onclick=\"jqxGrid.Delete('"+RowOBJ.ID+"');\" \
                 class='icon16 delete_icon hover50' title='Xóa'></div>\
             ";
                     }else{
                         str+="\
-                <div onclick=\"jqxGrid.Retore('"+Video.VideoID+"');\" \
+                <div onclick=\"jqxGrid.Retore('"+RowOBJ.ID+"');\" \
                 class='icon16 retore_icon hover50' title='Khôi phục'></div>\
             ";
                     }
                     str+="\
-                <div onclick=\"jqxGrid.Detail('"+Video.VideoID+"');\" \
+                <div onclick=\"jqxGrid.Detail('"+RowOBJ.ID+"');\" \
                 class='icon16 log_icon hover50' title='Lịch sử ghi vết'></div>\
             ";
                 }catch(e){ }
@@ -96,12 +96,12 @@
                     if(Status.Status=="Public"){
                         str+="\
                 <span class='hideifhover' style='color:blue;'>Public</span>\
-                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.VideoID+"','Private');\"><span style='color:blue;'>Public </span> <span style='color:#000;'>→ Private</span></a></span>\
+                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.ID+"','Private');\"><span style='color:blue;'>Public </span> <span style='color:#000;'>→ Private</span></a></span>\
                 ";
                     }else if(Status.Status=="Private"){
                         str+="\
                 <span class='hideifhover'>Private</span>\
-                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.VideoID+"','Public');\"><span style='color:#000;'>Private → </span> <span style='color:blue;'>Public</span></a></span>\
+                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.ID+"','Public');\"><span style='color:#000;'>Private → </span> <span style='color:blue;'>Public</span></a></span>\
                 ";
                     }
                 }catch(e){ }
@@ -133,7 +133,7 @@
                 virtualmode: true,
                 columns: [
                     { text: ''          , datafield: 'Slider',cellsrenderer: linkrenderer  ,width:80       },
-                    { text: 'Title' , datafield: 'Title'       },
+                    { text: 'Title'     , datafield: 'Title'       },
                     { text: 'Image'     , datafield: 'Image'       },
                     { text: 'Position'  , datafield: 'Position'    ,width:200},
                     { text: 'Status'    , datafield: 'Status'   ,cellsrenderer:statusrenderer ,width:100 },
@@ -166,15 +166,15 @@
             Retore:function (){
                 $("#jqxgrid").jqxGrid('updatebounddata');
             },
-            Edit:function (VideoID){
+            Edit:function (ID){
                 $("#frmDetail").show();
                 $("#jqxWidget").hide();
-                if(VideoID==undefined){
+                if(ID==undefined){
                     $(".tab-nav li.hover .tabdes").html(" → Insert");
-                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{},$("#frmDetail"));
+                    htmlAjax(baseurl+"admin-planners/slider/Edit",{},$("#frmDetail"));
                 }else{
                     $(".tab-nav li.hover .tabdes").html(" → Update");
-                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{VideoID:VideoID},$("#frmDetail"));
+                    htmlAjax(baseurl+"admin-planners/slider/Edit",{ID:ID},$("#frmDetail"));
                 }
             },
             CancelEdit:function (){
@@ -183,7 +183,7 @@
                 $(".tab-nav li.hover .tabdes").html("");
             },
             Save:function (){
-                _SaveVideo();
+                _Save();
             },
             ChangeStatus:function (VideoID,Status){
                 _ChangeStatus(VideoID,Status);
@@ -191,12 +191,12 @@
             }
         };
     } ());
-    function _ChangeStatus(VideoID,Status){
+    function _ChangeStatus(ID,Status){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/video/ChangeStatus";
+        var url=baseurl+"admin-planners/slider/ChangeStatus";
         var data={
-            VideoID:VideoID,
+            ID:ID,
             Status:Status
         };
         jqxAjax(url,data,function(result){
@@ -205,7 +205,7 @@
                 if(result.code<0){
                     ShowNoticeDialogMessage(result.msg);
                 }else{
-                    ShowNoticeDialogMessage("Video' Status have been Changed!","Notice Message !",function(){
+                    ShowNoticeDialogMessage("Slider' Status have been Changed!","Notice Message !",function(){
                         jqxGrid.Refresh();
                     });
                 }
@@ -214,45 +214,25 @@
             }
         });
     }
-    function _SaveVideo(){
+    function _Save(){
         if(isrunning)return;
-        var VideoKey   =   $("#VideoKey"  ).val();
-        var Author   =   $("#Author"  ).val();
-        var Title       =   $("#Title"      ).val();
-        var Thumbs      =   $("#Thumbs"     ).val();
-        var Source      =   $("#Link"     ).val();
-        var Description =   $("#Description").val();
-        var Tag         =   $("#Tag"        ).val();
-        var Embel       =   $("#Embel"      ).val();
-        var Length       =   $("#Length"      ).val();
-        var Categorys=$(".Categorys input[type=checkbox]");
-        var strCategorys="";
-        for(var i=0;i<Categorys.length;i++)
-        {
-            if(Categorys[i].checked)
-            {
-                strCategorys+=","+Categorys[i].value+",";
-            }
-        }
+        var VideoID     =   $("#VideoID"  ).val();
+        var Title       =   $("#Title"  ).val();
+        var Image       =   $("#Image"      ).val();
+        var Position    =   $("#Position"     ).val();
         isrunning=true;
         
-        var url=baseurl+"admin-planners/video/savevideo";
+        var url=baseurl+"admin-planners/slider/Save";
         var data={
             Params:{
-                VideoKey:VideoKey,
-                Length:Length,
-                Author:Author,
+                VideoID:VideoID,
                 Title:Title,
-                Thumbs:Thumbs,
-                Categorys:strCategorys,
-                Source:Source,
-                Description:Description,
-                Tag:Tag,
-                Embel:Embel
+                Image:Image,
+                Position:Position
             }
         };
-        if($("#VideoID").val()!=""){
-            data.Params.VideoID=$("#VideoID").val();
+        if($("#ID").val()!=""){
+            data.Params.ID=$("#ID").val();
         }
         jqxAjax(url,data,function(result){
             isrunning=false;
@@ -355,11 +335,21 @@
         a
     </div>
 </div>
+<style>
+    .token-item{position: relative;height: 40px;width: 480px}
+    .token-item img{height: 40px; width: 60px; position: absolute;top: 0;left: 0}
+    .token-item div{height: 40px; position: absolute;top: 0;left: 68px;overflow: hidden;font-size: 11px;font-weight: normal;}
+    .token-item div h5{padding: 0;margin: 0;font-size: 11px;font-weight: bold;height: 16px;overflow: hidden;font-family: tahoma;}
+    .token-item div p{padding: 0;margin: 0;font-size: 11px;font-weight: normal;overflow: hidden;;font-family: tahoma;}
+    ul.token-input-list-facebook li input{margin: 0px 0;}
+    div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-facebook{background: #C0E6E5;color:#000}
+/*    .token-input-dropdown-facebook ul{width: 300px}*/
+</style>
 
-
-<div class="MrKhuong orange">
+<div class="MrKhuong">
     <div class="tit"><span>404</span>Webpage not found.</div>
     <p>The 404 or Not Found, the server could not find what was requested</p>
     <a class="back">Go back</a>
     <a class="home">Go home</a>
 </div>
+
