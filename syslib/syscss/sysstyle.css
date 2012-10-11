@@ -64,3 +64,40 @@ ul.classic-list li{float: left;min-width: 120px}
 .showandhide .showifhover{display: none}
 .showandhide:hover .hideifhover{display: none}
 .showandhide:hover .showifhover{display: block}
+
+
+
+
+.MrKhuong{
+    border: 1px solid red;
+    padding: 1px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -50px 0 0 -160px;
+    width: 320px;
+    height: 100px;
+    z-index: 9999;
+    background: #fff;
+    -moz-box-shadow: 0 4px 10px #666;
+    -webkit-box-shadow: 0 4px 10px #666;
+    box-shadow: 0 4px 10px #666;
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, direction=270, strength=7)';
+    filter: progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, direction=270, strength=7);
+}
+.MrKhuong .tit{
+    text-align: center;
+    padding: 8px 12px;
+    background: red;
+    color: #fff;
+}
+.MrKhuong .tit span{font-weight: bold;padding-right: 12px}
+.MrKhuong p{color: red;padding: 8px 12px;margin: 0}
+.MrKhuong .back{color: red;padding: 8px 32px;margin: 0;position: absolute;bottom: 0;left: 0}
+.MrKhuong .home{color: red;padding: 8px 32px;margin: 0;position: absolute;bottom: 0;right: 0}
+.MrKhuong.blue{border: 1px solid blue;}
+.MrKhuong.blue .tit{background: blue;}
+.MrKhuong.blue .back,.MrKhuong.blue .home,.MrKhuong.blue p{color: blue;}
+.MrKhuong.orange{border: 1px solid orange;}
+.MrKhuong.orange .tit{background: orange;}
+.MrKhuong.orange .back,.MrKhuong.orange .home,.MrKhuong.orange p{color: orange;}

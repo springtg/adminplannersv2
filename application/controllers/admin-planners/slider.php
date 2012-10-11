@@ -1,6 +1,6 @@
 <?php 
 session_start();
-class video extends CI_Controller  {
+class slider extends CI_Controller  {
 
         /**
         * Index Page for this controller.
@@ -26,7 +26,7 @@ class video extends CI_Controller  {
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/video_model','video_model');
-            $this->load->model('admin-planners/youtube','youtube');
+            $this->load->model('admin-planners/slider_model','slider_model');
         }
         public function index()
 	{
@@ -49,75 +49,17 @@ class video extends CI_Controller  {
                     ,"value"=>"contact"       
                     ,"link"=>base_url("admin-planners/contact"))
             );
-            $Data["tab_config"]["tabindex"]="video";
+            $Data["tab_config"]["tabindex"]="slider";
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
             
             $this->smarty->view("sys/01_notice",'NOTICE');
             $this->smarty->view("sys/02_script",'SCRIPT');
             $this->smarty->view('admin-planners/tabs/01_tabs',"TABS");
-            $this->smarty->view('admin-planners/video/01_jqx',"JQXGRID");
+            $this->smarty->view('admin-planners/slider/01_jqx',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
-        public function YoutubeInfo(){
-            $url=$_POST["url"];
-            $key=$_POST["key"];
-            $video=null;
-            if($key!=""){
-                $video=$this->youtube->getVideo($key);
-            }
-            if($video==null){
-                $key=$this->youtube->getVideoKey($url);
-                if($key!=""){
-                    $video=$this->youtube->getVideo($key);
-                }
-            }
-            if($video!=null){
-                $video->alias=converturl($video->title);
-            }
-            echo json_encode($video);
-        }
-        public function YoutubeVideoInfo(){
-            //$url=$_POST["url"];
-            $url="http://www.youtube.com/watch?v=NbncKVDgfio&feature=g-all-shu";
-            $video=$this->youtube->getVideoInfo($url);
-            if($video!=null){
-                print_r($video);
-                $video->alias=converturl($video->title);
-            }
-            //echo json_encode($video);
-        }
-        public function EditVideo(){
-            $Data["categorys"]=array(
-                "Music"=>"Music",
-                "Comedy"=>"Comedy",
-                "FilmEntertainment"=>"Film & Entertainment",
-                "Gamming"=>"Gamming",
-                "BeautyFashion"=>"Beauty & Fashion",
-                "FromTV"=>"FromTV",
-                "Automotive"=>"Automotive",
-                "Animation"=>"Animation",
-                "Sports"=>"Sports",
-                "Blogs"=>"Blogs",
-                "CookingHealth"=>"Cooking & Health",
-                "Science"=>"Science",
-                "News"=>"News",
-                "Lifestyle"=>"Lifestyle"
-                
-                
-            );
-            if(isset($_POST["VideoID"])){
-                $video=$this->video_model->getVideo($_POST["VideoID"]);
-                if(count($video)>0){
-                    $Data["video"]=  objectToArray($video[0]);
-                    $this->smarty->assign('Data', $Data);
-                }
-            }
-            $this->smarty->assign('Data', $Data);
-            $this->smarty->display('admin-planners/video/02_edit');
-        }
-        
-        public function savevideo(){
+        public function Save(){
             $Params=$_POST["Params"];
             $msgs=array();
             
@@ -212,33 +154,27 @@ class video extends CI_Controller  {
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
-        public function jqxgrid_video(){
+        public function jqxgrid(){
             $jqx_data=array();
             $result['total_rows']=0;
             //if($this->checkauthority()>=0){
-                $result=$this->video_model->jqxgrid_video();
+                $result=$this->video_slider->jqxgrid();
                 $rows=$result['rows'];
                 // get data and store in a json array
                 foreach ($rows as $row) {
-                    $ca_value="";
-                    $ca_arr=  explode(",,", ",".$row->Category.",");
-                    foreach ($ca_arr as $ca){
-                        if($ca!=null && $ca!="")
-                        $ca_value.="<span class=\"mlr2 bgceb\">$ca</span>";
-                    }
                     $jqx_data[] = array(
-                            'VideoKey'      => $row->VideoKey,
+                            'VideoID'      => $row->VideoID,
                             'Title'         => $row->Title,
-                            'Category'      => $ca_value,
-                            'Source'        => $row->Source,
+                            'Position'      => $row->Position,
+                            'Image'        => $row->Image,
                             'Status'        => json_encode(array(
-                                            "VideoID"=>$row->VideoID,
+                                            "ID"=>$row->VideoID,
                                             "Status"=>$row->Status
                                         )),
                             'Insert'        => $row->Insert,
                             'Update'        => $row->Update,
-                            'Video'         => json_encode(array(
-                                            "VideoID"=>$row->VideoID,
+                            'Slider'         => json_encode(array(
+                                            "ID"=>$row->VideoID,
                                             "Delete"=>$row->Delete
                                         ))
                     );
