@@ -13,18 +13,26 @@
         </td>
     </tr>
     <tr>
-        <td class="w100"></td>
-        <td colspan="3" style="padding-bottom: 30px" >
-            <input type="button" class="classic-button" value="Get Video Infomartion " onclick="getYoutubeInfo();"/>
+        <td class="w100">Youtube Key</td>
+        <td class="w320">
+            <input id="VideoKey" type="text"  class="classic-input w320"
+                       value="{{if isset($Data["video"])}}{{$Data["video"]["VideoKey"]}}{{/if}}"
+                       />
+            
+        </td>
+        <td colspan="2" class="">
+            <input type="button" class="classic-button" 
+                   value="Get Video Infomartion by Youtube Key or Youtube link" 
+                   onclick="getYoutubeInfo();"/>
         </td>
     </tr>
     <tr>
-        <td class="w100">Youtube Key</td>
+        <td class="w100">Length</td>
 
         <td class="w320">
             <div class="pr10">
-                <input id="VideoKey" type="text"  class="classic-input w100pc" placeholder=""
-                       value="{{if isset($Data["video"])}}{{$Data["video"]["VideoKey"]}}{{/if}}"
+                <input id="Length" type="text"  class="classic-input w100pc" placeholder=""
+                       value="{{if isset($Data["video"])}}{{$Data["video"]["Length"]}}{{/if}}"
                        />
             </div>
         </td>
@@ -54,6 +62,7 @@
         <td colspan="3">
             <div class="pr10">
                 <input id="Alias" disabled="1" type="text"  class="classic-input w100pc"
+                       style="background: #fff"
                        value="{{if isset($Data["video"])}}{{$Data["video"]["Alias"]}}{{/if}}"
                        />
             </div>

@@ -29,17 +29,16 @@
             var source ={
                 datatype: "json",
                 datafields: [
-                    { name: 'Video', type: 'string'},
-                    { name: 'VideoKey', type: 'string'},
+                    { name: 'Slider', type: 'string'},
+                    { name: 'Image', type: 'string'},
                     { name: 'Title', type: 'string'},
-                    { name: 'Category',type:'string'},
-                    { name: 'Source',type:'string'},
+                    { name: 'Position', type: 'int'},
                     { name: 'Status',type:'string'},
                     { name: 'Insert',type: 'date'},
                     { name: 'Update',type: 'date'}
                     
                 ],
-                url: baseurl+'admin-planners/video/jqxgrid_video/',
+                url: baseurl+'admin-planners/slider/jqxgrid_video/',
                 filter: function(){
                     $("#jqxgrid").jqxGrid('updatebounddata');
                     //$('#grid').jqxGrid('refreshdata');
@@ -133,10 +132,10 @@
                 pageable: true,
                 virtualmode: true,
                 columns: [
-                    { text: ''          , datafield: 'Video',cellsrenderer: linkrenderer  ,width:80       },
-                    { text: 'Key' , datafield: 'VideoKey'       },
-                    { text: 'Title'     , datafield: 'Title'       },
-                    { text: 'Category'  , datafield: 'Category'    ,width:200},
+                    { text: ''          , datafield: 'Slider',cellsrenderer: linkrenderer  ,width:80       },
+                    { text: 'Title' , datafield: 'Title'       },
+                    { text: 'Image'     , datafield: 'Image'       },
+                    { text: 'Position'  , datafield: 'Position'    ,width:200},
                     { text: 'Status'    , datafield: 'Status'   ,cellsrenderer:statusrenderer ,width:100 },
                     { text: 'Insert'    , datafield: 'Insert'   ,cellsformat: 'yyyy-MM-dd',width:100},
                     { text: 'Update'    , datafield: 'Update'   ,cellsformat: 'yyyy-MM-dd',width:100}
