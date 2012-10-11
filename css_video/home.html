@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Read to my child - Home</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="js/jquery.cycle.all.js"></script>
+</head>
+
+<body>
+	<div id="top">
+    	<div id="cloud"></div>
+        <div id="sun"></div>
+    </div>
+    
+    <div id="navigation">
+    	<div id="about" class="fade"><a href="about.html"></a></div>
+        <div id="story" class="fade"><a href="stories.html"></a></div>
+        <div id="home"><a href="home.html"></a></div>
+        <div id="request" class="fade"><a href="request.html"></a></div>
+        <div id="contact" class="fade"><a href="contact.html"></a></div>
+        <div class="clear"></div>
+    </div>
+	
+    <div id="container" class="round-corner home-pad">
+    	<div id="slider-panel">
+            <div id="slider" class="slideshow">
+                <a href="story-detail.html"><img src="slider/slider-image.jpg" /></a>
+                <a href="story-detail.html"><img src="slider/slider-image-01.jpg" /></a>
+                <a href="story-detail.html"><img src="slider/slider-image-02.jpg" /></a>
+            </div>
+            <div id="arrow-pre"></div>
+            <div id="arrow-nex"></div>
+        </div>
+        
+		<div id="big-title-home"><p>it's story time! let's read it together</p></div>
+        <div id="advertising">
+        	<div class="box left round-corner fade"><a href="stories.html"><img src="advertising/advertising-box-1.png" /></a></div>
+            <div class="box right round-corner fade"><a href="request.html"><img src="advertising/advertising-box-2.png" /></a></div>
+            <div class="clear"></div>
+        </div>
+	</div>
+    
+    <div id="footer-home">
+    	<div class="footer-line">
+        	<div id="network" class="left">// Meet us on: 
+            	<a class="facebook" href="" target="_blank"></a>
+                <a class="twitter" href="" target="_blank"></a>
+                <a class="youtube" href="" target="_blank"></a></div>
+            <div id="subscribes" class="left"><form>// Subscribes: <input class="text" type="text" /> <a class="subscribe-button" href=""></a></form></div>
+            <div class="clear"></div>
+        </div>
+        <div class="footer-line">
+        	<div id="copyright" class="left">// Copyright © 2012 <a href="index.html">Read To My Child</a>. All Rights Reserved.</div>
+            <div id="designby" class="left">// Designed by <a href="http://www.behance.net/squalldesign" target="_blank">Squall Le</a>.</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    
+    <div id="bottom-wave">
+    	<div id="wave-back"></div>
+        <div id="whale"></div>
+        <div id="wave-front"></div>
+    </div>
+    
+    <script>
+		$(document).ready(function () {
+			$('#slider').cycle({ 
+				fx:     'fade',
+				prev:   '#arrow-pre', 
+				next:   '#arrow-nex', 
+				//pager:  '#nav', 
+				//pagerAnchorBuilder: function(idx, slide) { 
+				//    return '<a href="#"></a>'; 
+				//},      
+				timeout: 3000 
+			});
+		});
+	</script>
+    
+</body>
+</html>

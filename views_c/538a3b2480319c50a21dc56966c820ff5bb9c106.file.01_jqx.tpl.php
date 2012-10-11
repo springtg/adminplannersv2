@@ -1,25 +1,25 @@
-<?php /* Smarty version Smarty-3.1.7, created on 2012-10-10 12:28:20
+<?php /* Smarty version Smarty-3.1.7, created on 2012-10-11 03:05:06
          compiled from "application\views\admin-planners\video\01_jqx.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:2081250729df1c5d9e7-18343379%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:2408950761b42301ad7-97298065%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '538a3b2480319c50a21dc56966c820ff5bb9c106' => 
     array (
       0 => 'application\\views\\admin-planners\\video\\01_jqx.tpl',
-      1 => 1349864357,
+      1 => 1349917212,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2081250729df1c5d9e7-18343379',
+  'nocache_hash' => '2408950761b42301ad7-97298065',
   'function' => 
   array (
   ),
-  'version' => 'Smarty-3.1.7',
-  'unifunc' => 'content_50729df1d2afe',
   'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.7',
+  'unifunc' => 'content_50761b4234a8b',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_50729df1d2afe')) {function content_50729df1d2afe($_smarty_tpl) {?><link rel="stylesheet" href="<?php echo base_url();?>
+<?php if ($_valid && !is_callable('content_50761b4234a8b')) {function content_50761b4234a8b($_smarty_tpl) {?><link rel="stylesheet" href="<?php echo base_url();?>
 jqwidgets-ver2.4.2/jqwidgets/styles/jqx.base.css" type="text/css" />
 <!--    <script type="text/javascript" src="<?php echo base_url();?>
 jqwidgets-ver2.4.2/scripts/jquery-1.8.1.min.js"></script>-->
@@ -251,7 +251,7 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
         var Description =   $("#Description").val();
         var Tag         =   $("#Tag"        ).val();
         var Embel       =   $("#Embel"      ).val();
-        
+        var Length       =   $("#Length"      ).val();
         var Categorys=$(".Categorys input[type=checkbox]");
         var strCategorys="";
         for(var i=0;i<Categorys.length;i++)
@@ -267,6 +267,7 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
         var data={
             Params:{
                 VideoKey:VideoKey,
+                Length:Length,
                 Author:Author,
                 Title:Title,
                 Thumbs:Thumbs,
@@ -286,7 +287,7 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
                 if(result.code<0){
                     ShowNoticeDialogMessage(result.msg);
                 }else{
-                    ShowNoticeDialogMessage("Video have been added!","Notice Message !",function(){
+                    ShowNoticeDialogMessage(result.msg,function(){
                         jqxGrid.CancelEdit();
                         jqxGrid.Refresh();
                     });
@@ -314,14 +315,20 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
         });
     }
     function getYoutubeInfo(){
+        if(isrunning)return;
+        if( (!_FcheckFilled($("#Link").val())) && (!_FcheckFilled($("#VideoKey").val()))){
+            ShowNoticeDialogMessage("Please enter Youtube link or Youtube Key.");
+            return;
+            }
         var url=baseurl+"admin-planners/video/YoutubeInfo";
         var data={
-            url:$("#Link").val()
+            url:$("#Link").val(),
+            key:$("#VideoKey").val()
         };
         jqxAjax(url,data,function(video){
             isrunning=false;
             try{
-                
+                $("#Link").val(video.watchURL);
                 $("#Title").val(video.title);
                 $("#Alias").val(video.alias);
                 $("#VideoKey").val(video.key);
@@ -329,9 +336,10 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
                 $("#Thumbs").val(video.thumbnail);
                 $("#Description").val(video.description);
                 $("#Embel").val(video.embed);
+                $("#Length").val(video.length);
                 $("img.thumbs").attr("src",video.thumbnail);
             }catch(err){
-                ShowErrorDialogMessage("Cant get video information. Please check your link.");
+                ShowErrorDialogMessage("Cant get video information.<br/> Please check your Youtube link or Youtube Key.");
             }
         });
     }
@@ -376,4 +384,9 @@ syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
 </div>
 
 
-<?php }} ?>
+<div class="MrKhuong orange">
+    <div class="tit"><span>404</span>Webpage not found.</div>
+    <p>The 404 or Not Found, the server could not find what was requested</p>
+    <a class="back">Go back</a>
+    <a class="home">Go home</a>
+</div><?php }} ?>

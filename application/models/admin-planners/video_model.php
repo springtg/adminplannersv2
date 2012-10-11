@@ -7,6 +7,12 @@ class video_model extends jqxGrid_CI_Model {
         parent::__construct();
         
     }
+    function getToken($q=""){
+        $where=array("Delete"=>null);
+        $this->db->like('Title', $q); 
+        $query=$this->db->get_where('tbl_video', $where); 
+        return $query->result();
+    }
     function getVideo($VideoID){
         $where=array("VideoID"=>$VideoID);
         $query=$this->db->get_where('tbl_video', $where); 

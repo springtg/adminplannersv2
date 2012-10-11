@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.7, created on 2012-10-10 12:28:23
+<?php /* Smarty version Smarty-3.1.7, created on 2012-10-11 03:13:33
          compiled from "application\views\admin-planners\video\02_edit.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:296435072a8e34ec813-08555980%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'ea600e9ba235850673828bbad131b007217ff062' => 
     array (
       0 => 'application\\views\\admin-planners\\video\\02_edit.tpl',
-      1 => 1349864425,
+      1 => 1349917212,
       2 => 'file',
     ),
   ),
@@ -41,18 +41,27 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         </td>
     </tr>
     <tr>
-        <td class="w100"></td>
-        <td colspan="3" style="padding-bottom: 30px" >
-            <input type="button" class="classic-button" value="Get Video Infomartion " onclick="getYoutubeInfo();"/>
+        <td class="w100">Youtube Key</td>
+        <td class="w320">
+            <input id="VideoKey" type="text"  class="classic-input w320"
+                       value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["VideoKey"];?>
+<?php }?>"
+                       />
+            
+        </td>
+        <td colspan="2" class="">
+            <input type="button" class="classic-button" 
+                   value="Get Video Infomartion by Youtube Key or Youtube link" 
+                   onclick="getYoutubeInfo();"/>
         </td>
     </tr>
     <tr>
-        <td class="w100">Youtube Key</td>
+        <td class="w100">Length</td>
 
         <td class="w320">
             <div class="pr10">
-                <input id="VideoKey" type="text"  class="classic-input w100pc" placeholder=""
-                       value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["VideoKey"];?>
+                <input id="Length" type="text"  class="classic-input w100pc" placeholder=""
+                       value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Length"];?>
 <?php }?>"
                        />
             </div>
@@ -86,6 +95,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
         <td colspan="3">
             <div class="pr10">
                 <input id="Alias" disabled="1" type="text"  class="classic-input w100pc"
+                       style="background: #fff"
                        value="<?php if (isset($_smarty_tpl->tpl_vars['Data']->value["video"])){?><?php echo $_smarty_tpl->tpl_vars['Data']->value["video"]["Alias"];?>
 <?php }?>"
                        />
