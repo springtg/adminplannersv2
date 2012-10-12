@@ -3,25 +3,148 @@
 <link rel="stylesheet" href="{{base_url()}}jqwidgets-ver2.4.2/jqwidgets/styles/jqx.classic.css" type="text/css" />
 <script type="text/javascript" src="{{base_url()}}jqwidgets-ver2.4.2/jqwidgets/jqx-all.js"></script>
 <link rel="stylesheet" href="{{base_url()}}syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
+<div style="padding-right: 2px;padding-left: 0px;">
+    <div id='jqxWidget' style="position: relative;">
+        <div id="jqxgrid"></div>
+        <div type="button" 
+             style="padding: 0px; margin-top: 0px; margin-right: 3px; width: 27px; 
+             position: absolute;bottom: 4px;left: 4px;
+             cursor: pointer; " title="Add New Record" 
+             onclick="jqxGrid.Edit();"
+             class="jqx-rc-all jqx-rc-all-classic jqx-button jqx-button-classic jqx-widget jqx-widget-classic jqx-fill-state-hover jqx-fill-state-hover-classic">
+            <div style="margin-left: 6px; width: 15px; height: 15px;
 
+                 " 
+                 class="new_icon"
+
+                 ></div>
+        </div>
+        <div type="button" 
+             style="padding: 0px; margin-top: 0px; margin-right: 3px; width: 27px; 
+             position: absolute;bottom: 4px;left: 40px;
+             cursor: pointer; " title="Settings" 
+             onclick="jqxGrid.Setting();"
+             class="jqx-rc-all jqx-rc-all-classic jqx-button jqx-button-classic jqx-widget jqx-widget-classic jqx-fill-state-hover jqx-fill-state-hover-classic">
+            <div style="margin-left: 6px; width: 15px; height: 15px;
+
+                 " 
+                 class="setting_icon"
+
+                 ></div>
+        </div>
+        <div type="button" 
+             style="padding: 0px; margin-top: 0px; margin-right: 3px; width: 27px; 
+             position: absolute;bottom: 4px;left: 76px;
+             cursor: pointer; " title="Refresh" 
+             onclick="jqxGrid.Refresh();"
+             class="jqx-rc-all jqx-rc-all-classic jqx-button jqx-button-classic jqx-widget jqx-widget-classic jqx-fill-state-hover jqx-fill-state-hover-classic">
+            <div style="margin-left: 6px; width: 15px; height: 15px;
+
+                 " 
+                 class="refresh_icon"
+
+                 ></div>
+        </div>
+    </div>
+    <div id="frmDetail" class="tabdetail hidden">
+        Loadding...
+    </div>
+</div>
+<div id="window-setting">
+    <div id="windowSettingHeader">
+        <span style="line-height: 20px;font-weight: bold">
+            Settings
+        </span>
+    </div>
+    <div style="overflow: hidden;" id="windowContentSetting">
+        <table style="width: 100%">
+            <tr>
+                <td style="width: 50%;vertical-align: top">
+                    <div class="jqx_group id-group-setting-column">
+                        <div class=""><span class="pl0 pr0 pt0 pb0 ml0 mr0 mt0 mb0">Columns Setting</span></div>
+                        <div style="padding: 4px">
+                            <div style="float: left;" id="jqxlistbox-colums"></div>
+                        </div>
+                    </div>
+                </td>
+                <td style="vertical-align: top">
+                    <div class="jqx_group id-group-setting-delete">
+                        <div class=""><span class="pl0 pr0 pt0 pb0 ml0 mr0 mt0 mb0">Display Setting</span></div>
+                        <div>
+                            
+                            <div style='float: left;margin-top: 10px;' id='jqxRadioButtonShowAll'>
+                                <span>Show all record</span>
+                            </div>
+                            <div style='float: left;margin-top: 10px;' id='jqxRadioButtonHideDelete'>
+                                <span>Hide deleted record</span>
+                            </div>
+                            <div style='float: left;margin-top: 10px;' id='jqxRadioButtonShowDeleteOnly'>
+                                <span>Only show deleted record</span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
 <script type="text/javascript">
     var jqxGrid = (function () {
+        //Creating the demo window
+        function _createWindow() {
+            var theme=jqxGrid.config.theme;
+            $("#window-setting").jqxWindow({
+                autoOpen: false,showCollapseButton: true, resizable: false,
+                Height: 300,width: 480, theme: theme 
+            });
+            $("#jqxRadioButtonShowAll").jqxRadioButton({ width: 250, height: 25, {{if $_SESSION["JQX-DEL-VIDEO"]==1}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonHideDelete").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-VIDEO"]==0}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonShowDeleteOnly").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-VIDEO"]==-1}}checked: true,{{/if}} theme: theme });
+        };
         //Adding event listeners
-
         function _addEventListeners() {
-
-       
-
+            $('#jqxRadioButtonShowAll').bind('checked', function (event) { 
+                // Some code here. 
+                _changeDisplayDelete(1);
+            });
+            $('#jqxRadioButtonHideDelete').bind('checked', function (event) { 
+                // Some code here. 
+                _changeDisplayDelete(0);
+            });
+            $('#jqxRadioButtonShowDeleteOnly').bind('checked', function (event) { 
+                // Some code here. 
+                _changeDisplayDelete(-1);
+            });
         };
         //Creating all page elements which are jqxWidgets
         function _createElements() {
             var theme=jqxGrid.config.theme;
-       
-        };
-        //Creating the demo window
-        function _createWindow() {
-            var theme=jqxGrid.config.theme;
-        
+            $("#window-setting .jqx_group").jqxExpander({ showArrow: false, toggleMode: 'none', theme: theme });
+            var listSource = [
+                { label: 'Youtube Key', value: 'VideoKey', checked: true }, 
+                { label: 'Title', value: 'Title', checked: true }, 
+                { label: 'Alias', value: 'Alias', checked: false }, 
+                { label: 'Category', value: 'Category', checked: true }, 
+                { label: 'Source', value: 'Source', checked: false},
+                { label: 'Tag', value: 'Tag', checked: false },
+                { label: 'Thumbs', value: 'Thumbs', checked: false },
+                { label: 'Author', value: 'Author', checked: false },
+                { label: 'Length', value: 'Length', checked: false},
+                { label: 'Status', value: 'Status', checked: true }, 
+                { label: 'Insert', value: 'Insert', checked: true }, 
+                { label: 'Update', value: 'Update', checked: false },
+                { label: 'Delete', value: 'Delete', checked: false }
+                
+            ];
+            $("#jqxlistbox-colums").jqxListBox({ source: listSource, width: 200, height: 200, theme: theme, checkboxes: true });
+            $("#jqxlistbox-colums").bind('checkChange', function (event) {
+                if (event.args.checked) {
+                    $("#jqxgrid").jqxGrid('showcolumn', event.args.value);
+                }
+                else {
+                    $("#jqxgrid").jqxGrid('hidecolumn', event.args.value);
+                }
+            });
         };
         //create jqgrid
         function _createGrid() {
@@ -32,11 +155,17 @@
                     { name: 'Video', type: 'string'},
                     { name: 'VideoKey', type: 'string'},
                     { name: 'Title', type: 'string'},
+                    { name: 'Alias', type: 'string'},
                     { name: 'Category',type:'string'},
                     { name: 'Source',type:'string'},
+                    { name: 'Tag',type:'string'},
+                    { name: 'Thumbs',type:'string'},
+                    { name: 'Author',type:'string'},
+                    { name: 'Length',type:'int'},
                     { name: 'Status',type:'string'},
                     { name: 'Insert',type: 'date'},
-                    { name: 'Update',type: 'date'}
+                    { name: 'Update',type: 'date'},
+                    { name: 'Delete',type: 'date'}
                     
                 ],
                 url: baseurl+'admin-planners/video/jqxgrid_video/',
@@ -78,8 +207,8 @@
             ";
                     }else{
                         str+="\
-                <div onclick=\"jqxGrid.Retore('"+Video.VideoID+"');\" \
-                class='icon16 retore_icon hover50' title='Retore'></div>\
+                <div onclick=\"jqxGrid.Restore('"+Video.VideoID+"');\" \
+                class='icon16 restore_icon hover50' title='Retore'></div>\
             ";
                     }
                     str+="\
@@ -130,18 +259,26 @@
                 filterable: true,
                 //            groupable: true,
                 //            groupsexpandedbydefault: true,
+                columnsresize: true,
                 pageable: true,
                 pagesize: 20,
                 pagesizeoptions: ['20', '50', '100'],
                 virtualmode: true,
                 columns: [
                     { text: ''          , datafield: 'Video',cellsrenderer: linkrenderer  ,width:80       },
-                    { text: 'Key' , datafield: 'VideoKey'       },
-                    { text: 'Title'     , datafield: 'Title'       },
+                    { text: 'Key'       , datafield: 'VideoKey'    ,width:100   },
+                    { text: 'Thumbs'    , datafield: 'Thumbs',hidden:true  ,width:120     },
+                    { text: 'Title'     , datafield: 'Title'      },
+                    { text: 'Alias'     , datafield: 'Alias',hidden:true       },
                     { text: 'Category'  , datafield: 'Category'    ,width:200},
+                    { text: 'Source'    , datafield: 'Source'      ,hidden:true    ,width:120    },
+                    { text: 'Tag'       , datafield: 'Tag'      ,hidden:true   ,width:120     },
+                    { text: 'Author'    , datafield: 'Author'      ,hidden:true,width:100       },
+                    { text: 'Length'    , datafield: 'Length'      ,hidden:true ,cellsalign :"right"  ,width:40    },
                     { text: 'Status'    , datafield: 'Status'   ,cellsrenderer:statusrenderer ,width:100 },
-                    { text: 'Insert'    , datafield: 'Insert'   ,cellsformat: 'yyyy-MM-dd',width:100},
-                    { text: 'Update'    , datafield: 'Update'   ,cellsformat: 'yyyy-MM-dd',width:100}
+                    { text: 'Insert'    , datafield: 'Insert'   ,cellsformat: 'yyyy-MM-dd',width:80},
+                    { text: 'Update'    , datafield: 'Update'   ,cellsformat: 'yyyy-MM-dd',width:80,hidden:true},
+                    { text: 'Delete'    , datafield: 'Delete'   ,cellsformat: 'yyyy-MM-dd',width:80,hidden:true}
                 ]
             });
         };
@@ -160,14 +297,17 @@
                 //Attaching event listeners
                 _addEventListeners();
             },
+            Setting: function () {
+                $('#window-setting').jqxWindow('open');
+            },
             Refresh:function (){
                 $("#jqxgrid").jqxGrid('updatebounddata');
             },
-            Delete:function (){
-                $("#jqxgrid").jqxGrid('updatebounddata');
+            Delete:function (ID){
+                _delete(ID);
             },
-            Retore:function (){
-                $("#jqxgrid").jqxGrid('updatebounddata');
+            Restore:function (ID){
+                _restore(ID);
             },
             Edit:function (VideoID){
                 $("#frmDetail").show();
@@ -195,6 +335,22 @@
             }
         };
     } ());
+    function  _changeDisplayDelete(v){
+        if(isrunning)return;
+        isrunning=true;
+        var url=baseurl+"admin-planners/video/ChangeDeleteDisplay/";
+        var data={
+            showDelete  :   v
+        };
+        jqxAjax(url,data,function(result){
+            isrunning=false;
+            if(result.code>=0){
+                $('#jqxgrid').jqxGrid('updatebounddata');
+            }else{
+                ShowNoticeDialogMessage(result.msg);
+            }
+        });
+    }
     function _ChangeStatus(VideoID,Status){
         if(isrunning)return;
         isrunning=true;
@@ -210,6 +366,50 @@
                     ShowNoticeDialogMessage(result.msg);
                 }else{
                     ShowNoticeDialogMessage("Video' Status have been Changed!","Notice Message !",function(){
+                        jqxGrid.Refresh();
+                    });
+                }
+            }catch(err){
+                ShowErrorDialogMessage(err);
+            }
+        });
+    }
+    function _delete(VideoID){
+        if(isrunning)return;
+        isrunning=true;
+        var url=baseurl+"admin-planners/video/delete";
+        var data={
+            VideoID:VideoID
+        };
+        jqxAjax(url,data,function(result){
+            isrunning=false;
+            try{
+                if(result.code<0){
+                    ShowNoticeDialogMessage(result.msg);
+                }else{
+                    ShowNoticeDialogMessage(result.msg,"Notice Message !",function(){
+                        jqxGrid.Refresh();
+                    });
+                }
+            }catch(err){
+                ShowErrorDialogMessage(err);
+            }
+        });
+    }
+    function _restore(VideoID){
+        if(isrunning)return;
+        isrunning=true;
+        var url=baseurl+"admin-planners/video/retore";
+        var data={
+            VideoID:VideoID
+        };
+        jqxAjax(url,data,function(result){
+            isrunning=false;
+            try{
+                if(result.code<0){
+                    ShowNoticeDialogMessage(result.msg);
+                }else{
+                    ShowNoticeDialogMessage(result.msg,"Notice Message !",function(){
                         jqxGrid.Refresh();
                     });
                 }
@@ -296,7 +496,7 @@
         if( (!_FcheckFilled($("#Link").val())) && (!_FcheckFilled($("#VideoKey").val()))){
             ShowNoticeDialogMessage("Please enter Youtube link or Youtube Key.");
             return;
-            }
+        }
         var url=baseurl+"admin-planners/video/YoutubeInfo";
         var data={
             url:$("#Link").val(),
@@ -325,37 +525,3 @@
     });
         
 </script>
-<div style="padding-right: 2px;padding-left: 0px;">
-    <div id='jqxWidget' style="position: relative;">
-        <div id="jqxgrid"></div>
-        <div type="button" 
-             style="padding: 0px; margin-top: 0px; margin-right: 3px; width: 27px; 
-             position: absolute;bottom: 4px;left: 4px;
-             cursor: pointer; " title="Tạo Deal Mới" 
-             onclick="jqxGrid.Edit();"
-             class="jqx-rc-all jqx-rc-all-classic jqx-button jqx-button-classic jqx-widget jqx-widget-classic jqx-fill-state-hover jqx-fill-state-hover-classic">
-            <div style="margin-left: 6px; width: 15px; height: 15px;
-
-                 " 
-                 class="new_icon"
-
-                 ></div>
-        </div>
-        <div type="button" 
-             style="padding: 0px; margin-top: 0px; margin-right: 3px; width: 27px; 
-             position: absolute;bottom: 4px;left: 40px;
-             cursor: pointer; " title="Tùy Chỉnh" 
-             onclick="jqxGrid.setting();"
-             class="jqx-rc-all jqx-rc-all-classic jqx-button jqx-button-classic jqx-widget jqx-widget-classic jqx-fill-state-hover jqx-fill-state-hover-classic">
-            <div style="margin-left: 6px; width: 15px; height: 15px;
-
-                 " 
-                 class="setting_icon"
-
-                 ></div>
-        </div>
-    </div>
-    <div id="frmDetail" class="tabdetail hidden">
-        Loadding...
-    </div>
-</div>

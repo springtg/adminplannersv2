@@ -25,6 +25,24 @@ class video_model extends jqxGrid_CI_Model {
         if($count==1) return true;
         return false;
     }
+    function delete($VideoID){
+        $this->db->set('Delete', 'NOW()', FALSE);
+        $where=array("VideoID"=>$VideoID);
+        $this->db->where($where);
+        $this->db->update('tbl_video'); 
+        $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
+        if($count==1) return true;
+        return false;
+    }
+    function retore($VideoID){
+        $this->db->set('Delete', 'NULL', FALSE);
+        $where=array("VideoID"=>$VideoID);
+        $this->db->where($where);
+        $this->db->update('tbl_video'); 
+        $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
+        if($count==1) return true;
+        return false;
+    }
     function updateVideo($VideoID,$params){
         $this->db->set('Update', 'NOW()', FALSE);
         $this->db->where('VideoID', $VideoID);
@@ -41,6 +59,11 @@ class video_model extends jqxGrid_CI_Model {
         $configs["strWhere"]="
             WHERE true
             ";
+        if(isset($_SESSION["JQX-DEL-VIDEO"]) && $_SESSION["JQX-DEL-VIDEO"]==0){
+            $configs["strWhere"].=" AND `tbl_video`.`Delete` IS NULL";
+        }elseif(isset($_SESSION["JQX-DEL-VIDEO"]) && $_SESSION["JQX-DEL-VIDEO"]==-1){
+            $configs["strWhere"].=" AND `tbl_video`.`Delete` IS NOT NULL";
+        }
         $configs["strOrderBy"]=" ORDER BY `tbl_video`.`Insert` DESC";
         $configs["fields"]=array(
             "Video"=>"`VideoID`"

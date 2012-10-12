@@ -23,11 +23,11 @@
             {{foreach $Data["tab_config"]["tabs"] as $key=>$tab}}
                 {{if $Data["tab_config"]["tabindex"]==$tab["value"]}}
                     <li class="hover">
-                        <a href="{{$tab["link"]}}"><span>[ - ] </span>{{$tab["display"]}}<span class="tabdes"></span></a>
+                        <a href="{{$tab["link"]}}"><span></span>{{$tab["display"]}}<span class="tabdes"></span></a>
                     </li>  
                 {{else}}
                     <li>
-                        <a href="{{$tab["link"]}}"><span>[ - ] </span>{{$tab["display"]}}</a>
+                        <a href="{{$tab["link"]}}"><span></span>{{$tab["display"]}}</a>
                     </li> 
                 {{/if}}
 

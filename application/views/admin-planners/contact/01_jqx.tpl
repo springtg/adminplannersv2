@@ -6,23 +6,9 @@
 <div style="padding-right: 2px;padding-left: 0px;">
     <div id='jqxWidget' style="position: relative;">
         <div id="jqxgrid"></div>
-        <div>
         <div type="button" 
              style="padding: 0px; margin-top: 0px; margin-right: 3px; width: 27px; 
              position: absolute;bottom: 4px;left: 4px;
-             cursor: pointer; " title="New record" 
-             onclick="jqxGrid.Edit();"
-             class="jqx-rc-all jqx-rc-all-classic jqx-button jqx-button-classic jqx-widget jqx-widget-classic jqx-fill-state-hover jqx-fill-state-hover-classic">
-            <div style="margin-left: 6px; width: 15px; height: 15px;
-
-                 " 
-                 class="new_icon"
-
-                 ></div>
-        </div>
-        <div type="button" 
-             style="padding: 0px; margin-top: 0px; margin-right: 3px; width: 27px; 
-             position: absolute;bottom: 4px;left: 40px;
              cursor: pointer; " title="Settings" 
              onclick="jqxGrid.Setting();"
              class="jqx-rc-all jqx-rc-all-classic jqx-button jqx-button-classic jqx-widget jqx-widget-classic jqx-fill-state-hover jqx-fill-state-hover-classic">
@@ -35,7 +21,7 @@
         </div>
         <div type="button" 
              style="padding: 0px; margin-top: 0px; margin-right: 3px; width: 27px; 
-             position: absolute;bottom: 4px;left: 76px;
+             position: absolute;bottom: 4px;left: 40px;
              cursor: pointer; " title="Refresh" 
              onclick="jqxGrid.Refresh();"
              class="jqx-rc-all jqx-rc-all-classic jqx-button jqx-button-classic jqx-widget jqx-widget-classic jqx-fill-state-hover jqx-fill-state-hover-classic">
@@ -98,9 +84,9 @@
                 autoOpen: false,showCollapseButton: true, resizable: false,
                 Height: 300,width: 480, theme: theme 
             });
-            $("#jqxRadioButtonShowAll").jqxRadioButton({ width: 250, height: 25, {{if $_SESSION["JQX-DEL-SLIDER"]==1}}checked: true,{{/if}} theme: theme });
-            $("#jqxRadioButtonHideDelete").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-SLIDER"]==0}}checked: true,{{/if}} theme: theme });
-            $("#jqxRadioButtonShowDeleteOnly").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-SLIDER"]==-1}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonShowAll").jqxRadioButton({ width: 250, height: 25, {{if $_SESSION["JQX-DEL-CONTACT"]==1}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonHideDelete").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-CONTACT"]==0}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonShowDeleteOnly").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-CONTACT"]==-1}}checked: true,{{/if}} theme: theme });
         };
         //Adding event listeners
         function _addEventListeners() {
@@ -122,15 +108,14 @@
             var theme=jqxGrid.config.theme;
             $("#window-setting .jqx_group").jqxExpander({ showArrow: false, toggleMode: 'none', theme: theme });
             var listSource = [
-                { label: 'VideoID'  , value: 'VideoID'  , checked: false }, 
-                { label: 'VideoKey'  , value: 'VideoKey'  , checked: true }, 
-                { label: 'Title'    , value: 'Title'    , checked: true }, 
-                { label: 'Image'    , value: 'Image'    , checked: true }, 
-                { label: 'Position' , value: 'Position' , checked: true }, 
-                { label: 'Status'   , value: 'Status'   , checked: true }, 
-                { label: 'Insert'   , value: 'Insert'   , checked: true }, 
-                { label: 'Update'   , value: 'Update'   , checked: false },
-                { label: 'Delete'   , value: 'Delete'   , checked: false }
+                { label: 'FullName' , value: 'FullName', checked: true }, 
+                { label: 'Email'    , value: 'Email', checked: true }, 
+                { label: 'Phone'    , value: 'Phone', checked: false }, 
+                { label: 'Subject'  , value: 'Subject', checked: true }, 
+                { label: 'Status'   , value: 'Status', checked: false }, 
+                { label: 'Insert'   , value: 'Insert', checked: true }, 
+                { label: 'Update'   , value: 'Update', checked: false },
+                { label: 'Delete'   , value: 'Delete', checked: false }
                 
             ];
             $("#jqxlistbox-colums").jqxListBox({ source: listSource, width: 200, height: 200, theme: theme, checkboxes: true });
@@ -149,19 +134,18 @@
             var source ={
                 datatype: "json",
                 datafields: [
-                    { name: 'VideoID'   , type: 'string'},
-                    { name: 'VideoKey'  , type: 'string'},
-                    { name: 'Slider'    , type: 'string'},
-                    { name: 'Image'     , type: 'string'},
-                    { name: 'Title'     , type: 'string'},
-                    { name: 'Position'  , type: 'int'},
+                    { name: 'Contact'   , type: 'string'},
+                    { name: 'FullName'  , type: 'string'},
+                    { name: 'Email'     , type: 'string'},
+                    { name: 'Phone'     , type: 'string'},
+                    { name: 'Subject'   ,type:'string'},
                     { name: 'Status'    ,type:'string'},
                     { name: 'Insert'    ,type: 'date'},
                     { name: 'Update'    ,type: 'date'},
                     { name: 'Delete'    ,type: 'date'}
                     
                 ],
-                url: baseurl+'admin-planners/slider/jqxgrid/',
+                url: baseurl+'admin-planners/contact/jqxgrid/',
                 filter: function(){
                     $("#jqxgrid").jqxGrid('updatebounddata');
                     //$('#grid').jqxGrid('refreshdata');
@@ -191,22 +175,18 @@
                     RowOBJ = $.parseJSON(value);
                     if(RowOBJ.Delete==null){
                         str+="\
-                <div onclick=\"jqxGrid.Edit('"+RowOBJ.ID+"');\" \
-                class='icon16 edit_icon hover50' title='Chỉnh sửa video'></div>\
-            ";
-                        str+="\
                 <div onclick=\"jqxGrid.Delete('"+RowOBJ.ID+"');\" \
-                class='icon16 delete_icon hover50' title='Xóa'></div>\
+                class='icon16 delete_icon hover50' title='Delete'></div>\
             ";
                     }else{
                         str+="\
                 <div onclick=\"jqxGrid.Restore('"+RowOBJ.ID+"');\" \
-                class='icon16 restore_icon hover50' title='Khôi phục'></div>\
+                class='icon16 restore_icon hover50' title='Retore'></div>\
             ";
                     }
                     str+="\
                 <div onclick=\"jqxGrid.Detail('"+RowOBJ.ID+"');\" \
-                class='icon16 log_icon hover50' title='Lịch sử ghi vết'></div>\
+                class='icon16 log_icon hover50' title='Log'></div>\
             ";
                 }catch(e){ }
                 str+="</span>";
@@ -219,12 +199,12 @@
                     if(Status.Status=="Public"){
                         str+="\
                 <span class='hideifhover' style='color:blue;'>Public</span>\
-                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.ID+"','Private');\"><span style='color:blue;'>Public </span> <span style='color:#000;'>→ Private</span></a></span>\
+                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.VideoID+"','Private');\"><span style='color:blue;'>Public </span> <span style='color:#000;'>→ Private</span></a></span>\
                 ";
                     }else if(Status.Status=="Private"){
                         str+="\
                 <span class='hideifhover'>Private</span>\
-                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.ID+"','Public');\"><span style='color:#000;'>Private → </span> <span style='color:blue;'>Public</span></a></span>\
+                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.VideoID+"','Public');\"><span style='color:#000;'>Private → </span> <span style='color:blue;'>Public</span></a></span>\
                 ";
                     }
                 }catch(e){ }
@@ -252,21 +232,21 @@
                 filterable: true,
                 //            groupable: true,
                 //            groupsexpandedbydefault: true,
+                columnsresize: true,
                 pageable: true,
                 pagesize: 20,
                 pagesizeoptions: ['20', '50', '100'],
                 virtualmode: true,
                 columns: [
-                    { text: ''          , datafield: 'Slider',cellsrenderer: linkrenderer  ,width:80       },
-                    { text: 'VideoID'   , datafield: 'VideoID'    ,width:80 ,hidden:true  },
-                    { text: 'VideoKey'   , datafield: 'VideoKey'    ,width:120   },
-                    { text: 'Title'     , datafield: 'Title'       },
-                    { text: 'Image'     , datafield: 'Image'       },
-                    { text: 'Position'  , datafield: 'Position'    ,width:80},
-                    { text: 'Status'    , datafield: 'Status'   ,cellsrenderer:statusrenderer ,width:100 },
-                    { text: 'Insert'    , datafield: 'Insert'   ,cellsformat: 'yyyy-MM-dd',width:100},
-                    { text: 'Update'    , datafield: 'Update'   ,cellsformat: 'yyyy-MM-dd',width:100,hidden:true},
-                    { text: 'Delete'    , datafield: 'Update'   ,cellsformat: 'yyyy-MM-dd',width:100,hidden:true}
+                    { text: ''          , datafield: 'Contact'  ,cellsrenderer: linkrenderer  ,width:80       },
+                    { text: 'FullName'  , datafield: 'FullName' ,width:120   },
+                    { text: 'Email'     , datafield: 'Email'    ,width:120     },
+                    { text: 'Phone'     , datafield: 'Phone'    ,width:100    },
+                    { text: 'Subject'   , datafield: 'Subject'       },
+                    { text: 'Status'    , datafield: 'Status'   ,width:100,hidden:true },
+                    { text: 'Insert'    , datafield: 'Insert'   ,cellsformat: 'yyyy-MM-dd',width:80},
+                    { text: 'Update'    , datafield: 'Update'   ,cellsformat: 'yyyy-MM-dd',width:80,hidden:true},
+                    { text: 'Delete'    , datafield: 'Delete'   ,cellsformat: 'yyyy-MM-dd',width:80,hidden:true}
                 ]
             });
         };
@@ -297,16 +277,16 @@
             Restore:function (ID){
                 _restore(ID);
             },
-            Edit:function (ID){
+            Edit:function (VideoID){
                 $("#frmDetail").show();
                 $("#jqxWidget").hide();
                 $("#frmDetail").html("Loadding...");
-                if(ID==undefined){
+                if(VideoID==undefined){
                     $(".tab-nav li.hover .tabdes").html(" → Insert");
-                    htmlAjax(baseurl+"admin-planners/slider/Edit",{},$("#frmDetail"));
+                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{},$("#frmDetail"));
                 }else{
                     $(".tab-nav li.hover .tabdes").html(" → Update");
-                    htmlAjax(baseurl+"admin-planners/slider/Edit",{ID:ID},$("#frmDetail"));
+                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{VideoID:VideoID},$("#frmDetail"));
                 }
             },
             CancelEdit:function (){
@@ -315,7 +295,7 @@
                 $(".tab-nav li.hover .tabdes").html("");
             },
             Save:function (){
-                _Save();
+                _SaveVideo();
             },
             ChangeStatus:function (VideoID,Status){
                 _ChangeStatus(VideoID,Status);
@@ -326,7 +306,7 @@
     function  _changeDisplayDelete(v){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/slider/ChangeDeleteDisplay/";
+        var url=baseurl+"admin-planners/contact/ChangeDeleteDisplay/";
         var data={
             showDelete  :   v
         };
@@ -339,33 +319,11 @@
             }
         });
     }
-    function _ChangeStatus(ID,Status){
-        if(isrunning)return;
-        isrunning=true;
-        var url=baseurl+"admin-planners/slider/ChangeStatus";
-        var data={
-            ID:ID,
-            Status:Status
-        };
-        jqxAjax(url,data,function(result){
-            isrunning=false;
-            try{
-                if(result.code<0){
-                    ShowNoticeDialogMessage(result.msg);
-                }else{
-                    ShowNoticeDialogMessage("Slider' Status have been Changed!","Notice Message !",function(){
-                        jqxGrid.Refresh();
-                    });
-                }
-            }catch(err){
-                ShowErrorDialogMessage(err);
-            }
-        });
-    }
+    
     function _delete(ID){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/slider/delete";
+        var url=baseurl+"admin-planners/contact/delete";
         var data={
             ID:ID
         };
@@ -387,7 +345,7 @@
     function _restore(ID){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/slider/retore";
+        var url=baseurl+"admin-planners/contact/retore";
         var data={
             ID:ID
         };
@@ -406,103 +364,9 @@
             }
         });
     }
-    function _Save(){
-        if(isrunning)return;
-        var VideoID     =   $("#VideoID"  ).val();
-        var Title       =   $("#Title"  ).val();
-        var Image       =   $("#Image"      ).val();
-        var Position    =   $("#Position"     ).val();
-        isrunning=true;
-        
-        var url=baseurl+"admin-planners/slider/Save";
-        var data={
-            Params:{
-                VideoID:VideoID,
-                Title:Title,
-                Image:Image,
-                Position:Position
-            }
-        };
-        if($("#ID").val()!=""){
-            data.Params.ID=$("#ID").val();
-        }
-        jqxAjax(url,data,function(result){
-            isrunning=false;
-            try{
-                if(result.code<0){
-                    ShowNoticeDialogMessage(result.msg);
-                }else{
-                    ShowNoticeDialogMessage(result.msg,function(){
-                        jqxGrid.CancelEdit();
-                        jqxGrid.Refresh();
-                    });
-                }
-            }catch(err){
-                ShowErrorDialogMessage(err);
-            }
-        });
-    }
     
-    function getAlias(){
-        var url=baseurl+"sys/excution/getAlias";
-        var data={
-            string:$("#VideoName").val()
-        };
-        jqxAjax(url,data,function(result){
-            isrunning=false;
-            try{
-                if(result.code>=0){
-                    $("#Alias").val(result.msg);
-                }
-            }catch(err){
-                
-            }
-        });
-    }
-    function getYoutubeInfo(){
-        if(isrunning)return;
-        if( (!_FcheckFilled($("#Link").val())) && (!_FcheckFilled($("#VideoKey").val()))){
-            ShowNoticeDialogMessage("Please enter Youtube link or Youtube Key.");
-            return;
-            }
-        var url=baseurl+"admin-planners/video/YoutubeInfo";
-        var data={
-            url:$("#Link").val(),
-            key:$("#VideoKey").val()
-        };
-        jqxAjax(url,data,function(video){
-            isrunning=false;
-            try{
-                $("#Link").val(video.watchURL);
-                $("#Title").val(video.title);
-                $("#Alias").val(video.alias);
-                $("#VideoKey").val(video.key);
-                $("#Author").val(video.author);
-                $("#Thumbs").val(video.thumbnail);
-                $("#Description").val(video.description);
-                $("#Embel").val(video.embed);
-                $("#Length").val(video.length);
-                $("img.thumbs").attr("src",video.thumbnail);
-            }catch(err){
-                ShowErrorDialogMessage("Cant get video information.<br/> Please check your Youtube link or Youtube Key.");
-            }
-        });
-    }
     $(document).ready(function () {
         jqxGrid.init();
     });
         
 </script>
-<style>
-    .token-item{position: relative;height: 40px;width: 480px}
-    .token-item img{height: 40px; width: 60px; position: absolute;top: 0;left: 0}
-    .token-item div{height: 40px; position: absolute;top: 0;left: 68px;overflow: hidden;font-size: 11px;font-weight: normal;}
-    .token-item div h5{padding: 0;margin: 0;font-size: 11px;font-weight: bold;height: 16px;overflow: hidden;font-family: tahoma;}
-    .token-item div p{padding: 0;margin: 0;font-size: 11px;font-weight: normal;overflow: hidden;;font-family: tahoma;}
-    ul.token-input-list-facebook li input{margin: 0px 0;}
-    div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-facebook{background: #C0E6E5;color:#000}
-/*    .token-input-dropdown-facebook ul{width: 300px}*/
-</style>
-
-
-

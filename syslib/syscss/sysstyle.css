@@ -28,6 +28,9 @@
 .preview_icon{
     background: url(../../images/icon/16/stock_toggle-preview.png) center no-repeat;
 }
+.refresh_icon{
+    background: url(../../images/icon/16/view_refresh.png) center no-repeat;
+}
 .hover50{
     opacity: 0.5;
 }

@@ -27,12 +27,13 @@ class video extends CI_Controller  {
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/video_model','video_model');
             $this->load->model('admin-planners/youtube','youtube');
+            if(!isset($_SESSION["JQX-DEL-VIDEO"]))$_SESSION["JQX-DEL-VIDEO"]=1;
         }
         public function index()
 	{
             $Data["tab_config"]["tabs"]=array(
                 "content"   =>array(
-                    "display"=>"Nội Dung"     
+                    "display"=>"Content"
                     ,"value"=>"content"   
                     ,"link"=>  base_url("admin-planners/content")
                     ),
@@ -45,7 +46,7 @@ class video extends CI_Controller  {
                     ,"value"=>"slider"     
                     ,"link"=>base_url("admin-planners/slider")),
                 "contact"   =>array(
-                    "display"=>"Liên Hệ"      
+                    "display"=>"Contact"      
                     ,"value"=>"contact"       
                     ,"link"=>base_url("admin-planners/contact"))
             );
@@ -222,6 +223,55 @@ class video extends CI_Controller  {
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
+        public function ChangeDeleteDisplay(){
+            
+            if(isset($_POST["showDelete"]) && $_POST["showDelete"]==0){
+                $_SESSION["JQX-DEL-VIDEO"]=0;
+                $code=1;
+                $msg="Deleted record have been hide.";
+            }elseif(isset($_POST["showDelete"]) && $_POST["showDelete"]==-1){
+                $code=1;
+                $msg="Only show deleted record.";
+                $_SESSION["JQX-DEL-VIDEO"]=-1;
+            }else{
+                $code=1;
+                $msg="Show all record.";
+                $_SESSION["JQX-DEL-VIDEO"]=1;
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        public function delete(){
+            
+            if(isset($_POST["VideoID"])){
+                if($this->video_model->delete($_POST["VideoID"])){
+                    $code=1;
+                    $msg="Video have been deleted.";
+                }else{
+                    $code=-1;
+                    $msg="Fail. Cant delete this video";
+                }
+            }else{  
+                $code=-1;
+                $msg="Fail.";
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        public function retore(){
+            
+            if(isset($_POST["VideoID"])){
+                if($this->video_model->retore($_POST["VideoID"])){
+                    $code=1;
+                    $msg="Video have been retored.";
+                }else{
+                    $code=-1;
+                    $msg="Fail. Cant retore this video";
+                }
+            }else{  
+                $code=-1;
+                $msg="Fail.";
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
         public function jqxgrid_video(){
             $jqx_data=array();
             $result['total_rows']=0;
@@ -237,20 +287,26 @@ class video extends CI_Controller  {
                         $ca_value.="<span class=\"mlr2 bgceb\">$ca</span>";
                     }
                     $jqx_data[] = array(
-                            'VideoKey'      => $row->VideoKey,
-                            'Title'         => $row->Title,
-                            'Category'      => $ca_value,
-                            'Source'        => $row->Source,
-                            'Status'        => json_encode(array(
-                                            "VideoID"=>$row->VideoID,
-                                            "Status"=>$row->Status
-                                        )),
-                            'Insert'        => $row->Insert,
-                            'Update'        => $row->Update,
-                            'Video'         => json_encode(array(
-                                            "VideoID"=>$row->VideoID,
-                                            "Delete"=>$row->Delete
-                                        ))
+                        'VideoKey'      => $row->VideoKey,
+                        'Title'         => $row->Title,
+                        'Category'      => $ca_value,
+                        'Alias'         => $row->Alias,
+                        'Source'        => $row->Source,
+                        'Tag'           => $row->Tag,
+                        'Thumbs'        => $row->Thumbs,
+                        'Author'        => $row->Author,
+                        'Length'        => $row->Length,
+                        'Status'        => json_encode(array(
+                                        "VideoID"=>$row->VideoID,
+                                        "Status"=>$row->Status
+                                    )),
+                        'Insert'        => $row->Insert,
+                        'Update'        => $row->Update,
+                        'Delete'        => $row->Delete,
+                        'Video'         => json_encode(array(
+                                        "VideoID"=>$row->VideoID,
+                                        "Delete"=>$row->Delete
+                                    ))
                     );
                 }
             //}

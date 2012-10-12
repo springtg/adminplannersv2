@@ -35,7 +35,7 @@ class excution extends CI_Controller  {
         function nothing(){}
         function logout(){
             session_destroy();
-            redirect (base_url("quayso_ngaokiem/product"));
+            echo "<script>history.back();</script>";
         }
         function login(){
             $users=array(
@@ -44,7 +44,7 @@ class excution extends CI_Controller  {
             );
             
             $code=-1;
-            $msg="Đăng nhập thất bại.";
+            $msg="Login Fail. User name or Password is not validate.";
             if(isset($_POST["username"]) && isset($_POST["password"])){
                 if($users[$_POST["username"]]["password"]==md5($_POST["password"])){
                     $code=1;
