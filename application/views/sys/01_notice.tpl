@@ -45,10 +45,12 @@
         style	= "
         width:	0;
         height:	0;
-        border: none
+        border: none;
+        padding: 0;
+        margin: 0
         "
         ></iframe>
-    <div id="loadding-dialog" class="uidialog" title="Loadding...">Đang xử lý. Vui lòng đợi một chút...</div>
+    <div id="loadding-dialog" class="uidialog" title="Loadding...">Processing. Please, wait...</div>
     <div id="dialog" class="uidialog" title="Dialog Title">I'm in a dialog</div>
     <div id="error-dialog-message" title="Error !"></div>
     <div id="notice-dialog-message" title="Notice !"></div>
@@ -250,7 +252,7 @@
         obj.dialog({
             modal: true,
             //autoOpen            : false,
-            title: title==undefined?"Thông báo !":title,
+            title: title==undefined?"Notice message !":title,
             closeOnEscape       : false,
             hide                : "explode",
             buttons: {

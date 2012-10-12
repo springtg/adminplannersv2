@@ -130,6 +130,8 @@
                 //            groupable: true,
                 //            groupsexpandedbydefault: true,
                 pageable: true,
+                pagesize: 20,
+                pagesizeoptions: ['20', '50', '100'],
                 virtualmode: true,
                 columns: [
                     { text: ''          , datafield: 'Slider',cellsrenderer: linkrenderer  ,width:80       },
@@ -169,6 +171,7 @@
             Edit:function (ID){
                 $("#frmDetail").show();
                 $("#jqxWidget").hide();
+                $("#frmDetail").html("Loadding...");
                 if(ID==undefined){
                     $(".tab-nav li.hover .tabdes").html(" → Insert");
                     htmlAjax(baseurl+"admin-planners/slider/Edit",{},$("#frmDetail"));
@@ -332,7 +335,7 @@
         </div>
     </div>
     <div id="frmDetail" class="tabdetail hidden">
-        a
+        Loadding...
     </div>
 </div>
 <style>
@@ -346,10 +349,5 @@
 /*    .token-input-dropdown-facebook ul{width: 300px}*/
 </style>
 
-<div class="MrKhuong">
-    <div class="tit"><span>404</span>Webpage not found.</div>
-    <p>The 404 or Not Found, the server could not find what was requested</p>
-    <a class="back">Go back</a>
-    <a class="home">Go home</a>
-</div>
+
 

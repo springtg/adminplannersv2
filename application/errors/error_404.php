@@ -47,7 +47,7 @@
     <div class="MrKhuong">
         <div class="tit"><span>404</span>Webpage not found.</div>
         <p>The 404 or Not Found, the server could not find what was requested</p>
-        <a href="" class="back">Go back</a>
+        <a href="javascript:window.history.back()" class="back">Go back</a>
         <a href="" class="home">Go home</a>
     </div>
 </body>

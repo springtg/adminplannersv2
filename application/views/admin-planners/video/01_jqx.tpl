@@ -70,21 +70,21 @@
                     if(Video.Delete==null){
                         str+="\
                 <div onclick=\"jqxGrid.Edit('"+Video.VideoID+"');\" \
-                class='icon16 edit_icon hover50' title='Chỉnh sửa video'></div>\
+                class='icon16 edit_icon hover50' title='Edit'></div>\
             ";
                         str+="\
                 <div onclick=\"jqxGrid.Delete('"+Video.VideoID+"');\" \
-                class='icon16 delete_icon hover50' title='Xóa'></div>\
+                class='icon16 delete_icon hover50' title='Delete'></div>\
             ";
                     }else{
                         str+="\
                 <div onclick=\"jqxGrid.Retore('"+Video.VideoID+"');\" \
-                class='icon16 retore_icon hover50' title='Khôi phục'></div>\
+                class='icon16 retore_icon hover50' title='Retore'></div>\
             ";
                     }
                     str+="\
                 <div onclick=\"jqxGrid.Detail('"+Video.VideoID+"');\" \
-                class='icon16 log_icon hover50' title='Lịch sử ghi vết'></div>\
+                class='icon16 log_icon hover50' title='Log'></div>\
             ";
                 }catch(e){ }
                 str+="</span>";
@@ -131,6 +131,8 @@
                 //            groupable: true,
                 //            groupsexpandedbydefault: true,
                 pageable: true,
+                pagesize: 20,
+                pagesizeoptions: ['20', '50', '100'],
                 virtualmode: true,
                 columns: [
                     { text: ''          , datafield: 'Video',cellsrenderer: linkrenderer  ,width:80       },
@@ -170,6 +172,7 @@
             Edit:function (VideoID){
                 $("#frmDetail").show();
                 $("#jqxWidget").hide();
+                $("#frmDetail").html("Loadding...");
                 if(VideoID==undefined){
                     $(".tab-nav li.hover .tabdes").html(" → Insert");
                     htmlAjax(baseurl+"admin-planners/video/EditVideo",{},$("#frmDetail"));
@@ -353,14 +356,6 @@
         </div>
     </div>
     <div id="frmDetail" class="tabdetail hidden">
-        a
+        Loadding...
     </div>
-</div>
-
-
-<div class="MrKhuong orange">
-    <div class="tit"><span>404</span>Webpage not found.</div>
-    <p>The 404 or Not Found, the server could not find what was requested</p>
-    <a class="back">Go back</a>
-    <a class="home">Go home</a>
 </div>

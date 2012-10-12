@@ -43,7 +43,7 @@
 
         <div id="video-line">
             {{if isset($Data["Related"][0])}}
-                <div class="video">
+                <div class="video first">
                     <a href="{{base_url()}}stories-detail/{{$Data["Related"][0]["Alias"]}}">
                         <span ></span><div></div>
                         <img src="{{$Data["Related"][0]["Thumbs"]}}" width="290" height="163"/>
@@ -51,7 +51,7 @@
                 </div>
             {{/if}}
             {{if isset($Data["Related"][1])}}
-                <div class="video video-center">
+                <div class="video second">
                     <a href="{{base_url()}}stories-detail/{{$Data["Related"][1]["Alias"]}}">
                         <span ></span><div></div>
                         <img src="{{$Data["Related"][1]["Thumbs"]}}" width="290" height="163"/>
@@ -59,7 +59,7 @@
                 </div>
             {{/if}}
             {{if isset($Data["Related"][2])}}
-                <div class="video">
+                <div class="video third">
                     <a href="{{base_url()}}stories-detail/{{$Data["Related"][2]["Alias"]}}">
                         <span ></span><div></div>
                         <img src="{{$Data["Related"][2]["Thumbs"]}}" width="290" height="163"/>

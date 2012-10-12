@@ -27,7 +27,7 @@
                     <tr>
                         <td>Mật Khẩu</td>
 
-                        <td><input type="text" id="txtpassword"  name="txtpassword" class="classic-input"/></td>
+                        <td><input type="password" id="txtpassword"  name="txtpassword" class="classic-input"/></td>
                     </tr>
                     <tr>
                         <td colspan="2">
@@ -71,7 +71,7 @@
     </div>
 </div>
 <script>
-    var login=new ConfirmDialogMessage($('.dialog-login'),'Đăng Nhập',submitToLogin );
+    var login=new ConfirmDialogMessage($('.dialog-login'),'Login',submitToLogin );
     function submitToLogin(){
         if(isrunning) return;
     
@@ -95,17 +95,17 @@
             try{
                 if(result.code<0){
                     
-                    var notice=new NoticeDialogMessage(result.msg,"Thông Báo",function(){ login.Show(); });
+                    var notice=new NoticeDialogMessage(result.msg,"Notice Message",function(){ login.Show(); });
                     //notice.SetCallBack=function(){ login.Show(); }
                     notice.Show();
                     //ShowNoticeDialogMessage(result.msg);
                 }else{
-                    ShowNoticeDialogMessage("Thành công",function(){
+                    ShowNoticeDialogMessage("Login Sussess.! Wellcom to admin planners.","Notice Message",function(){
                         location.reload();
                     });
                 }
             }catch(err){
-                showUIWindowloginmsg("Lỗi",err.message);
+                showUIWindowloginmsg("Error!",err.message);
             
                 
             }
