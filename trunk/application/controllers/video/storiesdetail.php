@@ -30,7 +30,16 @@ class storiesdetail extends CI_Controller  {
         }
         public function index()
 	{
-            
+            $Error=array(
+                "color"=>"",
+                "errortype"=>"404",
+                "title"=>"Webpage not found.",
+                "title"=>"Webpage not found.",
+                "message"=>"The 404 or Not Found, the server could not find what was requested",
+                "backlink"=>"",
+                "homelink"=>  base_url("stories")
+            );
+            ShowError($Error);
             
 	}
         public function detail($alias="")
@@ -43,12 +52,18 @@ class storiesdetail extends CI_Controller  {
                 $related=$this->video_model->getRelated($cate,$tag);
                 $Data["Related"]=  objectToArray($related);
             }else{
-                show_404();
+                redirect(base_url("not-found"));
+                //ShowError();
             }
             $this->smarty->assign('Data', $Data);
             $this->smarty->display("video/page/03_stories_detail");
             
 	}
-        
+        public function notfound($alias="")
+	{
+            
+            $this->smarty->display("video/page/07_not_found");
+            
+	}
         
 }

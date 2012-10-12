@@ -110,3 +110,23 @@ function converturl($str) {
     $str=  strtolower($str);
     return $str;
 }
+function ShowError(
+        $Error=array(
+            "color"=>"",
+            "errortype"=>"404",
+            "title"=>"Webpage not found.",
+            "title"=>"Webpage not found.",
+            "message"=>"The 404 or Not Found, the server could not find what was requested",
+            "homelink"=> ""
+        )
+        ){
+    die('
+        <link href="'.base_url("syslib/syscss/sysstyle.css").'" rel="stylesheet" type="text/css" />
+        <div class="MrKhuong'.$Error["color"].'">
+            <div class="tit"><span>'.$Error["errortype"].'</span>'.$Error["title"].'</div>
+            <p>'.$Error["message"].'</p>
+            <a href="javascript:window.history.back()" class="back">Go back</a>
+            <a href="'.($Error["homelink"]==""?  base_url("home"):$Error["homelink"]).'" class="home">Go home</a>
+        </div>
+    ');
+}

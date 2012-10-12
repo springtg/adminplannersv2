@@ -96,8 +96,11 @@ hr{}
 #big-title-stories p {display:none;}
 
 #video-list {border-bottom: thin dashed #999; padding-bottom:10px; margin-bottom:20px;}
-#video-line {margin-bottom:10px;}
-#video-line .video{width:290px; height:163px; display:inline-block;position: relative}
+#video-line {margin-bottom:10px;position: relative;width: 900px;height: 163px;}
+#video-line .video{width:290px; height:163px; display:inline-block;}
+#video-line .video.first{position: absolute;top: 0;left: 0}
+#video-line .video.second{position: absolute;top: 0;left: 50%;margin-left: -145px}
+#video-line .video.third{position: absolute;top: 0;right: 0}
 #video-line .video-center {margin-left:11px; margin-right:11px;}
 
 #video-line .video span,#video-line .video-center span{
@@ -253,3 +256,11 @@ hr{}
 #bottom-grass #chesnut {background: url(img/chesnut.png) repeat-x bottom; height:103px; width:564px; z-index:0; position:absolute; bottom:52px; left:50%; margin-left:-440px}
 #bottom-grass #monkey {background: url(img/monkey.png) repeat-x bottom; height:266px; width:237px; z-index:2; position:absolute; bottom:40px; left:50%; margin-left:200px}
 #bottom-grass #rhino {background: url(img/rhino.png) repeat-x bottom; height:265px; width:281px; z-index:2; position:absolute; bottom:40px; left:50%; margin-left:100px}
+#slider a div{position: absolute;bottom: 0;height: 40px;left: 0;width: 900px;
+      background: url('../syslib/bg/60.png') repeat;;font-weight: bold;
+      color: #fff;line-height: 40px;text-transform: uppercase;
+      padding-left: 20px;
+}
+#slider a:hover div{display: block;}
+#slider-panel #arrow-pre,#slider-panel #arrow-nex,#slider-panel #slider div{display: none}
+#slider-panel:hover #arrow-pre,#slider-panel:hover #arrow-nex,#slider-panel:hover #slider div{display: block}

@@ -8,4 +8,7 @@
         <script type="text/javascript" src="{{base_url("css_video/js/jquery.cycle.all.js")}}"></script>
     </head>
 
-    <body>
+    <body style="overflow-x: hidden;">
+        <script>var baseurl="{{base_url()}}";</script>
+        {{include file='../../sys/02_script.tpl'}}
+        {{include file='../../sys/01_notice.tpl'}}

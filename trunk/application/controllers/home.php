@@ -30,7 +30,7 @@ class home extends CI_Controller  {
         }
         public function index()
 	{
-            
+            $this->smarty->display("video/page/00_index");
             
 	}
         

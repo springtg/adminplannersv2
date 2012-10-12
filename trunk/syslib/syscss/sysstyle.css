@@ -1,3 +1,4 @@
+*{font-family: tahoma;font-size: 11px}
 .showandhide .hideifhover{display: block}
 .showandhide .showifhover{display: none}
 .showandhide:hover .hideifhover{display: none}

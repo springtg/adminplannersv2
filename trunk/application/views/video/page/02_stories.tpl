@@ -6,7 +6,7 @@
         <div id="video-list">
             <div id="video-line">
                 {{if isset($Data["Videos"][0])}}
-                    <div class="video">
+                    <div class="video first">
 
                         <a href="{{base_url()}}stories-detail/{{$Data["Videos"][0]["Alias"]}}">
                             <span ></span><div></div>
@@ -15,7 +15,7 @@
                     </div>
                 {{/if}}
                 {{if isset($Data["Videos"][1])}}
-                    <div class="video video-center">
+                    <div class="video second">
                         <a href="{{base_url()}}stories-detail/{{$Data["Videos"][1]["Alias"]}}">
                             <span ></span><div></div>
                             <img src="{{$Data["Videos"][1]["Thumbs"]}}" width="290" height="163" />
@@ -23,7 +23,7 @@
                     </div>
                 {{/if}}
                 {{if isset($Data["Videos"][2])}}
-                    <div class="video">
+                    <div class="video third">
                         <a href="{{base_url()}}stories-detail/{{$Data["Videos"][2]["Alias"]}}">
                             <span ></span><div></div>
                             <img src="{{$Data["Videos"][2]["Thumbs"]}}" width="290" height="163"/>
@@ -33,7 +33,7 @@
             </div>
             <div id="video-line">
                 {{if isset($Data["Videos"][3])}}
-                    <div class="video">
+                    <div class="video first">
                         <a href="{{base_url()}}stories-detail/{{$Data["Videos"][3]["Alias"]}}">
                             <span ></span><div></div>
                             <img src="{{$Data["Videos"][3]["Thumbs"]}}" width="290" height="163" />
@@ -41,7 +41,7 @@
                     </div>
                 {{/if}}
                 {{if isset($Data["Videos"][4])}}
-                    <div class="video video-center">
+                    <div class="video second">
                         <a href="{{base_url()}}stories-detail/{{$Data["Videos"][4]["Alias"]}}">
                             <span ></span><div></div>
                             <img src="{{$Data["Videos"][4]["Thumbs"]}}" width="290" height="163" />
@@ -49,7 +49,7 @@
                     </div>
                 {{/if}}
                 {{if isset($Data["Videos"][5])}}
-                    <div class="video">
+                    <div class="video third">
                         <a href="{{base_url()}}stories-detail/{{$Data["Videos"][5]["Alias"]}}">
                             <span ></span><div></div>
                             <img src="{{$Data["Videos"][5]["Thumbs"]}}" width="290" height="163"/>

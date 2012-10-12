@@ -43,8 +43,11 @@ $route['scaffolding_trigger'] = "scaffolding";
 $route['about'] = "video/pagecontent";
 $route['home'] = "video/home";
 $route['stories'] = "video/stories";
+$route['contact'] = "video/contact";
+$route['contact/(:any)'] = "video/contact/$1";
+$route['request'] = "video/request";
 $route['stories-detail/(:any)'] = "video/storiesdetail/detail/$1";
-
+$route['not-found'] = "video/storiesdetail/notfound";
 $route['404_override'] = '';
 
 
