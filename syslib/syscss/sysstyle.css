@@ -31,6 +31,9 @@
 .refresh_icon{
     background: url(../../images/icon/16/view_refresh.png) center no-repeat;
 }
+.chooseimage_icon{
+    background: url(../../images/icon/16/pictures_folder_black.png) center no-repeat;
+}
 .hover50{
     opacity: 0.5;
 }
@@ -52,6 +55,7 @@
 .w320{width: 320px}
 .w80{width: 80px}
 .w800{width: 800px}
+.w720{width: 720px}
 .pl20{padding-left: 20px}
 .pl60{padding-left: 60px}
 .pr8{padding-right: 8px}
@@ -106,3 +110,27 @@ ul.classic-list li{float: left;min-width: 120px}
 .MrKhuong.orange{border: 1px solid orange;}
 .MrKhuong.orange .tit{background: orange;}
 .MrKhuong.orange .back,.MrKhuong.orange .home,.MrKhuong.orange p{color: orange;}
+
+fieldset,.fieldset {
+    background: rgba(204, 204, 204, 0.2);
+    border: 1px solid #C9C9C9;
+    -webkit-box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.7);
+    -moz-box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0px 0px 1px 1px rgba(255, 255, 255, 0.7);
+}
+legend {
+    color: #333;
+    border-color: transparent;
+    font-weight: bold;
+    padding: 4px 20px;
+    line-height: 16px;
+    background: #E0BAED;
+}
+pre{
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word; 
+}
+.chooseimage{top: 50%;right: 0;width: 16px;height: 16px;margin: -8px -16px 0 0px;}

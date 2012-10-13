@@ -4,6 +4,8 @@
 <script type="text/javascript" src="{{base_url()}}jqwidgets-ver2.4.2/jqwidgets/jqx-all.js"></script>
 <link rel="stylesheet" href="{{base_url()}}syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
 
+<script type="text/javascript" src="{{base_url()}}syslib/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+
 <script type="text/javascript" src="{{base_url()}}syslib/ckfinder/ckfinder.js"></script>
 <script type="text/javascript" src="{{base_url()}}syslib/ckfinder/browse.js"></script>
 <div style="padding-right: 2px;padding-left: 0px;">
@@ -100,9 +102,9 @@
                 autoOpen: false,showCollapseButton: true, resizable: false,
                 Height: 300,width: 480, theme: theme 
             });
-            $("#jqxRadioButtonShowAll").jqxRadioButton({ width: 250, height: 25, {{if $_SESSION["JQX-DEL-VIDEO"]==1}}checked: true,{{/if}} theme: theme });
-            $("#jqxRadioButtonHideDelete").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-VIDEO"]==0}}checked: true,{{/if}} theme: theme });
-            $("#jqxRadioButtonShowDeleteOnly").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-VIDEO"]==-1}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonShowAll").jqxRadioButton({ width: 250, height: 25, {{if $_SESSION["JQX-DEL-CONTENT"]==1}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonHideDelete").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-CONTENT"]==0}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonShowDeleteOnly").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-CONTENT"]==-1}}checked: true,{{/if}} theme: theme });
         };
         //Adding event listeners
         function _addEventListeners() {
@@ -124,15 +126,9 @@
             var theme=jqxGrid.config.theme;
             $("#window-setting .jqx_group").jqxExpander({ showArrow: false, toggleMode: 'none', theme: theme });
             var listSource = [
-                { label: 'Youtube Key', value: 'VideoKey', checked: true }, 
                 { label: 'Title', value: 'Title', checked: true }, 
                 { label: 'Alias', value: 'Alias', checked: false }, 
-                { label: 'Category', value: 'Category', checked: true }, 
-                { label: 'Source', value: 'Source', checked: false},
-                { label: 'Tag', value: 'Tag', checked: false },
-                { label: 'Thumbs', value: 'Thumbs', checked: false },
-                { label: 'Author', value: 'Author', checked: false },
-                { label: 'Length', value: 'Length', checked: false},
+                { label: 'Thumb', value: 'Thumb', checked: false }, 
                 { label: 'Status', value: 'Status', checked: true }, 
                 { label: 'Insert', value: 'Insert', checked: true }, 
                 { label: 'Update', value: 'Update', checked: false },
@@ -155,23 +151,17 @@
             var source ={
                 datatype: "json",
                 datafields: [
-                    { name: 'Video', type: 'string'},
-                    { name: 'VideoKey', type: 'string'},
+                    { name: 'Content', type: 'string'},
                     { name: 'Title', type: 'string'},
                     { name: 'Alias', type: 'string'},
-                    { name: 'Category',type:'string'},
-                    { name: 'Source',type:'string'},
-                    { name: 'Tag',type:'string'},
-                    { name: 'Thumbs',type:'string'},
-                    { name: 'Author',type:'string'},
-                    { name: 'Length',type:'int'},
+                    { name: 'Thumb',type:'string'},
                     { name: 'Status',type:'string'},
                     { name: 'Insert',type: 'date'},
                     { name: 'Update',type: 'date'},
                     { name: 'Delete',type: 'date'}
                     
                 ],
-                url: baseurl+'admin-planners/video/jqxgrid_video/',
+                url: baseurl+'admin-planners/content/jqxgrid/',
                 filter: function(){
                     $("#jqxgrid").jqxGrid('updatebounddata');
                     //$('#grid').jqxGrid('refreshdata');
@@ -198,24 +188,24 @@
             var linkrenderer = function (row, column, value) {
                 var str="<span style='margin: 4px; float: left;'>";
                 try{
-                    Video = $.parseJSON(value);
-                    if(Video.Delete==null){
+                    RowOBJ = $.parseJSON(value);
+                    if(RowOBJ.Delete==null){
                         str+="\
-                <div onclick=\"jqxGrid.Edit('"+Video.VideoID+"');\" \
+                <div onclick=\"jqxGrid.Edit('"+RowOBJ.ID+"');\" \
                 class='icon16 edit_icon hover50' title='Edit'></div>\
             ";
                         str+="\
-                <div onclick=\"jqxGrid.Delete('"+Video.VideoID+"');\" \
+                <div onclick=\"jqxGrid.Delete('"+RowOBJ.ID+"');\" \
                 class='icon16 delete_icon hover50' title='Delete'></div>\
             ";
                     }else{
                         str+="\
-                <div onclick=\"jqxGrid.Restore('"+Video.VideoID+"');\" \
+                <div onclick=\"jqxGrid.Restore('"+RowOBJ.ID+"');\" \
                 class='icon16 restore_icon hover50' title='Retore'></div>\
             ";
                     }
                     str+="\
-                <div onclick=\"jqxGrid.Detail('"+Video.VideoID+"');\" \
+                <div onclick=\"jqxGrid.Detail('"+RowOBJ.ID+"');\" \
                 class='icon16 log_icon hover50' title='Log'></div>\
             ";
                 }catch(e){ }
@@ -268,16 +258,10 @@
                 pagesizeoptions: ['20', '50', '100'],
                 virtualmode: true,
                 columns: [
-                    { text: ''          , datafield: 'Video',cellsrenderer: linkrenderer  ,width:80       },
-                    { text: 'Key'       , datafield: 'VideoKey'    ,width:100   },
-                    { text: 'Thumbs'    , datafield: 'Thumbs',hidden:true  ,width:120     },
+                    { text: ''          , datafield: 'Content',cellsrenderer: linkrenderer  ,width:80       },
                     { text: 'Title'     , datafield: 'Title'      },
-                    { text: 'Alias'     , datafield: 'Alias',hidden:true       },
-                    { text: 'Category'  , datafield: 'Category'    ,width:200},
-                    { text: 'Source'    , datafield: 'Source'      ,hidden:true    ,width:120    },
-                    { text: 'Tag'       , datafield: 'Tag'      ,hidden:true   ,width:120     },
-                    { text: 'Author'    , datafield: 'Author'      ,hidden:true,width:100       },
-                    { text: 'Length'    , datafield: 'Length'      ,hidden:true ,cellsalign :"right"  ,width:40    },
+                    { text: 'Alias'     , datafield: 'Alias'    ,hidden:true       },
+                    { text: 'Thumb'     , datafield: 'Thumb'    ,width:200,hidden:true},
                     { text: 'Status'    , datafield: 'Status'   ,cellsrenderer:statusrenderer ,width:100 },
                     { text: 'Insert'    , datafield: 'Insert'   ,cellsformat: 'yyyy-MM-dd',width:80},
                     { text: 'Update'    , datafield: 'Update'   ,cellsformat: 'yyyy-MM-dd',width:80,hidden:true},
@@ -312,16 +296,16 @@
             Restore:function (ID){
                 _restore(ID);
             },
-            Edit:function (VideoID){
+            Edit:function (ID){
                 $("#frmDetail").show();
                 $("#jqxWidget").hide();
                 $("#frmDetail").html("Loadding...");
-                if(VideoID==undefined){
+                if(ID==undefined){
                     $(".tab-nav li.hover .tabdes").html(" → Insert");
-                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{},$("#frmDetail"));
+                    htmlAjax(baseurl+"admin-planners/content/Edit",{},$("#frmDetail"));
                 }else{
                     $(".tab-nav li.hover .tabdes").html(" → Update");
-                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{VideoID:VideoID},$("#frmDetail"));
+                    htmlAjax(baseurl+"admin-planners/content/Edit",{ID:ID},$("#frmDetail"));
                 }
             },
             CancelEdit:function (){
@@ -330,7 +314,7 @@
                 $(".tab-nav li.hover .tabdes").html("");
             },
             Save:function (){
-                _SaveVideo();
+                _save();
             },
             ChangeStatus:function (VideoID,Status){
                 _ChangeStatus(VideoID,Status);
@@ -341,7 +325,7 @@
     function  _changeDisplayDelete(v){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/video/ChangeDeleteDisplay/";
+        var url=baseurl+"admin-planners/content/ChangeDeleteDisplay/";
         var data={
             showDelete  :   v
         };
@@ -354,12 +338,12 @@
             }
         });
     }
-    function _ChangeStatus(VideoID,Status){
+    function _ChangeStatus(ID,Status){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/video/ChangeStatus";
+        var url=baseurl+"admin-planners/content/ChangeStatus";
         var data={
-            VideoID:VideoID,
+            ID:ID,
             Status:Status
         };
         jqxAjax(url,data,function(result){
@@ -377,12 +361,12 @@
             }
         });
     }
-    function _delete(VideoID){
+    function _delete(ID){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/video/delete";
+        var url=baseurl+"admin-planners/content/delete";
         var data={
-            VideoID:VideoID
+            ID:ID
         };
         jqxAjax(url,data,function(result){
             isrunning=false;
@@ -399,12 +383,12 @@
             }
         });
     }
-    function _restore(VideoID){
+    function _restore(ID){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/video/retore";
+        var url=baseurl+"admin-planners/content/retore";
         var data={
-            VideoID:VideoID
+            ID:ID
         };
         jqxAjax(url,data,function(result){
             isrunning=false;
@@ -421,45 +405,24 @@
             }
         });
     }
-    function _SaveVideo(){
+    function _save(){
         if(isrunning)return;
-        var VideoKey   =   $("#VideoKey"  ).val();
-        var Author   =   $("#Author"  ).val();
-        var Title       =   $("#Title"      ).val();
-        var Thumbs      =   $("#Thumbs"     ).val();
-        var Source      =   $("#Link"     ).val();
-        var Description =   $("#Description").val();
-        var Tag         =   $("#Tag"        ).val();
-        var Embel       =   $("#Embel"      ).val();
-        var Length       =   $("#Length"      ).val();
-        var Categorys=$(".Categorys input[type=checkbox]");
-        var strCategorys="";
-        for(var i=0;i<Categorys.length;i++)
-        {
-            if(Categorys[i].checked)
-            {
-                strCategorys+=","+Categorys[i].value+",";
-            }
-        }
+        var Title   =   $("#Title"  ).val();
+        var Alias   =   $("#Alias"  ).val();
+        var Thumb   =   $("#Thumb"      ).val();
+        var Content =   tinyMCE.get('Content').getContent();
         isrunning=true;
-        
-        var url=baseurl+"admin-planners/video/savevideo";
+        var url=baseurl+"admin-planners/content/Save";
         var data={
             Params:{
-                VideoKey:VideoKey,
-                Length:Length,
-                Author:Author,
                 Title:Title,
-                Thumbs:Thumbs,
-                Categorys:strCategorys,
-                Source:Source,
-                Description:Description,
-                Tag:Tag,
-                Embel:Embel
+                Alias:Alias,
+                Thumb:Thumb,
+                Content:Content
             }
         };
-        if($("#VideoID").val()!=""){
-            data.Params.VideoID=$("#VideoID").val();
+        if($("#ID").val()!=""){
+            data.Params.ID=$("#ID").val();
         }
         jqxAjax(url,data,function(result){
             isrunning=false;
@@ -481,7 +444,7 @@
     function getAlias(){
         var url=baseurl+"sys/excution/getAlias";
         var data={
-            string:$("#VideoName").val()
+            string:$("#Title").val()
         };
         jqxAjax(url,data,function(result){
             isrunning=false;
@@ -494,33 +457,35 @@
             }
         });
     }
-    function getYoutubeInfo(){
-        if(isrunning)return;
-        if( (!_FcheckFilled($("#Link").val())) && (!_FcheckFilled($("#VideoKey").val()))){
-            ShowNoticeDialogMessage("Please enter Youtube link or Youtube Key.");
-            return;
-        }
-        var url=baseurl+"admin-planners/video/YoutubeInfo";
-        var data={
-            url:$("#Link").val(),
-            key:$("#VideoKey").val()
-        };
-        jqxAjax(url,data,function(video){
-            isrunning=false;
-            try{
-                $("#Link").val(video.watchURL);
-                $("#Title").val(video.title);
-                $("#Alias").val(video.alias);
-                $("#VideoKey").val(video.key);
-                $("#Author").val(video.author);
-                $("#Thumbs").val(video.thumbnail);
-                $("#Description").val(video.description);
-                $("#Embel").val(video.embed);
-                $("#Length").val(video.length);
-                $("img.thumbs").attr("src",video.thumbnail);
-            }catch(err){
-                ShowErrorDialogMessage("Cant get video information.<br/> Please check your Youtube link or Youtube Key.");
-            }
+    function CreateEditorElement(){
+         tinyMCE.init({
+                // General options
+                mode : "textareas",
+                editor_selector : "mceEditor",
+                editor_deselector : "mceNoEditor",
+                theme : "advanced",
+                plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+                width : "730",
+                height:"500",
+                // Theme options
+                theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+                theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+                theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+                theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+                theme_advanced_toolbar_location : "top",
+                theme_advanced_toolbar_align : "left",
+                theme_advanced_statusbar_location : "bottom",
+                theme_advanced_resizing : true,
+
+                // Skin options
+
+                // Example content CSS (should be your site CSS)
+                // Drop lists for link/image/media/template dialogs
+                template_external_list_url : "js/template_list.js",
+                external_link_list_url : "js/link_list.js",
+                external_image_list_url : "js/image_list.js",
+                media_external_list_url : "js/media_list.js"
+
         });
     }
     $(document).ready(function () {

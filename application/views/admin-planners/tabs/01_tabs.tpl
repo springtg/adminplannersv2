@@ -21,7 +21,7 @@
     <ul class="tab-nav">
         {{if isset($Data["tab_config"]["tabs"])}}
             {{foreach $Data["tab_config"]["tabs"] as $key=>$tab}}
-                {{if $Data["tab_config"]["tabindex"]==$tab["value"]}}
+                {{if $Data["tab_config"]["tabindex"]==$key}}
                     <li class="hover">
                         <a href="{{$tab["link"]}}"><span></span>{{$tab["display"]}}<span class="tabdes"></span></a>
                     </li>  

@@ -59,7 +59,18 @@ class contact extends CI_Controller  {
             $this->smarty->view('admin-planners/contact/01_jqx',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
-        
+        public function Detail(){
+            if(isset($_POST["ID"])){
+                $contact=$this->contact_model->get($_POST["ID"]);
+                $Data["obj"]=null;
+                if(isset($contact[0]))$Data["obj"]= objectToArray ($contact[0]);
+                $this->smarty->assign('Data', $Data);
+                $this->smarty->display("admin-planners/contact/02_detail");
+            }else{
+                echo "No data to display.";
+            }
+            
+        }
         public function ChangeDeleteDisplay(){
             
             if(isset($_POST["showDelete"]) && $_POST["showDelete"]==0){

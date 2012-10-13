@@ -28,6 +28,7 @@ class slider_model extends jqxGrid_CI_Model {
         $this->db->from('tbl_slider');
         $this->db->join('tbl_video', 'tbl_video.VideoID = tbl_slider.VideoID');
         $this->db->where($where);
+        $this->db->order_by("Position", "ASC"); 
         $query=$this->db->get();
         //$query=$this->db->get_where("tbl_slider",$where); 
         return $query->result();

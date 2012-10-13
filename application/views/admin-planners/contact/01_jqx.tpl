@@ -37,7 +37,7 @@
         Loadding...
     </div>
 </div>
-<div id="window-setting">
+<div id="window-setting" class="hidden">
     <div id="windowSettingHeader">
         <span style="line-height: 20px;font-weight: bold">
             Settings
@@ -58,7 +58,7 @@
                     <div class="jqx_group id-group-setting-delete">
                         <div class=""><span class="pl0 pr0 pt0 pb0 ml0 mr0 mt0 mb0">Display Setting</span></div>
                         <div>
-                            
+
                             <div style='float: left;margin-top: 10px;' id='jqxRadioButtonShowAll'>
                                 <span>Show all record</span>
                             </div>
@@ -178,6 +178,10 @@
                 <div onclick=\"jqxGrid.Delete('"+RowOBJ.ID+"');\" \
                 class='icon16 delete_icon hover50' title='Delete'></div>\
             ";
+                        str+="\
+                <div onclick=\"jqxGrid.Detail('"+RowOBJ.ID+"');\" \
+                class='icon16 detail_icon hover50' title='Detail'></div>\
+            ";
                     }else{
                         str+="\
                 <div onclick=\"jqxGrid.Restore('"+RowOBJ.ID+"');\" \
@@ -185,7 +189,7 @@
             ";
                     }
                     str+="\
-                <div onclick=\"jqxGrid.Detail('"+RowOBJ.ID+"');\" \
+                <div onclick=\"jqxGrid.Log('"+RowOBJ.ID+"');\" \
                 class='icon16 log_icon hover50' title='Log'></div>\
             ";
                 }catch(e){ }
@@ -241,7 +245,7 @@
                     { text: ''          , datafield: 'Contact'  ,cellsrenderer: linkrenderer  ,width:80       },
                     { text: 'FullName'  , datafield: 'FullName' ,width:120   },
                     { text: 'Email'     , datafield: 'Email'    ,width:120     },
-                    { text: 'Phone'     , datafield: 'Phone'    ,width:100    },
+                    { text: 'Phone'     , datafield: 'Phone'    ,width:100   ,hidden:true  },
                     { text: 'Subject'   , datafield: 'Subject'       },
                     { text: 'Status'    , datafield: 'Status'   ,width:100,hidden:true },
                     { text: 'Insert'    , datafield: 'Insert'   ,cellsformat: 'yyyy-MM-dd',width:80},
@@ -287,6 +291,15 @@
                 }else{
                     $(".tab-nav li.hover .tabdes").html(" → Update");
                     htmlAjax(baseurl+"admin-planners/video/EditVideo",{VideoID:VideoID},$("#frmDetail"));
+                }
+            },
+            Detail:function (ID){
+                if(ID!=undefined){
+                    $("#frmDetail").show();
+                    $("#jqxWidget").hide();
+                    $("#frmDetail").html("Loadding...");
+                    $(".tab-nav li.hover .tabdes").html(" → Detail");
+                    htmlAjax(baseurl+"admin-planners/contact/Detail",{ID:ID},$("#frmDetail"));
                 }
             },
             CancelEdit:function (){
