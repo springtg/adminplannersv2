@@ -18,6 +18,18 @@ class video_model extends jqxGrid_CI_Model {
         $query=$this->db->get_where('tbl_video', $where); 
         return $query->result();
     }
+    function checkExist($VideoKey="",$ID=""){
+        if($ID==""){
+            $where=array("VideoKey"=>$VideoKey);
+            
+        }else{
+            $where=array("VideoKey"=>$VideoKey);
+            $query=$this->db->where("VideoID!=",$ID);
+        }
+        $query=$this->db->where($where);
+        $query=$this->db->get('tbl_video'); 
+        return $query->result();
+    }
     function insertVideo($params){
         $this->db->set('Insert', 'NOW()', FALSE);
         $this->db->insert('tbl_video', $params); 

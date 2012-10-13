@@ -60,6 +60,9 @@ class video extends CI_Controller  {
             $this->smarty->view('admin-planners/video/01_jqx',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
+        public function checkVideoExist($ID){
+            
+        }
         public function YoutubeInfo(){
             $url=$_POST["url"];
             $key=$_POST["key"];

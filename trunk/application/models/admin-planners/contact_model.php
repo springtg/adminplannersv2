@@ -7,6 +7,11 @@ class contact_model extends jqxGrid_CI_Model {
         parent::__construct();
         
     }
+    function get($ID){
+        $where=array("ID"=>$ID);
+        $query=$this->db->get_where('tbl_contact', $where); 
+        return $query->result();
+    }
     function delete($ID){
         $this->db->set('Delete', 'NOW()', FALSE);
         $where=array("ID"=>$ID);

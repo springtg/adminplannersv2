@@ -8,6 +8,7 @@
         <script src="{{base_url()}}syslib/slimScroll/slimScroll.js"></script>
         <link href="{{base_url()}}syslib/tab/tab.css" type="text/css" rel="stylesheet"/>
         <link href="{{base_url()}}syslib/syscss/sysstyle.css" type="text/css" rel="stylesheet"/>
+        <link href="{{base_url()}}syslib/syscss/bubble.css" type="text/css" rel="stylesheet"/>
     </head>
     <body style="overflow-y: scroll;">
     {{if isset($NOTICE)}}{{$NOTICE}}{{/if}}
@@ -44,6 +45,7 @@
 </span>
 
 <div style="min-width: 960px">
+    <div style="height: 40px;"></div>
     <div class="content" style="">
         <div style="">
             <div class="pets tab4">
@@ -69,7 +71,41 @@
         </div>
         <div class="clear"></div>
     </div>
+    <div>
+        <div class="pr" style="width: 50%;display: inline-block;float: left">
+            <div class="pl20 pr20 pt12 pb12">
+                <b>Admin Planners 2.0</b><br/>
+                <span style="font-weight: normal">Được xây dựng và phát triển bởi <a href="javascript:$('.about-box').show();"><b>Mr. Khuong</b></a></span>
+            </div>
+            <div class="jfk-bubble jfk-bubble-promo gray about-box hidden" 
+                 style="visibility: visible; left: 94px; bottom: 22px; opacity: 1; position: absolute">
+                <div class="jfk-bubble-closebtn giftnotice btn" onclick="$('.about-box').hide();" style=""></div>
+                <div class="jfk-bubble-content-id">
+                    <div class="promo-content" style="width: 200px; ">
+                        <b>Mr. Khuong</b><br/>
+                        Khương Xuân Trường<br/>
+                        khuongxuantruong@gmail.com<br/>
+                        0985 747 240
+                    </div>
+                </div>
+                <div class="jfk-bubble-arrow-id jfk-bubble-arrow jfk-bubble-arrowdown" style="left: 114px">
+                    <div class="jfk-bubble-arrowimplbefore"></div>
+                    <div class="jfk-bubble-arrowimplafter"></div>
+                </div>
+            </div>
+        </div>
+        <div style="width: 50%;display: inline-block;float: left;text-align: right">
+            <div class="pl20 pr20 pt12 pb12">
+                Được tích hợp các control  <br/> 
+                Bộ control <a href="http://www.jqwidgets.com" target="_blank"><b>jqxWidget</b></a>  
+                Editer -    <a href="http://www.tinymce.com/" target="_blank"><b>tinyMCE</b></a> , 
+                File Manage - <a href="http://ckfinder.com/" target="_blank"><b>CKFinder</b></a>.
+            </div>
+        </div>
+    </div>
+
 </div>
+
 <script>
     var login=new ConfirmDialogMessage($('.dialog-login'),'Login',submitToLogin );
     function submitToLogin(){
