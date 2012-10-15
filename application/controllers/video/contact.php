@@ -26,11 +26,15 @@ class contact extends CI_Controller  {
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
             $this->load->model('video/contact_model','contact_model');
+            $this->load->model('video/content_model','content_model');
             
         }
         public function index()
 	{
-            
+            $getintouch=$this->content_model->get("1");
+            $getintouch=  isset($getintouch[0])?objectToArray($getintouch[0]):null;
+            $Data["getintouch"]=$getintouch;
+            $this->smarty->assign('Data', $Data);
             $this->smarty->display("video/page/05_contact");
             
 	}

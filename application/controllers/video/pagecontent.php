@@ -25,11 +25,18 @@ class pagecontent extends CI_Controller  {
             $this->load->library('javascript');
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
+            $this->load->model('video/content_model','content_model');
             $this->load->model('video/slider_model','slider_model');
             
         }
         public function index()
 	{
+            $whoweare=$this->content_model->get("5");
+            $whoweare=  isset($whoweare[0])?objectToArray($whoweare[0]):null;
+            $service=$this->content_model->get("4");
+            $service=  isset($service[0])?objectToArray($service[0]):null;
+            $Data["whoweare"]=$whoweare;
+            $Data["service"]=$service;
             $sliders=$this->slider_model->gets();
             $Data["Sliders"]=  objectToArray($sliders);
             $this->smarty->assign('Data', $Data);

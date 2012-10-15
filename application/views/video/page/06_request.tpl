@@ -2,8 +2,15 @@
 {{include file='../sub/04_nav.tpl'}}
 <div id="container" class="round-corner request-pad">
     <div id="big-title-request"><p>please fill this form to complete the request</p></div>
-    <div class="error hidden">There is an error with your information. Please check again!</div>
-    <div class="success hidden">Your request was successful! Thank you very much!</div>
+    <div style="margin-bottom:20px;">
+        {{if isset($Data["request"]) and !isset($Data["request"]["Delete"]) and $Data["request"]["Status"]=="Public"}}
+            {{$Data["request"]["Content"]}}
+        {{else}}
+            No data to display.
+        {{/if}}
+    </div>
+    <div class="error">There is an error with your information. Please check again!</div>
+    <div class="success">Your request was successful! Thank you very much!</div>
     <form>
         <div id="left-content">
             <div><label>Story Title <span class="red">(*)</span></label><input type="text" class="request-text" /></div>

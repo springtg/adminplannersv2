@@ -28,7 +28,7 @@
                 <div class="pr10">
                     <input type="hidden" id="ID" value="{{if isset($Data["slider"])}}{{$Data["slider"]["ID"]}}{{/if}}"/>
                     <input id="Title" type="text"  class="classic-input w100pc"
-                           value="{{if isset($Data["slider"])}}{{$Data["slider"]["Title"]}}{{/if}}"
+                           value="{{if isset($Data["slider"])}}{{$Data["slider"]["Title"]|escape:'html'}}{{/if}}"
                            />
                 </div>
             </td>
@@ -58,6 +58,17 @@
                 </div>
             </td>
         </tr>
+        {{if isset($Data["slider"])}}
+            <tr>
+                <td class="w100"></td>
+                <td colspan="3">
+                    Insert : {{$Data["slider"]["Insert"]}}<br/>
+                    Update : {{$Data["slider"]["Update"]}}<br/>
+                    Log :<br/>
+                    <pre>{{$Data["slider"]["Log"]}}</pre>
+                </td>
+            </tr>
+        {{/if}}
     </table>
     <div>
         <input type="button" class="classic-button" value="Back" onclick="jqxGrid.CancelEdit();"/>

@@ -45,7 +45,9 @@
 </span>
 
 <div style="min-width: 960px">
-    <div style="height: 40px;"></div>
+    <div style="height: 40px;">
+        {{include file='../sys/03_menu.tpl'}}
+    </div>
     <div class="content" style="">
         <div style="">
             <div class="pets tab4">
@@ -77,15 +79,16 @@
                 <b>Admin Planners 2.0</b><br/>
                 <span style="font-weight: normal">Được xây dựng và phát triển bởi <a href="javascript:$('.about-box').show();"><b>Mr. Khuong</b></a></span>
             </div>
-            <div class="jfk-bubble jfk-bubble-promo gray about-box hidden" 
-                 style="visibility: visible; left: 94px; bottom: 22px; opacity: 1; position: absolute">
+            <div class="jfk-bubble jfk-bubble-promo grayc about-box hidden" 
+                 style="visibility: visible; left: 100px;bottom: 36px; opacity: 1; position: absolute">
                 <div class="jfk-bubble-closebtn giftnotice btn" onclick="$('.about-box').hide();" style=""></div>
                 <div class="jfk-bubble-content-id">
                     <div class="promo-content" style="width: 200px; ">
                         <b>Mr. Khuong</b><br/>
-                        Khương Xuân Trường<br/>
-                        khuongxuantruong@gmail.com<br/>
-                        0985 747 240
+                        Khương Xuân Trường <sup>[Name]</sup><br/>
+                        khuongxuantruong@gmail.com <sup>[Email]</sup><br/>
+                        khuongxuantruong <sup>[Skype]</sup><br/>
+                        0985 747 240 <sup>[Phone]</sup>
                     </div>
                 </div>
                 <div class="jfk-bubble-arrow-id jfk-bubble-arrow jfk-bubble-arrowdown" style="left: 114px">

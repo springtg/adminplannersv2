@@ -41,7 +41,7 @@
                 <div class="pr10">
                     <input id="Author" type="text"  class="classic-input w100pc" placeholder=""
 
-                           value="{{if isset($Data["video"])}}{{$Data["video"]["Author"]}}{{/if}}"
+                           value="{{if isset($Data["video"])}}{{$Data["video"]["Author"]|escape:'html'}}{{/if}}"
                            />
                 </div>
             </td>
@@ -52,7 +52,7 @@
                 <div class="pr10">
                     <input type="hidden" id="VideoID" value="{{if isset($Data["video"])}}{{$Data["video"]["VideoID"]}}{{/if}}"/>
                     <input id="Title" type="text"  class="classic-input w100pc"
-                           value="{{if isset($Data["video"])}}{{$Data["video"]["Title"]}}{{/if}}"
+                           value="{{if isset($Data["video"])}}{{$Data["video"]["Title"]|escape:'html'}}{{/if}}"
                            />
                 </div>
             </td>
@@ -136,6 +136,17 @@
                 </div>
             </td>
         </tr>
+        {{if isset($Data["video"])}}
+            <tr>
+                <td class="w100"></td>
+                <td colspan="3">
+                    Insert : {{$Data["video"]["Insert"]}}<br/>
+                    Update : {{$Data["video"]["Update"]}}<br/>
+                    Log :<br/>
+                    <pre>{{$Data["video"]["Log"]}}</pre>
+                </td>
+            </tr>
+        {{/if}}
     </table>
     <div>
         <input type="button" class="classic-button" value="Back" onclick="jqxGrid.CancelEdit();"/>

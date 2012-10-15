@@ -46,6 +46,7 @@ class video_model extends jqxGrid_CI_Model {
             ,"`tbl_video`.`Status`"=>"Public"
             );
         $this->db->where($where);
+        $this->db->order_by("Insert", "desc"); 
         $query=$this->db->get("tbl_video",$limit,$begin);
         //$query=$this->db->get_where("tbl_slider",$where); 
         return $query->result();

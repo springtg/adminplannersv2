@@ -1,0 +1,48 @@
+/* 
+    Document   : tab_
+    Created on : Oct 14, 2012, 9:58:23 PM
+    Author     : Truong
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{background: #F1DFB9;margin: 0;padding: 0}
+.content{
+    overflow: auto;
+    overflow-x: hidden;
+    position: relative;
+    left: 0;
+    right: 0;
+}
+ul, li {
+margin: 0;
+padding: 0;
+}
+ul, ol {
+list-style: none;
+}
+body{font-family:tahoma;font-size:11px}
+a{color:#333;text-decoration:none;}
+a:hover,a:active{color:#E40451;text-decoration:underline;}
+
+.pets{background: #C5AD85;position:relative;border: 1px solid #BEA787;}
+.pets .left{ float:left; padding:0px 0 0 0px; position:relative}
+.pets .left h4{height:30px; line-height:30px; padding-left:5px; margin:0 0 5px 48px; color:#ffbf00; font-weight:bold; background:url(../img/icon.gif) no-repeat 0 -43px}
+.pets .left .hd{height:25px;line-height:25px; padding-left:5px; margin-right:5px; }
+.pets .left .hd li{float:left;cursor:pointer;text-align:center; position:relative; margin:0 3px 0 0;height:24px;line-height:24px;color:#676568;border:1px solid #bea787;padding-left: 20px;padding-right: 20px}
+.pets .left .hd li.hover{font-weight:bold;color:#920000; background:url(img/bg_hot_tab.gif) repeat-x; border:1px solid #bea787; border-bottom:none;height:25px; line-height:25px}
+.pets .left .bd{padding:5px;border-top:1px solid #bca887; _margin-top:-1px;background: url(img/bg_6.gif) repeat-x bottom right;}
+.pets .left .list li{background:url(img/icon_li.gif) no-repeat 0 11px; border:none; height:23px; line-height:23px}
+.pets .left .moer{margin:0; color:#666; position:absolute; top:16px; right:0}
+.pets .hed{height:60px}
+.bdt{border-top: 1px solid #BEA787;}
+.bg{background: url(img/bg_6.gif) repeat-x bottom right;}
+
+.navMenu .item{
+    
+    position: absolute;top: 0;left: 0px;width: 100%;height: 40px;
+/*    border-right: 1px solid #B6A283;
+    border-left: 1px solid #AF734A;*/
+    line-height: 40px;text-align: center;font-weight: bold;
+}
+.navMenu .item:hover,.navMenu .item.active,.navMenu:hover .item.active:hover{background: #AE9063;border-bottom: 5px solid brown;}
+.navMenu:hover .item.active{background: none;border-bottom: none}

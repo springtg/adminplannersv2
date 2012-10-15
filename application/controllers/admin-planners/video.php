@@ -26,6 +26,7 @@ class video extends CI_Controller  {
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/video_model','video_model');
+            $this->load->model('admin-planners/log_model','log_model');
             $this->load->model('admin-planners/youtube','youtube');
             if(!isset($_SESSION["JQX-DEL-VIDEO"]))$_SESSION["JQX-DEL-VIDEO"]=1;
         }
@@ -150,18 +151,18 @@ class video extends CI_Controller  {
             if( (!isset($Params["Title"])) || $Params["Title"]==""){
                 $msgs[]="Title does not empty.";
             }
-            if( (!isset($Params["Categorys"])) || $Params["Categorys"]==""){
-                $msgs[]="Please, choose the Categorys.";
-            }
+//            if( (!isset($Params["Categorys"])) || $Params["Categorys"]==""){
+//                $msgs[]="Please, choose the Categorys.";
+//            }
             if( (!isset($Params["Thumbs"])) || $Params["Thumbs"]==""){
                 $msgs[]="Thumbs does not empty.";
             }
-            if( (!isset($Params["Description"])) || $Params["Description"]==""){
-                $msgs[]="Description does not empty.";
-            }
-            if( (!isset($Params["Tag"])) || $Params["Tag"]==""){
-                $msgs[]="Tag does not empty.";
-            }
+//            if( (!isset($Params["Description"])) || $Params["Description"]==""){
+//                $msgs[]="Description does not empty.";
+//            }
+//            if( (!isset($Params["Tag"])) || $Params["Tag"]==""){
+//                $msgs[]="Tag does not empty.";
+//            }
             if( (!isset($Params["Embel"])) || $Params["Embel"]==""){
                 $msgs[]="Embel does not empty.";
             }
@@ -187,7 +188,10 @@ class video extends CI_Controller  {
                     "Length"=>$Params["Length"]
                 );
                 if(isset($Params["VideoID"]) && $Params["VideoID"]!=""){
+                    $ip = getIP();
+                    $VideoParams["Log"] = "    IP : $ip \n    Action : Update \n    RowID : " . $Params["VideoID"] . "\n    VideoKey : " . $Params["VideoKey"];
                     if($this->video_model->updateVideo($Params["VideoID"],$VideoParams)){
+                        $this->log_model->insert(array("Table" => "Video","RowID"=>$Params["VideoID"], "Action" => "Update", "Log" => $VideoParams["Log"]));
                         $code=1;
                         $msg="Success. Video have been updated.";
                     }else{
@@ -195,7 +199,10 @@ class video extends CI_Controller  {
                         $msg="Fail. Cant update video information.";
                     }
                 }else{
+                    $ip=  getIP();
+                    $VideoParams["Log"]="    IP : $ip \n    Action : Insert \n    VideoKey : ".$Params["VideoKey"];
                     if($this->video_model->insertVideo($VideoParams)){
+                        $this->log_model->insert(array("Table"=>"Video","Action"=>"Insert","Log"=>$VideoParams["Log"]));
                         $code=1;
                         $msg="Success. Video have been added to database.";
                     }else{
@@ -213,13 +220,16 @@ class video extends CI_Controller  {
                 $VideoParams=array(
                     "Status"=>$_POST["Status"]
                 );
-                    if($this->video_model->updateVideo($_POST["VideoID"],$VideoParams)){
-                        $code=1;
-                        $msg="Status' video have been changed.";
-                    }else{
-                        $code=-1;
-                        $msg="Fail. Cant change status of this video";
-                    }
+                $ip=  getIP();
+                $VideoParams["Log"]="    IP : $ip \n    Action : Change Status \n    RowID : ".$_POST["VideoID"]."\n    New Status : ".$_POST["Status"];
+                if($this->video_model->updateVideo($_POST["VideoID"],$VideoParams)){
+                    $this->log_model->insert(array("Table"=>"Video","RowID"=>$_POST["VideoID"],"Action"=>"Change Status","Log"=>$VideoParams["Log"]));
+                    $code=1;
+                    $msg="Status' video have been changed.";
+                }else{
+                    $code=-1;
+                    $msg="Fail. Cant change status of this video";
+                }
             }else{  
                 $code=-1;
                 $msg="Fail.";
@@ -246,7 +256,11 @@ class video extends CI_Controller  {
         public function delete(){
             
             if(isset($_POST["VideoID"])){
+                $ip=  getIP();
+                $VideoParams["Log"]="    IP : $ip \n    Action : Delete \n    RowID : ".$_POST["VideoID"];
+                
                 if($this->video_model->delete($_POST["VideoID"])){
+                    $this->log_model->insert(array("Table"=>"Video","RowID"=>$_POST["VideoID"],"Action"=>"Delete","Log"=>$VideoParams["Log"]));
                     $code=1;
                     $msg="Video have been deleted.";
                 }else{
@@ -262,7 +276,10 @@ class video extends CI_Controller  {
         public function retore(){
             
             if(isset($_POST["VideoID"])){
+                $ip=  getIP();
+                $VideoParams["Log"]="    IP : $ip \n    Action : Restore \n    RowID : ".$_POST["VideoID"];
                 if($this->video_model->retore($_POST["VideoID"])){
+                    $this->log_model->insert(array("Table"=>"Video","Action"=>"Restore","RowID"=>$_POST["VideoID"],"Log"=>$VideoParams["Log"]));
                     $code=1;
                     $msg="Video have been retored.";
                 }else{
