@@ -3,6 +3,13 @@
 -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
 -moz-box-shadow: 0 1px 3px rgba(0,0,0,.2);
 box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+
+-moz-box-shadow: 0 4px 10px #666;
+-webkit-box-shadow: 0 4px 10px #666;
+box-shadow: 0 4px 10px #666;
+-ms-filter: 'progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, direction=270, strength=7)';
+filter: progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, direction=270, strength=7);
+
 background-color: white;
 border: 1px solid;
 border-color: #BBB #BBB #A8A8A8;
@@ -48,6 +55,10 @@ z-index: 1201!important;
 .jfk-bubble.jfk-bubble-promo.gray .jfk-bubble-arrowimplbefore{border-color:#ddd transparent}
 .jfk-bubble.jfk-bubble-promo.gray .jfk-bubble-arrowimplafter{border-color:#fafafa transparent}
 
+.jfk-bubble.jfk-bubble-promo.grayc {background-color: #FFF1A8;border: 1px solid #ccc;}
+.jfk-bubble.jfk-bubble-promo.grayc .jfk-bubble-arrowimplbefore{border-color:#ccc transparent}
+.jfk-bubble.jfk-bubble-promo.grayc .jfk-bubble-arrowimplafter{border-color:#FFF1A8 transparent}
+
 .jfk-bubble.jfk-bubble-promo.white {background-color: #fff;border: 1px solid #ddd;}
 .jfk-bubble.jfk-bubble-promo.white .jfk-bubble-arrowimplbefore{border-color:#ddd transparent}
 .jfk-bubble.jfk-bubble-promo.white .jfk-bubble-arrowimplafter{border-color:#fff transparent}
@@ -55,4 +66,6 @@ z-index: 1201!important;
 .jfk-bubble.jfk-bubble-promo.blue {background-color: #A8EDFF;border: 1px solid #51DBFF;}
 .jfk-bubble.jfk-bubble-promo.blue .jfk-bubble-arrowimplbefore{border-color:#00CBFF transparent}
 .jfk-bubble.jfk-bubble-promo.blue .jfk-bubble-arrowimplafter{border-color:#A8EDFF transparent}
+
+
 

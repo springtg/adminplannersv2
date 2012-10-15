@@ -16,6 +16,8 @@ a img {border:none;}
 img {}
 p {padding-bottom:10px; line-height:24px;}
 hr{}
+.error {width:100%; background-color:#ff6666; color:#FFF; margin-bottom:30px; font-weight:bold; text-align:center; padding:5px 0; border-radius: 5px;}
+.success {width:100%; background-color:#53bec8; color:#FFF; margin-bottom:30px; font-weight:bold; text-align:center; padding:5px 0; border-radius: 5px;}
 
 .clear {clear:both;}
 .left {float:left;}
@@ -109,8 +111,26 @@ hr{}
 #video-line .video:hover span,#video-line .video-center:hover span{display: block}
 #video-line .video div,#video-line .video-center div{
     position: absolute;top: 0;left: 0;width: 290px;height: 163px;
-    background: url('img/video_over.png') no-repeat center; display: none}
+    background: url('img/video_hover.png') no-repeat center; display: none}
 #video-line .video:hover div,#video-line .video-center:hover div{display: block}
+#video-line .video div p,#video-line .video-center div p,#video-line .video div span,#video-line .video-center div span{
+    margin: 0;padding: 0;
+    position: relative;
+    background: #fff;
+top: 50%;
+left: 50%;
+width: 100px;
+height: 65px;
+margin: -26px 0 0 -50px;
+overflow: hidden;
+text-align: center;
+line-height: 20px;
+color: #333;
+font-size: 13px;
+font-weight: bold;
+vertical-align: middle;
+text-transform: uppercase
+}
 #page {float:right; font-weight:bold; }
 #page a {width:20px; height:20px; display:block; margin-left: 12px; color:#333; text-align:center; float:left; padding-bottom:2px;}
 #page a:hover {color:#ff6666;}
@@ -187,7 +207,7 @@ hr{}
 
 #contact-form {margin-top:20px;}
 #contact-form div {margin-top:0px; margin-bottom:30px;}
-#contact-form label {background:url(img/bullet.png) no-repeat left; padding-left:20px; width:129px; display:inline-block; color:#333; font-weight:bold; font-size:13px;}
+#contact-form label {background:url(img/bullet.png) no-repeat left; padding-left:20px; width:120px; display:inline-block; color:#333; font-weight:bold; font-size:13px;}
 #contact-form textarea {border:solid thin #ccc; border-radius: 5px; color:#999; width:377px; padding:5px 5px; font-family:Arial, Helvetica, sans-serif; font-size:12px; }
 #contact-form textarea:focus {border:solid thin #53bec8; color:#53bec8;}
 #contact-form input.contact-text {width:377px; padding:5px 5px 5px 5px; border:solid thin #ccc; border-radius: 5px; color:#999;}
@@ -203,7 +223,7 @@ hr{}
 
 
 /************* Footer *************/
-
+/*
 #footer-home {position:absolute; bottom:140px; width:900px; height:150px; overflow:hidden; left:50%; margin-left:-450px; z-index:3;}
 #footer-about {position:absolute; bottom:120px; width:900px; height:150px; overflow:hidden; left:50%; margin-left:-450px; z-index:3;}
 #footer-request {position:absolute; bottom:70px; width:900px; height:150px; overflow:hidden; left:50%; margin-left:-450px; z-index:3;}
@@ -220,6 +240,40 @@ hr{}
 #network a.facebook {background:url(img/icon-facebook.png) no-repeat; width:24px; height:24px; display:inline-block;}
 #network a.facebook:hover {background:url(img/icon-facebook-hover.png) no-repeat;}
 #network a.twitter {background:url(img/icon-twitter.png) no-repeat; width:24px; height:24px; display:inline-block;}
+#network a.twitter:hover {background:url(img/icon-twitter-hover.png) no-repeat;}
+#network a.youtube {background:url(img/icon-youtube.png) no-repeat; width:24px; height:24px; display:inline-block;}
+#network a.youtube:hover {background:url(img/icon-youtube-hover.png) no-repeat;}
+
+#subscribes {font-weight:bold; color:#ff6666;}
+#subscribes a.subscribe-button {background:url(img/subscribe-button.png) no-repeat; width:24px; height:24px; display:inline-block; margin:0 0px -1px 2px;}
+#subscribes a.subscribe-button:hover {background:url(img/subscribe-button-hover.png) no-repeat;}
+
+#copyright {color:#999; margin-right:20px;}
+#copyright a {color:#53bec8; font-weight:bold;}
+#copyright a:hover {text-decoration:underline;}
+
+#designby {color:#999;}
+#designby a {color:#666; font-weight:bold;}
+#designby a:hover {text-decoration:underline;}*/
+
+/************* Footer *************/
+
+#footer-home {position:absolute; bottom:140px; width:900px; height:150px; overflow:hidden; left:50%; margin-left:-450px; z-index:3;}
+#footer-about {position:absolute; bottom:120px; width:900px; height:150px; overflow:hidden; left:50%; margin-left:-450px; z-index:3;}
+#footer-request {position:absolute; bottom:70px; width:900px; height:150px; overflow:hidden; left:50%; margin-left:-450px; z-index:3;}
+#footer-contact {position:absolute; bottom:140px; width:900px; height:150px; overflow:hidden; left:50%; margin-left:-450px; z-index:3;}
+#footer-stories {position:absolute; bottom:200px; width:900px; height:150px; overflow:hidden; left:50%; margin-left:-450px; z-index:3;}
+#footer-story-detail {position:absolute; bottom:120px; width:900px; height:150px; overflow:hidden; left:50%; margin-left:-450px; z-index:3;}
+
+.footer-line {padding:10px 0; font-size:12px;}
+.footer-line form input.text { border-bottom:thin solid #999; border-top:none; border-left:none; border-right:none; color:#999; font-size:12px; background-color:transparent; width:190px; padding-left:3px;}
+.footer-line form input.text:focus {border-bottom:thin solid #666; }
+
+#network {font-weight:bold; color:#ff6666; width:170px;}
+#network a {margin:0 6px -1px 6px;}
+#network a.facebook {background:url(img/icon-facebook.png) no-repeat; width:24px; height:24px; display:inline-block;}
+#network a.facebook:hover {background:url(img/icon-facebook-hover.png) no-repeat;}
+#network a.twitter {background:url(img/icon-twitter.png) no-repeat; width:24px; height:24px; display:none;}
 #network a.twitter:hover {background:url(img/icon-twitter-hover.png) no-repeat;}
 #network a.youtube {background:url(img/icon-youtube.png) no-repeat; width:24px; height:24px; display:inline-block;}
 #network a.youtube:hover {background:url(img/icon-youtube-hover.png) no-repeat;}
@@ -261,6 +315,6 @@ hr{}
       color: #fff;line-height: 40px;text-transform: uppercase;
       padding-left: 20px;
 }
-#slider a:hover div{display: block;}
-#slider-panel #arrow-pre,#slider-panel #arrow-nex,#slider-panel #slider div{display: none}
-#slider-panel:hover #arrow-pre,#slider-panel:hover #arrow-nex,#slider-panel:hover #slider div{display: block}
+#slider a:hover div{display: block ;}
+#slider-panel #arrow-pre,#slider-panel #arrow-nex,#slider-panel #slider div{display: block;opacity: 0;transition: opacity .25s ease-in-out; -moz-transition: opacity .25s ease-in-out; -webkit-transition: opacity .25s ease-in-out;}
+#slider-panel:hover #arrow-pre,#slider-panel:hover #arrow-nex,#slider-panel:hover #slider div{display: block;opacity: 1 }

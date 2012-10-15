@@ -30,11 +30,12 @@
     <div id="right-text">
         <div id="right-ribbon-contact"><p>get in touch</p></div>
         <div class="text">
-            <p><span class="red">Quisque pretium elementum nisl,</span> sit amet ultrices ipsum varius sed. </p>
-
-            <p>Integer facilisis malesuada mauris non suscipit. Proin quis tellus nulla. </p>
-
-            <p>Nullam adipiscing lacus sit amet tortor sagittis lacinia.</p>
+            {{if isset($Data["getintouch"]) and !isset($Data["getintouch"]["Delete"]) and $Data["getintouch"]["Status"]=="Public"}}
+            {{$Data["getintouch"]["Content"]}}
+            {{else}}
+                No data to display.
+            {{/if}}
+            
         </div>
     </div>
 

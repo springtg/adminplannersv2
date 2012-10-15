@@ -4,8 +4,8 @@
 <script type="text/javascript" src="{{base_url()}}jqwidgets-ver2.4.2/jqwidgets/jqx-all.js"></script>
 <link rel="stylesheet" href="{{base_url()}}syslib/fix_jqxGrid/fix_jqxGrid.css" type="text/css" />
 
-<script type="text/javascript" src="{{base_url()}}syslib/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-
+<!--<script type="text/javascript" src="{{base_url()}}syslib/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>-->
+<script src="{{base_url()}}syslib/nicEdit/nicEdit.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{base_url()}}syslib/ckfinder/ckfinder.js"></script>
 <script type="text/javascript" src="{{base_url()}}syslib/ckfinder/browse.js"></script>
 <div style="padding-right: 2px;padding-left: 0px;">
@@ -194,10 +194,12 @@
                 <div onclick=\"jqxGrid.Edit('"+RowOBJ.ID+"');\" \
                 class='icon16 edit_icon hover50' title='Edit'></div>\
             ";
+                if(RowOBJ.Lock==0){
                         str+="\
                 <div onclick=\"jqxGrid.Delete('"+RowOBJ.ID+"');\" \
                 class='icon16 delete_icon hover50' title='Delete'></div>\
             ";
+                    }
                     }else{
                         str+="\
                 <div onclick=\"jqxGrid.Restore('"+RowOBJ.ID+"');\" \
@@ -219,12 +221,12 @@
                     if(Status.Status=="Public"){
                         str+="\
                 <span class='hideifhover' style='color:blue;'>Public</span>\
-                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.VideoID+"','Private');\"><span style='color:blue;'>Public </span> <span style='color:#000;'>→ Private</span></a></span>\
+                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.ID+"','Private');\"><span style='color:blue;'>Public </span> <span style='color:#000;'>→ Private</span></a></span>\
                 ";
                     }else if(Status.Status=="Private"){
                         str+="\
                 <span class='hideifhover'>Private</span>\
-                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.VideoID+"','Public');\"><span style='color:#000;'>Private → </span> <span style='color:blue;'>Public</span></a></span>\
+                <span class='showifhover'><a href=\"javascript:jqxGrid.ChangeStatus('"+Status.ID+"','Public');\"><span style='color:#000;'>Private → </span> <span style='color:blue;'>Public</span></a></span>\
                 ";
                     }
                 }catch(e){ }
@@ -311,6 +313,7 @@
             CancelEdit:function (){
                 $("#frmDetail").hide();
                 $("#jqxWidget").show();
+                removeEditorContent();
                 $(".tab-nav li.hover .tabdes").html("");
             },
             Save:function (){
@@ -352,7 +355,7 @@
                 if(result.code<0){
                     ShowNoticeDialogMessage(result.msg);
                 }else{
-                    ShowNoticeDialogMessage("Video' Status have been Changed!","Notice Message !",function(){
+                    ShowNoticeDialogMessage(result.msg,"Notice Message !",function(){
                         jqxGrid.Refresh();
                     });
                 }
@@ -409,8 +412,8 @@
         if(isrunning)return;
         var Title   =   $("#Title"  ).val();
         var Alias   =   $("#Alias"  ).val();
-        var Thumb   =   $("#Thumb"      ).val();
-        var Content =   tinyMCE.get('Content').getContent();
+        var Thumb   =   $("#Thumb"  ).val();
+        var Content =   areaContent.instanceById('Content').getContent();
         isrunning=true;
         var url=baseurl+"admin-planners/content/Save";
         var data={
@@ -457,37 +460,19 @@
             }
         });
     }
-    function CreateEditorElement(){
-         tinyMCE.init({
-                // General options
-                mode : "textareas",
-                editor_selector : "mceEditor",
-                editor_deselector : "mceNoEditor",
-                theme : "advanced",
-                plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-                width : "730",
-                height:"500",
-                // Theme options
-                theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
-                theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-                theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-                theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
-                theme_advanced_toolbar_location : "top",
-                theme_advanced_toolbar_align : "left",
-                theme_advanced_statusbar_location : "bottom",
-                theme_advanced_resizing : true,
-
-                // Skin options
-
-                // Example content CSS (should be your site CSS)
-                // Drop lists for link/image/media/template dialogs
-                template_external_list_url : "js/template_list.js",
-                external_link_list_url : "js/link_list.js",
-                external_image_list_url : "js/image_list.js",
-                media_external_list_url : "js/media_list.js"
-
-        });
+    var areaContent;
+    function addEditorContent(){
+        if(!areaContent) {
+            areaContent = new nicEditor({fullPanel : true}).panelInstance('Content',{hasPanel : true});
+	}
     }
+    function removeEditorContent(){
+        if(areaContent) {
+        	areaContent.removeInstance('Content');
+		areaContent = null;
+	}
+    }
+    
     $(document).ready(function () {
         jqxGrid.init();
     });

@@ -26,11 +26,15 @@ class request extends CI_Controller  {
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
             $this->load->model('video/slider_model','slider_model');
+            $this->load->model('video/content_model','content_model');
             
         }
         public function index()
 	{
-           
+            $request=$this->content_model->get("6");
+            $request=  isset($request[0])?objectToArray($request[0]):null;
+            $Data["request"]=$request;
+            $this->smarty->assign('Data', $Data);
             $this->smarty->display("video/page/06_request");
             
 	}

@@ -25,7 +25,7 @@ class content extends CI_Controller  {
             $this->load->library('javascript');
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
-            $this->load->model('admin-planners/content_model','video_model');
+            $this->load->model('admin-planners/content_model','content_model');
             if(!isset($_SESSION["JQX-DEL-CONTENT"]))$_SESSION["JQX-DEL-CONTENT"]=1;
         }
         public function index()
@@ -107,7 +107,7 @@ class content extends CI_Controller  {
         public function delete(){
             
             if(isset($_POST["ID"])){
-                if($this->video_model->delete($_POST["ID"])){
+                if($this->content_model->delete($_POST["ID"])){
                     $code=1;
                     $msg="Record have been deleted.";
                 }else{
@@ -137,7 +137,10 @@ class content extends CI_Controller  {
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
         public function Save(){
+            $vlows=array("\\\"","\\'");
+            $vals=array("\"","'");
             $_Params=$_POST["Params"];
+            $_Params["Content"]=  str_replace($vlows, $vals,$_REQUEST["Params"]["Content"]);
             $msgs=array();
             
             if( (!isset($_Params["Title"])) || $_Params["Title"]==""){
@@ -149,6 +152,7 @@ class content extends CI_Controller  {
             if( (!isset($_Params["Content"])) || $_Params["Content"]==""){
                 $msgs[]="Content does not empty.";
             }
+            //echo $_Params["Content"];return;
             if(count($msgs)>0){
                 $code=-44;
                 $msg="";
@@ -164,7 +168,7 @@ class content extends CI_Controller  {
                     
                 );
                 if(isset($_Params["ID"]) && $_Params["ID"]!=""){
-                    if($this->video_model->updateVideo($_Params["ID"],$Params)){
+                    if($this->content_model->update($_Params["ID"],$Params)){
                         $code=1;
                         $msg="Success. Record have been updated.";
                     }else{
@@ -172,7 +176,7 @@ class content extends CI_Controller  {
                         $msg="Fail. Cant update this Record.";
                     }
                 }else{
-                    if($this->video_model->insertVideo($Params)){
+                    if($this->content_model->insert($Params)){
                         $code=1;
                         $msg="Success. Record have been added to database.";
                     }else{
@@ -205,7 +209,8 @@ class content extends CI_Controller  {
                         'Delete'        => $row->Delete,
                         'Content'         => json_encode(array(
                                         "ID"=>$row->ID,
-                                        "Delete"=>$row->Delete
+                                        "Delete"=>$row->Delete,
+                                        "Lock"=>$row->Lock
                                     ))
                     );
                 }
