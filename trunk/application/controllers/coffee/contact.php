@@ -1,6 +1,6 @@
 <?php 
 session_start();
-class home extends CI_Controller  {
+class contact extends CI_Controller  {
 
         /**
         * Index Page for this controller.

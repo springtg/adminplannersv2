@@ -1,6 +1,6 @@
 <?php 
 session_start();
-class home extends CI_Controller  {
+class about extends CI_Controller  {
 
         /**
         * Index Page for this controller.
@@ -32,7 +32,7 @@ class home extends CI_Controller  {
 	{
             $this->smarty->view("sys/01_notice",'NOTICE');
             $this->smarty->view("sys/02_script",'SCRIPT');
-            $this->smarty->view("coffee/page/01_home",'PAGE');
+            $this->smarty->view("coffee/page/02_about",'PAGE');
             $this->smarty->display("coffee/page/00_template");
             
 	}

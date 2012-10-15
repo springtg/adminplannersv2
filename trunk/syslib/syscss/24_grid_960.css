@@ -13,9 +13,10 @@
 
   Note: IE6 works fine without this fix.
 */
-*{font-family: tahoma,arial,sans-serif;font-size: 11px;}
+
 body {
   min-width: 960px;
+  font-family: tahoma,arial,sans-serif;font-size: 11px;
 }
 
 /* Containers

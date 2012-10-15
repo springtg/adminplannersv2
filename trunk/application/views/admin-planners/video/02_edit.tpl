@@ -52,6 +52,7 @@
                 <div class="pr10">
                     <input type="hidden" id="VideoID" value="{{if isset($Data["video"])}}{{$Data["video"]["VideoID"]}}{{/if}}"/>
                     <input id="Title" type="text"  class="classic-input w100pc"
+                           onblur="getAlias();"
                            value="{{if isset($Data["video"])}}{{$Data["video"]["Title"]|escape:'html'}}{{/if}}"
                            />
                 </div>

@@ -481,7 +481,7 @@
     function getAlias(){
         var url=baseurl+"sys/excution/getAlias";
         var data={
-            string:$("#VideoName").val()
+            string:$("#Title").val()
         };
         jqxAjax(url,data,function(result){
             isrunning=false;
