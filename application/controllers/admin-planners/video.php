@@ -133,6 +133,8 @@ class video extends CI_Controller  {
         }
         
         public function savevideo(){
+            $vlows=array("\\\"","\\'");
+            $vals=array("\"","'");
             $Params=$_POST["Params"];
             $msgs=array();
             
@@ -166,7 +168,7 @@ class video extends CI_Controller  {
             if( (!isset($Params["Embel"])) || $Params["Embel"]==""){
                 $msgs[]="Embel does not empty.";
             }
-            //echo"<pre>";print_r($Params);echo"</pre>";return;
+            
             if(count($msgs)>0){
                 $code=-44;
                 $msg="";
@@ -187,6 +189,8 @@ class video extends CI_Controller  {
                     "Embel"=>$Params["Embel"],
                     "Length"=>$Params["Length"]
                 );
+                //$VideoParams["Embel"]=  str_replace($vlows, $vals,$_REQUEST["Params"]["Embel"]);
+                //echo"<pre>";print_r($VideoParams);echo"</pre>";return;
                 if(isset($Params["VideoID"]) && $Params["VideoID"]!=""){
                     $ip = getIP();
                     $VideoParams["Log"] = "    IP : $ip \n    Action : Update \n    RowID : " . $Params["VideoID"] . "\n    VideoKey : " . $Params["VideoKey"];

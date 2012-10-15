@@ -22,13 +22,13 @@
                         }
                     } 
                 }catch(err){
-                    ShowErrorDialogMessage("JSON Error:"+err.message+"\nContent: "+data);
+                    ShowErrorDialogMessage("Sorry. Your request could not be completed.<br/> Please check your input data.");
                 }
             },
             error: function (xhr, ajaxOptions, thrownError){
                 isrunning=false;
                 HideLoadding();
-                ShowErrorDialogMessage("<b>Status</b>:"+xhr.status+"\n<b>ThrownError</b>:"+thrownError+"<br/>"+surl);
+                ShowErrorDialogMessage("Sorry. Your request could not be completed.<br/> Please check your input data.");
             
             }
         });
@@ -49,7 +49,7 @@
             },
             error: function (xhr, ajaxOptions, thrownError){
                 isrunning=false;
-                ShowErrorDialogMessage("<b>Status</b>:"+xhr.status+"<br/><b>ThrownError</b>:"+thrownError+"<br/>"+surl);
+                ShowErrorDialogMessage("Sorry. Your request could not be completed.<br/> Please check your input data.");
             }
         });
     }
