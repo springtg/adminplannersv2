@@ -31,6 +31,7 @@ z-index: 1
 .foot-flash{width: 960px; height: 200px;position: absolute;top: 0;left: 0}
 .page-bg{}
 .banner{position: absolute;top: -90px;right: 0;width: 261px;height: 257px;background: url(../banner.png) no-repeat top center;}
+.subbanner{position: absolute;width: 100px;height: 100px;top: 51px;left: 88px}
 .address{position: absolute;top: 400px;left: 52px;width: 160px;line-height: 18px}
 .line{background: url(../line.png) no-repeat right center;}
 h1{font-size: 12px;font-weight: bold;color: #FAA551}

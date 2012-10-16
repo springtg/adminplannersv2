@@ -1,6 +1,8 @@
 <div id="top">
     <div id="cloud"></div>
-    <div id="sun" 
+    
+</div>
+<div id="sun" 
          {{if intval(date("h"))>=6}}
              style="left: {{(intval(date("h"))-6)*100/12}}%;"
          {{else}}
@@ -8,8 +10,6 @@
          {{/if}}
          
          ></div>
-</div>
-
 <div id="navigation">
     <div id="about" class="fade"><a href="{{base_url("about")}}"></a></div>
     <div id="story" class="fade"><a href="{{base_url("stories")}}"></a></div>

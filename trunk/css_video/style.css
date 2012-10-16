@@ -110,9 +110,9 @@ hr{}
     background: url('../syslib/bg/60.png') repeat; display: none}
 #video-line .video:hover span,#video-line .video-center:hover span{display: block}
 #video-line .video div,#video-line .video-center div{
-    position: absolute;top: 0;left: 0;width: 290px;height: 163px;
-    background: url('img/video_hover.png') no-repeat center; display: none}
-#video-line .video:hover div,#video-line .video-center:hover div{display: block}
+    position: absolute;top: 0;left: 0;width: 290px;height: 163px;opacity: 0;
+    background: url('img/video_hover.png') no-repeat center; transition: opacity .25s ease-in-out; -moz-transition: opacity .25s ease-in-out; -webkit-transition: opacity .25s ease-in-out;}
+#video-line .video:hover div,#video-line .video-center:hover div{opacity: 1;}
 #video-line .video div p,#video-line .video-center div p,#video-line .video div span,#video-line .video-center div span{
     margin: 0;padding: 0;
     position: relative;
@@ -146,7 +146,7 @@ text-transform: uppercase
 
 #video-panel {margin-bottom:20px;}
 #video-title {margin-bottom:20px; padding-bottom:10px; border-bottom: thin dashed #999;}
-#video-title .title {float:left; font-size:23px; color:#ff3333; font-weight:bold; text-transform:uppercase; max-width:500px;}
+#video-title .title {float:left; font-size:23px; color:#ff3333; font-weight:bold; text-transform:uppercase; width: 665px;overflow: hidden;}
 #video-title .likefb {float:left; margin:0 15px;}
 #video-title .video-pani {float:right; display:block;}
 #video-title .video-pani a.video-pani-previous {background:url(img/video-previous.png) no-repeat; width:25px; height:25px; display:inline-block;}
@@ -160,8 +160,8 @@ text-transform: uppercase
 #video-info #video-detail .title {font-weight:bold; text-transform:uppercase; color:#ea8254; margin-bottom:2px;}
 #video-info #video-detail .author {color:#333; font-weight:bold; text-transform:uppercase; margin-bottom:10px;}
 #video-info #video-detail .share {padding:17px 0 10px 0; margin:15px 0 20px 0; border-bottom:thin dashed #999; border-top:thin dashed #999; }
-#video-info #video-detail .share .fbshare {display:inline-block; margin-right:5px;}
-#video-info #video-detail .share .twittershare {display:inline-block;}
+#video-info #video-detail .share .fbshare {display:inline-block; margin-right:0px;width: 48%;}
+#video-info #video-detail .share .twittershare {display:inline-block;width: 48%;}
 #video-info #video-detail a.record-button {background:url(img/record-button.png) no-repeat center; width:221px; height:36px; display:block;}
 #video-info #video-detail a.record-button:hover {background:url(img/record-button-hover.png) no-repeat center;}
 

@@ -43,7 +43,11 @@ class content extends CI_Controller  {
                     ,"link"=>base_url("admin-planners/slider")),
                 "contact"   =>array(
                     "display"=>"Contact"      
-                    ,"link"=>base_url("admin-planners/contact"))
+                    ,"link"=>base_url("admin-planners/contact")),
+                "request"   =>array(
+                    "display"=>"Request"      
+                    ,"value"=>"request"       
+                    ,"link"=>base_url("admin-planners/request"))
             );
             $Data["tab_config"]["tabindex"]="content";
             $this->smarty->assign('_SESSION', $_SESSION);

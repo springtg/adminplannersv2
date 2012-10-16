@@ -23,24 +23,24 @@ class video_model extends jqxGrid_CI_Model {
             "`tbl_video`.`Delete`"=>null
             ,"`tbl_video`.`Status`"=>"Public"
             );
-        $this->db->like('Category', "a-zA-Z0-9"); 
-        $categorys=  explode(",", $categorys);
-        foreach ($categorys as $ca){
-            if($ca!="" && $ca!=null){
-               $this->db->or_like('Category', ",$ca,");  
-            }
-        }
-        $tag=  explode(",", $tag);
-        foreach ($tag as $ta){
-            if($ta!="" && $ta!=null){
-               $this->db->or_like('Tag', "$ta");  
-            }
-        }
+//        $this->db->like('Category', "a-zA-Z0-9"); 
+//        $categorys=  explode(",", $categorys);
+//        foreach ($categorys as $ca){
+//            if($ca!="" && $ca!=null){
+//               $this->db->or_like('Category', ",$ca,");  
+//            }
+//        }
+//        $tag=  explode(",", $tag);
+//        foreach ($tag as $ta){
+//            if($ta!="" && $ta!=null){
+//               $this->db->or_like('Tag', "$ta");  
+//            }
+//        }
         $this->db->order_by("Rand()", "desc"); 
         $query=$this->db->get_where('tbl_video', $where,3,0); 
         return $query->result();
     }
-    function gets($limit=6,$begin=0){
+    function gets($limit=9,$begin=0){
         $where=array(
             "`tbl_video`.`Delete`"=>null
             ,"`tbl_video`.`Status`"=>"Public"

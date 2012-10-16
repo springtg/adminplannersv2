@@ -1,6 +1,10 @@
 
 <div class="grid_24 page-bg" style="min-height: 360px;">
-    <div class="banner"></div>
+    <div class="banner">
+        <div class="subbanner">
+            
+        </div>
+    </div>
     <div class="grid_7 line" style="height: 460px">
 
     </div>

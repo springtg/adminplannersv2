@@ -14,7 +14,13 @@ class contact_model extends jqxGrid_CI_Model {
         if($count==1) return true;
         return false;
     }
-    
+    function insertRequest($params){
+        $this->db->set('Insert', 'NOW()', FALSE);
+        $this->db->insert('tbl_request', $params); 
+        $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
+        if($count==1) return true;
+        return false;
+    }
     
 }
 ?>

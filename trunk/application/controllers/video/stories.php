@@ -30,11 +30,11 @@ class stories extends CI_Controller  {
         }
         public function index()
 	{
-            $limit=6;
+            $limit=9;
             $begin=0;
             $videos=$this->video_model->gets($limit,$begin);
             $totalrecord=$this->video_model->counts();
-            $pages=  intval(($totalrecord+5)/6);
+            $pages=  intval(($totalrecord+8)/9);
             $pageindex=1;
             $Data["PageIndex"]=$pageindex;
             $Data["Pages"]=$pages;
@@ -45,11 +45,11 @@ class stories extends CI_Controller  {
 	}
         public function page($p=1)
 	{
-            $limit=6;
+            $limit=9;
             $begin=($p-1)*$limit;
             $videos=$this->video_model->gets($limit,$begin);
             $totalrecord=$this->video_model->counts();
-            $pages=  intval(($totalrecord+5)/6);
+            $pages=  intval(($totalrecord+8)/9);
             $Data["PageIndex"]=$p;
             $Data["Pages"]=$pages;
             $Data["Videos"]=  objectToArray($videos);
