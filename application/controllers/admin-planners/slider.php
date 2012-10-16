@@ -76,7 +76,11 @@ class slider extends CI_Controller  {
                 "contact"   =>array(
                     "display"=>"Contact"      
                     ,"value"=>"contact"       
-                    ,"link"=>base_url("admin-planners/contact"))
+                    ,"link"=>base_url("admin-planners/contact")),
+                "request"   =>array(
+                    "display"=>"Request"      
+                    ,"value"=>"request"       
+                    ,"link"=>base_url("admin-planners/request"))
             );
             $Data["tab_config"]["tabindex"]="slider";
             $this->smarty->assign('_SESSION', $_SESSION);

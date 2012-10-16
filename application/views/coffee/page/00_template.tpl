@@ -84,16 +84,7 @@
                 </object>
             </div>
         </div>
-        <a href="{{base_url('coffee')}}">
-            <div class="grid_8" style="top: 35px;left: 22px;">
-                <div class="grid_2">
-                    <img src="http://www.gbs.com.tw/images/logo11.png"/>
-                </div>
-                <div class="grid_6">
-                    <img src="{{base_url()}}css_coffee/logo.png"/>
-                </div>
-            </div>
-        </a>
+
         <div class="grid_12">
         </div>
         <div class="head-second"></div>
@@ -109,6 +100,16 @@
                 ...<br/>
             </div>
         </div>
+        <a href="{{base_url('coffee')}}">
+            <div class="grid_8" style="top: 35px;left: 22px;">
+                <div class="grid_2">
+                    <img src="http://www.gbs.com.tw/images/logo11.png"/>
+                </div>
+                <div class="grid_6">
+                    <img src="{{base_url()}}css_coffee/logo.png"/>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
 <div class="container container_24" style="">

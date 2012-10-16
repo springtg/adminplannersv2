@@ -4,6 +4,8 @@
     <div id="left-text">
         <div id="left-ribbon-contact"><p>send us a message</p></div>
         <div class="text">
+            <div class="error hidden">There is an error with your information. Please check again!</div>
+    <div class="success hidden">Your request was successful! Thank you very much!</div>
             <form id="contact-form">
                 <div>
                     <label>Full Name <span class="red">(*)</span></label>
@@ -61,11 +63,21 @@
             isrunning=false;
             try{
                 if(result.code<0){
-                    ShowNoticeDialogMessage(result.msg);
+                    //ShowNoticeDialogMessage(result.msg);
+                    $("div.error").show();
+                    setTimeout(function(){$("div.error").hide();},5000);
                 }else{
-                    ShowNoticeDialogMessage(result.msg,"Notice Message.",function(){
-                        location.reload();
-                    });
+                    $("div.success").show();
+                    setTimeout(function(){
+                        $("div.success").hide("");
+                        $("#FullName").val("");
+                        $("#Email").val("");
+                        $("#Subject").val("");
+                        $("#Message").val("");
+                    },5000);
+//                    ShowNoticeDialogMessage(result.msg,"Notice Message.",function(){
+//                        location.reload();
+//                    });
                 }
             }catch(err){
                 ShowErrorDialogMessage(err);

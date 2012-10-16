@@ -29,6 +29,7 @@ class home extends CI_Controller  {
         }
         public function index()
 	{
+            redirect(base_url("admin-planners/video"));
             $Data["tab_config"]["tabs"]=array(
                 "system"   =>array("display"=>"Hệ Thống"          ,"value"=>"system"     ,"link"=>""),
                 "authority" =>array("display"=>"Quyền"            ,"value"=>"authority"   ,"link"=>""),

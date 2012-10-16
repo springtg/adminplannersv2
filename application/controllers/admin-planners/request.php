@@ -1,6 +1,6 @@
 <?php 
 session_start();
-class contact extends CI_Controller  {
+class request extends CI_Controller  {
 
         /**
         * Index Page for this controller.
@@ -26,7 +26,7 @@ class contact extends CI_Controller  {
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/contact_model','contact_model');
-            if(!isset($_SESSION["JQX-DEL-CONTACT"]))$_SESSION["JQX-DEL-CONTACT"]=1;
+            if(!isset($_SESSION["JQX-DEL-REQUEST"]))$_SESSION["JQX-DEL-REQUEST"]=1;
         }
         public function index()
 	{
@@ -53,49 +53,38 @@ class contact extends CI_Controller  {
                     ,"value"=>"request"       
                     ,"link"=>base_url("admin-planners/request"))
             );
-            $Data["tab_config"]["tabindex"]="contact";
+            $Data["tab_config"]["tabindex"]="request";
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
             
             $this->smarty->view("sys/01_notice",'NOTICE');
             $this->smarty->view("sys/02_script",'SCRIPT');
             $this->smarty->view('admin-planners/tabs/01_tabs',"TABS");
-            $this->smarty->view('admin-planners/contact/01_jqx',"JQXGRID");
+            $this->smarty->view('admin-planners/request/01_jqx',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
-        public function Detail(){
-            if(isset($_POST["ID"])){
-                $contact=$this->contact_model->get($_POST["ID"]);
-                $Data["obj"]=null;
-                if(isset($contact[0]))$Data["obj"]= objectToArray ($contact[0]);
-                $this->smarty->assign('Data', $Data);
-                $this->smarty->display("admin-planners/contact/02_detail");
-            }else{
-                echo "No data to display.";
-            }
-            
-        }
+        
         public function ChangeDeleteDisplay(){
             
             if(isset($_POST["showDelete"]) && $_POST["showDelete"]==0){
-                $_SESSION["JQX-DEL-CONTACT"]=0;
+                $_SESSION["JQX-DEL-REQUEST"]=0;
                 $code=1;
                 $msg="Deleted record have been hide.";
             }elseif(isset($_POST["showDelete"]) && $_POST["showDelete"]==-1){
                 $code=1;
                 $msg="Only show deleted record.";
-                $_SESSION["JQX-DEL-CONTACT"]=-1;
+                $_SESSION["JQX-DEL-REQUEST"]=-1;
             }else{
                 $code=1;
                 $msg="Show all record.";
-                $_SESSION["JQX-DEL-CONTACT"]=1;
+                $_SESSION["JQX-DEL-REQUEST"]=1;
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
         public function delete(){
             
             if(isset($_POST["ID"])){
-                if($this->contact_model->delete($_POST["ID"])){
+                if($this->contact_model->deleteRequest($_POST["ID"])){
                     $code=1;
                     $msg="Item have been deleted.";
                 }else{
@@ -111,7 +100,7 @@ class contact extends CI_Controller  {
         public function retore(){
             
             if(isset($_POST["ID"])){
-                if($this->contact_model->retore($_POST["ID"])){
+                if($this->contact_model->retoreRequest($_POST["ID"])){
                     $code=1;
                     $msg="Item have been retored.";
                 }else{
@@ -128,20 +117,20 @@ class contact extends CI_Controller  {
             $jqx_data=array();
             $result['total_rows']=0;
             //if($this->checkauthority()>=0){
-                $result=$this->contact_model->jqxgrid();
+                $result=$this->contact_model->jqxgridRequest();
                 $rows=$result['rows'];
                 // get data and store in a json array
                 foreach ($rows as $row) {
                     $jqx_data[] = array(
                         'FullName'      => $row->FullName,
                         'Email'         => $row->Email,
-                        'Phone'         => $row->Phone,
-                        'Subject'       => $row->Subject,
+                        'Title'         => $row->Title,
+                        'Author'       => $row->Author,
                         'Status'        => $row->Status,
                         'Insert'        => $row->Insert,
                         'Update'        => $row->Update,
                         'Delete'        => $row->Delete,
-                        'Contact'         => json_encode(array(
+                        'Request'         => json_encode(array(
                                         "ID"=>$row->ID,
                                         "Delete"=>$row->Delete
                                     ))

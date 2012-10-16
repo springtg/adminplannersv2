@@ -84,9 +84,9 @@
                 autoOpen: false,showCollapseButton: true, resizable: false,
                 Height: 300,width: 480, theme: theme 
             });
-            $("#jqxRadioButtonShowAll").jqxRadioButton({ width: 250, height: 25, {{if $_SESSION["JQX-DEL-CONTACT"]==1}}checked: true,{{/if}} theme: theme });
-            $("#jqxRadioButtonHideDelete").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-CONTACT"]==0}}checked: true,{{/if}} theme: theme });
-            $("#jqxRadioButtonShowDeleteOnly").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-CONTACT"]==-1}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonShowAll").jqxRadioButton({ width: 250, height: 25, {{if $_SESSION["JQX-DEL-REQUEST"]==1}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonHideDelete").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-REQUEST"]==0}}checked: true,{{/if}} theme: theme });
+            $("#jqxRadioButtonShowDeleteOnly").jqxRadioButton({ width: 250, height: 25,{{if $_SESSION["JQX-DEL-REQUEST"]==-1}}checked: true,{{/if}} theme: theme });
         };
         //Adding event listeners
         function _addEventListeners() {
@@ -110,8 +110,8 @@
             var listSource = [
                 { label: 'FullName' , value: 'FullName', checked: true }, 
                 { label: 'Email'    , value: 'Email', checked: true }, 
-                { label: 'Phone'    , value: 'Phone', checked: false }, 
-                { label: 'Subject'  , value: 'Subject', checked: true }, 
+                { label: 'Title'    , value: 'Title', checked: true }, 
+                { label: 'Author'  , value: 'Author', checked: true }, 
                 { label: 'Status'   , value: 'Status', checked: false }, 
                 { label: 'Insert'   , value: 'Insert', checked: true }, 
                 { label: 'Update'   , value: 'Update', checked: false },
@@ -134,18 +134,18 @@
             var source ={
                 datatype: "json",
                 datafields: [
-                    { name: 'Contact'   , type: 'string'},
+                    { name: 'Request'   , type: 'string'},
                     { name: 'FullName'  , type: 'string'},
                     { name: 'Email'     , type: 'string'},
-                    { name: 'Phone'     , type: 'string'},
-                    { name: 'Subject'   ,type:'string'},
+                    { name: 'Title'     , type: 'string'},
+                    { name: 'Author'   ,type:'string'},
                     { name: 'Status'    ,type:'string'},
                     { name: 'Insert'    ,type: 'date'},
                     { name: 'Update'    ,type: 'date'},
                     { name: 'Delete'    ,type: 'date'}
                     
                 ],
-                url: baseurl+'admin-planners/contact/jqxgrid/',
+                url: baseurl+'admin-planners/request/jqxgrid/',
                 filter: function(){
                     $("#jqxgrid").jqxGrid('updatebounddata');
                     //$('#grid').jqxGrid('refreshdata');
@@ -178,10 +178,7 @@
                 <div onclick=\"jqxGrid.Delete('"+RowOBJ.ID+"');\" \
                 class='icon16 delete_icon hover50' title='Delete'></div>\
             ";
-                        str+="\
-                <div onclick=\"jqxGrid.Detail('"+RowOBJ.ID+"');\" \
-                class='icon16 detail_icon hover50' title='Detail'></div>\
-            ";
+                        
                     }else{
                         str+="\
                 <div onclick=\"jqxGrid.Restore('"+RowOBJ.ID+"');\" \
@@ -239,11 +236,11 @@
                 pagesizeoptions: ['20', '50', '100'],
                 virtualmode: true,
                 columns: [
-                    { text: ''          , datafield: 'Contact'  ,cellsrenderer: linkrenderer  ,width:80       },
+                    { text: ''          , datafield: 'Request'  ,cellsrenderer: linkrenderer  ,width:80       },
                     { text: 'FullName'  , datafield: 'FullName' ,width:120   },
                     { text: 'Email'     , datafield: 'Email'    ,width:120     },
-                    { text: 'Phone'     , datafield: 'Phone'    ,width:100   ,hidden:true  },
-                    { text: 'Subject'   , datafield: 'Subject'       },
+                    { text: 'Title'     , datafield: 'Title'    ,width:100     },
+                    { text: 'Author'   , datafield: 'Author'   ,width:100    },
                     { text: 'Status'    , datafield: 'Status'   ,width:100,hidden:true },
                     { text: 'Insert'    , datafield: 'Insert'   ,cellsformat: 'yyyy-MM-dd',width:80},
                     { text: 'Update'    , datafield: 'Update'   ,cellsformat: 'yyyy-MM-dd',width:80,hidden:true},
@@ -279,33 +276,33 @@
                 _restore(ID);
             },
             Edit:function (VideoID){
-                $("#frmDetail").show();
-                $("#jqxWidget").hide();
-                $("#frmDetail").html("Loadding...");
-                if(VideoID==undefined){
-                    $(".tab-nav li.hover .tabdes").html(" → Insert");
-                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{},$("#frmDetail"));
-                }else{
-                    $(".tab-nav li.hover .tabdes").html(" → Update");
-                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{VideoID:VideoID},$("#frmDetail"));
-                }
+//                $("#frmDetail").show();
+//                $("#jqxWidget").hide();
+//                $("#frmDetail").html("Loadding...");
+//                if(VideoID==undefined){
+//                    $(".tab-nav li.hover .tabdes").html(" → Insert");
+//                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{},$("#frmDetail"));
+//                }else{
+//                    $(".tab-nav li.hover .tabdes").html(" → Update");
+//                    htmlAjax(baseurl+"admin-planners/video/EditVideo",{VideoID:VideoID},$("#frmDetail"));
+//                }
             },
             Detail:function (ID){
-                if(ID!=undefined){
-                    $("#frmDetail").show();
-                    $("#jqxWidget").hide();
-                    $("#frmDetail").html("Loadding...");
-                    $(".tab-nav li.hover .tabdes").html(" → Detail");
-                    htmlAjax(baseurl+"admin-planners/contact/Detail",{ID:ID},$("#frmDetail"));
-                }
+//                if(ID!=undefined){
+//                    $("#frmDetail").show();
+//                    $("#jqxWidget").hide();
+//                    $("#frmDetail").html("Loadding...");
+//                    $(".tab-nav li.hover .tabdes").html(" → Detail");
+//                    htmlAjax(baseurl+"admin-planners/contact/Detail",{ID:ID},$("#frmDetail"));
+//                }
             },
             CancelEdit:function (){
-                $("#frmDetail").hide();
-                $("#jqxWidget").show();
-                $(".tab-nav li.hover .tabdes").html("");
+//                $("#frmDetail").hide();
+//                $("#jqxWidget").show();
+//                $(".tab-nav li.hover .tabdes").html("");
             },
             Save:function (){
-                _SaveVideo();
+                
             },
             ChangeStatus:function (VideoID,Status){
                 _ChangeStatus(VideoID,Status);
@@ -316,7 +313,7 @@
     function  _changeDisplayDelete(v){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/contact/ChangeDeleteDisplay/";
+        var url=baseurl+"admin-planners/request/ChangeDeleteDisplay/";
         var data={
             showDelete  :   v
         };
@@ -333,7 +330,7 @@
     function _delete(ID){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/contact/delete";
+        var url=baseurl+"admin-planners/request/delete";
         var data={
             ID:ID
         };
@@ -355,7 +352,7 @@
     function _restore(ID){
         if(isrunning)return;
         isrunning=true;
-        var url=baseurl+"admin-planners/contact/retore";
+        var url=baseurl+"admin-planners/request/retore";
         var data={
             ID:ID
         };

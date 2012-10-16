@@ -31,6 +31,7 @@
                     </div>  
                 {{/if}}
             </div>
+            {{if isset($Data["Videos"][3])}}
             <div id="video-line">
                 {{if isset($Data["Videos"][3])}}
                     <div class="video first">
@@ -57,6 +58,35 @@
                     </div>  
                 {{/if}}
             </div>
+            {{/if}}
+            {{if isset($Data["Videos"][6])}}
+            <div id="video-line">
+                {{if isset($Data["Videos"][6])}}
+                    <div class="video first">
+                        <a href="{{base_url()}}stories-detail/{{$Data["Videos"][6]["Alias"]}}">
+                            <span ></span><div><span>{{$Data["Videos"][6]["Title"]}}</span></div>
+                            <img src="{{$Data["Videos"][6]["Thumbs"]}}" width="290" height="163" />
+                        </a>
+                    </div>
+                {{/if}}
+                {{if isset($Data["Videos"][7])}}
+                    <div class="video second">
+                        <a href="{{base_url()}}stories-detail/{{$Data["Videos"][7]["Alias"]}}">
+                            <span ></span><div><p>{{$Data["Videos"][7]["Title"]}}</p></div>
+                            <img src="{{$Data["Videos"][7]["Thumbs"]}}" width="290" height="163" />
+                        </a>
+                    </div>
+                {{/if}}
+                {{if isset($Data["Videos"][8])}}
+                    <div class="video third">
+                        <a href="{{base_url()}}stories-detail/{{$Data["Videos"][8]["Alias"]}}">
+                            <span ></span><div><p>{{$Data["Videos"][8]["Title"]}}</p></div>
+                            <img src="{{$Data["Videos"][8]["Thumbs"]}}" width="290" height="163"/>
+                        </a>
+                    </div>  
+                {{/if}}
+            </div>
+            {{/if}}
             <div class="clear"></div>
 
         </div>
