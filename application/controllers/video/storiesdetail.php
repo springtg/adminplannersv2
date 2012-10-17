@@ -47,10 +47,24 @@ class storiesdetail extends CI_Controller  {
             $video=$this->video_model->getByAlias($alias);
             if(isset($video[0])){
                 $Data["Video"]=  objectToArray($video[0]);
+                $videoid=$Data["Video"]["VideoID"];
+                $Data["VideoNex"]=objectToArray($this->video_model->getNex($videoid));
+                if(isset($Data["VideoNex"][0])){
+                    $Data["VideoNex"]=$Data["VideoNex"][0]["Alias"];
+                }else{
+                    $Data["VideoNex"]="";
+                }
+                $Data["VideoPre"]=objectToArray($this->video_model->getPre($videoid));
+                if(isset($Data["VideoPre"][0])){
+                    $Data["VideoPre"]=$Data["VideoPre"][0]["Alias"];
+                }else{
+                    $Data["VideoPre"]="";
+                }
                 $cate=$Data["Video"]["Category"];
                 $tag=$Data["Video"]["Tag"];
                 $related=$this->video_model->getRelated($cate,$tag);
                 $Data["Related"]=  objectToArray($related);
+                
             }else{
                 redirect(base_url("not-found"));
                 //ShowError();
