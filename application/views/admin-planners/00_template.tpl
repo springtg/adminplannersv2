@@ -45,7 +45,8 @@
 </span>
 
 <div style="min-width: 960px">
-    <div style="height: 40px;">
+    <div class="header-fade"></div>
+    <div class="syshead">
         {{include file='../sys/03_menu.tpl'}}
     </div>
     <div class="content" style="">

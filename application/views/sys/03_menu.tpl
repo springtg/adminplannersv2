@@ -1,5 +1,5 @@
 <ul class="sysmenu">
-    <li>
+    <li class="active">
         <a href=""><img class="ic " src="{{base_url()}}images/icon/other/home_2.png"/></a>
         <div>Home</div>
     </li>

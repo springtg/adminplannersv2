@@ -211,15 +211,35 @@ pre{
 .tranf80{background: url(../../images/bg/80.png) repeat;}
 .tranf90{background: url(../../images/bg/90.png) repeat;}
 
-ul.sysmenu{list-style: none;padding-left: 40px;}
-ul.sysmenu li{float: left;position: relative;height: 40px;width: 80px;}
-ul.sysmenu li img.ic{width: 32px;height: 32px;margin-left: 24px;margin-top: 4px;opacity: .5;z-index: 1}
-ul.sysmenu li:hover img.ic{
+ul.sysmenu{list-style: none;padding-left: 40px;height: 50px}
+ul.sysmenu li{float: left;position: relative;height: 50px;width: 80px;}
+ul.sysmenu li img.ic,ul.sysmenu:hover li.active img.ic{width: 32px;height: 32px;margin-left: 24px;margin-top: 9px;opacity: .5;z-index: 1}
+ul.sysmenu li,ul.sysmenu:hover li.active{background: #d7d7d7;}
+ul.sysmenu li:hover,ul.sysmenu li.active,ul.sysmenu:hover li.active:hover{background: #ccc;}
+ul.sysmenu li:hover img.ic,ul.sysmenu li.active img.ic,ul.sysmenu:hover li.active:hover img.ic{
     position: absolute;
-    width: 40px;height: 40px;margin-left: 20px;margin-top: 0;
-    opacity: 1}
+    width: 50px;height: 50px;margin-left: 15px;margin-top: 0;
+    opacity: 1;
+}
 ul.sysmenu li div{
     position: absolute;
-    top: 40px;
+    top: 50px;
     left: 0;font-weight: bold;width: 80px;text-align: center;color: #E40451;display: none}
 ul.sysmenu li:hover div{display: block;z-index: 1}
+div.syshead{
+    background: #d7d7d7;
+
+    height: 50px;
+    z-index: 10001;
+    position: relative;
+}
+.header-fade {
+    
+    position: absolute;
+    top: 51px;
+    left: 0;
+    right: 0;
+    background: url('../sysimages/bg-header-fade.png') repeat-x;
+    height: 5px;
+    z-index: 1;
+}
