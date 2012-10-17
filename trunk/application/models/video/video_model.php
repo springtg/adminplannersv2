@@ -13,6 +13,18 @@ class video_model extends jqxGrid_CI_Model {
         $query=$this->db->get_where('tbl_video', $where); 
         return $query->result();
     }
+    function getPre($ID){
+        $where=array("VideoID <= "=>$ID-1,"Status"=>"Public","Delete"=>null);
+        $this->db->order_by("VideoID", "desc"); 
+        $query=$this->db->get_where('tbl_video', $where,1,0); 
+        return $query->result();
+    }
+    function getNex($ID){
+        $where=array("VideoID >= "=>$ID+1,"Status"=>"Public","Delete"=>null);
+        $this->db->order_by("VideoID", "ASC"); 
+        $query=$this->db->get_where('tbl_video', $where,1,0); 
+        return $query->result();
+    }
     function getByAlias($alias){
         $where=array("Alias"=>$alias,"Status"=>"Public","Delete"=>null);
         $query=$this->db->get_where('tbl_video', $where); 
