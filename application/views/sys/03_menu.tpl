@@ -27,6 +27,24 @@
         <a href=""><img class="ic " src="{{base_url()}}images/icon/other/contact.png"/></a>
         <div>Contacts</div>
     </li>
-    <li></li>
     
+
 </ul>
+<ul class="sysnav">
+    <li><a href="">User Manage</a></li>
+    <li><a href="">Settings</a></li>
+    <li class="user"><a href="">Administrator</a></li>
+</ul>
+<script>
+    $('html').click(function(event){
+        console.log('click - body');
+    });
+    $('.sysnav').click(function(event){
+        console.log('click - sysnav');
+        event.stopPropagation();
+    });
+    $('.sysmenu').click(function(event){
+        console.log('click - sysmenu');
+        event.stopPropagation();
+    });
+</script>
