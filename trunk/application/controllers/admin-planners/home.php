@@ -1,5 +1,7 @@
 <?php 
 session_start();
+include APPPATH.'libraries/khlang.php';
+
 class home extends CI_Controller  {
 
         /**
@@ -25,23 +27,35 @@ class home extends CI_Controller  {
             $this->load->library('javascript');
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
+            $_SESSION["LANG"]="VI";
             
         }
         public function index()
 	{
-            redirect(base_url("admin-planners/video"));
+            global $lang;
             $Data["tab_config"]["tabs"]=array(
-                "system"   =>array("display"=>"Hệ Thống"          ,"value"=>"system"     ,"link"=>""),
-                "authority" =>array("display"=>"Quyền"            ,"value"=>"authority"   ,"link"=>""),
-                "account"   =>array("display"=>"Tài Khoản"        ,"value"=>"account"     ,"link"=>""),
-                "group"     =>array("display"=>"Nhóm"             ,"value"=>"group"       ,"link"=>"")
+                "home"   =>array(
+                    "display"=>$lang["home"]
+                    ,"link"=>  base_url("admin-planners")
+                    ),
+                "setting"     =>array(
+                    "display"=>$lang["settings"]    
+                    ,"link"=>base_url("admin-planners/setting")),
+                "content"    =>array(
+                    "display"=>$lang["content"] 
+                    ,"link"=>base_url("admin-planners/content"))
+                ,"usermanage"    =>array(
+                    "display"=>$lang["usermanage"] 
+                    ,"link"=>base_url("admin-planners/usermanage"))
             );
-            $Data["tab_config"]["tabindex"]="authority";
+            $Data["tab_config"]["tabindex"]="home";
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
-            $this->smarty->view('admin-planners/tabs/01_tabs',"TABS");
+            
             $this->smarty->view("sys/01_notice",'NOTICE');
             $this->smarty->view("sys/02_script",'SCRIPT');
+            $this->smarty->view('admin-planners/tabs/01_tabs',"TABS");
+            
             $this->smarty->display("admin-planners/00_template");
 	}
         
