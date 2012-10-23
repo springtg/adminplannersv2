@@ -1,0 +1,71 @@
+.mcs_container a,.mcs_container span{font-family: tahoma}
+.mcs_container {
+    border: 1px solid #d7d7d7;
+width: 230px;
+position: relative;
+right: 0;
+top: 0px;
+margin: 0;
+height: auto;
+padding: 4px 4px 4px 4px;
+background-color: 
+white;
+z-index: 100;
+overflow: auto;
+}
+.customScrollBox {
+position: relative;
+height: auto;
+overflow: hidden;
+}
+.customScrollBox .mscontainer {
+position: relative;
+top: 0;
+float: left;
+width: 100%;
+}
+.mscustomScrollBox .mscontent {
+clear: both;
+}
+.mscontainer .mscontent .JO_box_item:hover{
+    background-color: #eee;
+}
+.mscontainer .mscontent .JO_box_item {
+position: relative;
+display: block;
+margin: 0;
+padding: 2px 7px 2px 0px;
+cursor: pointer;
+color: 
+#7D7D7D;
+line-height: 16px;
+text-align: left;
+}
+.mscontainer .mscontent .JO_box_item a, .mscontainer .mscontent .JO_box_item span {
+margin-left: 22px;
+text-align: left;
+font-family: tahoma;
+font-size: 11px;
+color:#7d7d7d;
+text-decoration: none;
+}
+.mscontainer .mscontent .JO_box_item_hr {
+position: relative;
+display: block;
+margin: 3px 0 3px 0;
+padding: 1px 7px 0px 0px;
+cursor: pointer;
+color: 
+#7D7D7D;
+line-height: 16px;
+background: 
+#EBEBEB;
+}
+.JO_box_item img {
+position: absolute;
+width: 16px;
+height: 16px;
+top: 2px;
+left: 2px;
+border: 0;
+}

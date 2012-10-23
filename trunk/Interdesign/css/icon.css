@@ -1,0 +1,19 @@
+.icon24{width: 24px;height: 24px;cursor: pointer;display: inline;margin: 1px 3px;margin: 0;padding: 0}
+.icon16{width: 16px;height: 16px;cursor: pointer;display: inline;margin: 1px 2px;margin: 0;padding: 0}
+.icon32{width: 32px;height: 32px;cursor: pointer;display: inline;margin: 2px 4px;margin: 0;padding: 0}
+
+.icon32:active img{position: relative; top: 1px}
+.icon24:active img{position: relative; top: 1px}
+.icon16:active img{position: relative; top: 1px}
+
+.icon16 img{width: 16px;height: 16px;}
+.icon24 img{width: 24px;height: 24px;}
+.icon32 img{width: 32px;height: 32px;}
+.disable,.hover50.disable{opacity: 0.3}
+.disable:hover,.hover50.disable:hover{opacity: 0.5}
+
+.icon16.onoff:hover img:first-child,.icon24.onoff:hover img:first-child,.icon32.onoff:hover img:first-child{display: none}
+.icon24.onoff img:last-child,.icon16.onoff img:last-child,.icon32.onoff img:last-child{display: none}
+.icon24.onoff:hover img:last-child,.icon16.onoff:hover img:last-child,.icon32.onoff:hover img:last-child{display: block}
+.hover50{opacity: 0.5}
+.hover50:hover{opacity: 1}
