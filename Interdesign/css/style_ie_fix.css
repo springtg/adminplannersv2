@@ -1,0 +1,12 @@
+/* 
+    Document   : style_ie_fix
+    Created on : Jun 22, 2012, 3:04:18 PM
+    Author     : Kandahar
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+*{font-family: arial;
+font-size: 14px;}
+#menu > li > a{font-family: tahoma;
+font-size: 14px;}

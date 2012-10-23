@@ -24,7 +24,7 @@
         </div>
         <div id="video-info">
             <div id="video-screen">
-                <iframe width="640" height="390" src="http://www.youtube.com/embed/{{$Data["Video"]["VideoKey"]}}" frameborder="0" allowfullscreen></iframe>
+                <iframe width="640" height="390" src="http://www.youtube.com/embed/{{$Data["Video"]["VideoKey"]}}?rel=0" frameborder="0" allowfullscreen></iframe>
             </div>
             <div id="video-detail">
                 <div class="title">Author</div>
@@ -36,25 +36,24 @@
 
                 <div class="share">
                     <div class="fbshare" style="width: 100%">
-                        <!-- AddThis Button BEGIN -->
-                        <div class="addthis_toolbox addthis_default_style">
-                            <a class="addthis_button_preferred_1"></a>
-                            <a class="addthis_button_preferred_2"></a>
-                            <a class="addthis_button_preferred_3"></a>
-                            <a class="addthis_button_preferred_4"></a>
-                            <a class="addthis_button_compact"></a>
-                            <a class="addthis_counter addthis_bubble_style"></a>
-                        </div>
-                        <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-                        <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-507e59f60076f0ca"></script>
+                        <!-- AddThis Button BEGIN --> 
+                        <div class="addthis_toolbox addthis_default_style "> 
+                            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> 
+                            <a class="addthis_button_tweet"></a> 
+                            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a> 
+                            <a class="addthis_counter addthis_pill_style"></a> 
+                        </div> 
+                        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e5a517830ae061f"></script> 
                         <!-- AddThis Button END -->
+
+
                     </div>
                     <!--                    <div class="twittershare">
                                             <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://readtomychild.com.au/stories-detail/{{$Data["Video"]["Alias"]}}">Tweet</a>
                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                                         </div>-->
                 </div>
-                <div><a class="record-button" href="javascript:recordding();"></a></div>
+<!--                <div><a class="record-button" href="javascript:recordding();"></a></div>-->
             </div>
             <div class="clear"></div>
         </div>
