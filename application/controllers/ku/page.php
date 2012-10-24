@@ -1,6 +1,6 @@
 <?php 
 session_start();
-class home extends CI_Controller  {
+class page extends CI_Controller  {
 
         /**
         * Index Page for this controller.
@@ -39,8 +39,8 @@ class home extends CI_Controller  {
         function  im(){
             $this->smarty->display("impress/00_template");
         }
-        function  ab(){
-            $this->smarty->display("impress/02_about");
+        function  contact(){
+            $this->smarty->display("impress/pages/06_contact");
         }
         
         
