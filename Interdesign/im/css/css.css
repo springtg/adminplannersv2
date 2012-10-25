@@ -1,7 +1,7 @@
 body {
     background-color:#f3f3f3;
     background: url(../../../images/bg/px1.jpg) center repeat;
-    color: #ebebeb;
+    color: #111;
     
     font-family:tahoma,Arial, Helvetica, sans-serif;
     font-size: 11px;
@@ -138,7 +138,59 @@ h2{
 .pl12{padding-left: 12px}
 .p12{padding: 12px}
 .page{border-radius: 4px;
-/*background: url('../../../images/bg/50.png')repeat;*/
+background: url('../../../images/bg/10.png')repeat;
+background: rgba(255,255,255,0.5);
 }
 #contact .classic-input{background: url('../../../images/bg/50.png')repeat;border: 1px solid #aaa;color: #ddd}
 .nicEdit-panelContain{color: #000}
+
+.q230{width: 128px;height: 128px;}
+.q460{width: 256px;height: 128px;}
+.q690{width: 464px;height: 128px;}
+.q460.fix,.q690.fix{width: 128px;height: 128px;}
+.jq230{width: 128px;height: 256px;}
+
+.jtit{position: absolute;top: 92px;left: 0;height: 128px;width: 100%;z-index: 3;}
+.jtit *{color: #d7d7d7}
+.jtit span.bg{position: absolute;top: 0;left: 0;height: 128px;width: 100%;}
+.q230 .jtit,.q460 .jtit,.q690 .jtit,.jq230 .jtit{background: #aaa;background: url(../../../images/bg/30.png) repeat;}
+.q230:hover .jtit,.q460:hover .jtit,.q690:hover .jtit,.jq230:hover .jtit{background: url(../../../images/bg/80.png) repeat;}
+.q230 .jimg,.q460 .jimg,.q690 .jimg,.jq230 .jimg{width: 100%;height: 100%;position:relative;}
+.q230 .jimg,.q460 .jimg img,.q690 .jimg img,.jq230 .jimg img{
+    max-width: 100%;max-height: 128px;position:absolute;top:0;bottom:0;right: 0;left: 0;margin:auto;
+         
+}
+.q230 .jaction,.q460 .jaction,.q690 .jaction,.jq230 .jaction{
+    position: absolute;
+    bottom: 0;right: 0;height: 28px;width: 100%;
+    text-align: center;
+}
+.q230 .jimg img,.jq230 .jimg img{max-width: 128px;max-height: 128px;position:absolute;top:0;bottom:0;right: 0;left: 0;margin:auto;}
+.q230,.q460,.q690,.jq230{
+    float: left;margin: 3px;position: relative;overflow: hidden;
+    background:#ccc;
+}
+
+.q154{width: 153px;height: 153px;}
+.q312{width: 310px;height: 153px;}
+
+
+.q154 .jtit,.q312 .jtit{background: rgba(0,0,0,0.3);}
+.q154:hover .jtit,.q312:hover .jtit{background: rgba(0,0,0,0.8);}
+.q154 .jimg,.q312 .jimg{width: 100%;height: 100%;position:relative;}
+.q154 .jimg,.q312 .jimg img{
+    max-width: 100%;max-height: 153px;position:absolute;top:0;bottom:0;right: 0;left: 0;margin:auto;
+         
+}
+.q154 .jaction,.q312 .jaction{
+    position: absolute;
+    bottom: 0;right: 0;height: 28px;width: 100%;
+    text-align: center;
+}
+.q154 .jimg img,.jq230 .jimg img{max-width: 153px;max-height: 153px;position:absolute;top:0;bottom:0;right: 0;left: 0;margin:auto;}
+.q154,.q312{
+    float: left;margin: 2px;position: relative;overflow: hidden;
+    background:#ccc;
+}
+
+.jbox{position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index: 2;}

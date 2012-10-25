@@ -5,6 +5,7 @@
  * For more information visit http://nicedit.com/
  * Do not remove this copyright message
  */
+ if(baseurl==undefined) var baseurl="../../../";
 var bkExtend = function(){
 	var args = arguments;
 	if (args.length == 1) args = [this, args[0]];
@@ -879,6 +880,7 @@ var nicEditorPane = bkClass.extend({
 		this.pos = elm.pos();
 		
 		this.contain = new bkElement('div').setStyle({zIndex : '99999', overflow : 'hidden', position : 'absolute', left : this.pos[0]+'px', top : this.pos[1]+'px'})
+		//this.contain = new bkElement('div').setStyle({zIndex : '99999', overflow : 'hidden', position : 'absolute', left : '45%', top : '45%'})
 		this.pane = new bkElement('div').setStyle({fontSize : '12px', border : '1px solid #ccc', 'overflow': 'hidden', padding : '4px', textAlign: 'left', backgroundColor : '#ffffc9'}).addClass('pane').setStyle(options).appendTo(this.contain);
 		
 		if(openButton && !openButton.options.noClose) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
-        <title>Hướng dẫn tạo slide ấn tượng bằng impress.js </title>
+        <title>Mr. Khương</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
             <link href="http://y2graphic.com/templates/v2/favicon.ico" rel="shortcut icon" type="image/x-icon" />
             <link href="{{base_url()}}Interdesign/im/css/css.css" rel="stylesheet"/>
@@ -12,7 +12,11 @@
             <script src="{{base_url()}}Interdesign/im/js/jquery.easing.1.3.js"></script>
             <script type="text/javascript" src="{{base_url()}}syslib/slimScroll/slimScroll.js"></script>
 
-
+<!--            <link rel="stylesheet" href="{{base_url()}}syslib/jwysiwyg/jwysiwyg/jwysiwyg/jquery.wysiwyg.css" type="text/css"/>
+            <script type="text/javascript" src="{{base_url()}}syslib/jwysiwyg/jwysiwyg/jwysiwyg/jquery.wysiwyg.js"></script>
+            -->
+<!--            <link href='{{base_url()}}syslib/redactor/redactor.css' rel='stylesheet' type='text/css'/>
+            <script src="{{base_url()}}syslib/redactor/redactor.js"></script>-->
     </head>
 
     <body>
@@ -21,7 +25,17 @@
         {{include file="../impress/subs/01_menu.tpl"}}
         {{include file="../impress/subs/02_splash.tpl"}}
         <div id="impress">
-            <div id="home" class="step" >
+            <div id="contact" class="step" >
+                <div class="page">
+                    <h2 class="p12">Contact us</h2>
+                    <div class="content">
+                        <iframe style="border: none;width: 520px;height: 398px"
+                                src="http://localhost/AdminPlanners2.0/ku/page/contact"></iframe>	
+                    </div>
+
+                </div>
+            </div>
+            <div id="home" class="step" data-x="1500" data-y="-750" data-z="-1000" data-rotate="270">
 
             </div>
 
@@ -42,23 +56,18 @@
                 </div>	
             </div>
 
-            <div id="design" class="step" data-x="7500" data-scale='4'>
-                <div class="content">
+            <div id="template" class="step" data-x="7500" data-scale='4'>
+                <div class="page">
+                    <h2 class="p12">Templates</h2>
+                    <div class="content">Loadding...</div>
 
-                    <h2>Samsung Galaxy S III</h2>
-                    <p>Ra mắt tại sự kiện diễn ra ở London, Anh vào ngày 4-5, Samsung đã giới thiệu thế hệ thứ ba của dòng smartphone "đinh" của hãng. Hai thế hệ Galaxy S và S2 trước đó của hãng đều được đánh giá là đối thủ nặng ký của Apple iPhone 3GS và iPhone 4. Theo đó, Galaxy S3 cũng sẽ đối mặt trực diện với thế hệ iPhone mới sẽ ra mắt vào đầu tháng 6 tới đây.</p>
                 </div>	
             </div>
 
             <div id="effect" class="step" data-src="{{base_url('ku/home/ab')}}" data-x="4200" data-y='1600' data-rotate="500">
                 loadding...	
             </div>
-            <div id="contact" class="step" data-x="2000" data-z="1500" data-rotate="170">
-                <div class="page">
-                    <h2 class="p12">Contact us</h2>
-                    <div class="content">Loadding...</div>	
-                </div>
-            </div>
+
         </div>
         <script type="text/javascript">
             (function(){
@@ -73,13 +82,15 @@
             
                 $(".step").on("impress:stepenter", function() {
                     //if (console.clear) { console.clear(); }
-                    console.log("aa");
                 });
             })(jQuery)
             var areaContent;
             function addEditorContent(){
+                
                 if(!areaContent) {
-                    areaContent = new nicEditor().panelInstance('Content');
+                    areaContent = new nicEditor({
+                        buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','indent','outdent','subscript','superscript']
+                    }).panelInstance('Content');
                 }
             }
             function removeEditorContent(){
@@ -96,9 +107,7 @@
                     $("#menu li.navactive").removeClass("navactive");
                     $("#menu li.nav"+currentSlide).addClass("navactive");
                     if($("#"+currentSlide+" .content").html()=="Loadding..."){
-                        $("#"+currentSlide+" .content").load("{{base_url('ku/page/contact')}}"
-                        ,function(){addEditorContent();}
-                    );
+                        $("#"+currentSlide+" .content").load("{{base_url('ku/page')}}/"+currentSlide);
                     }
                     if(currentSlide=="home"){
                         showSplash();
