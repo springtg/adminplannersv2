@@ -42,6 +42,8 @@ class page extends CI_Controller  {
         function  contact(){
             $this->smarty->display("impress/pages/06_contact");
         }
-        
+        function template(){
+            $this->smarty->display("impress/pages/07_template");
+        }
         
 }

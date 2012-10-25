@@ -1,4 +1,5 @@
 body{font-family: tahoma;font-size: 11px}
+img{border: none}
 .showandhide .hideifhover{display: block}
 .showandhide .showifhover{display: none}
 .showandhide:hover .hideifhover{display: none}
@@ -257,3 +258,11 @@ ul.sysnav li{}
 ul.sysnav li:hover{background: #CCC}
 ul.sysnav li.user{padding-left: 16px;}
 ul.sysnav li.user a{background: url(../sysimg/bg-user-icon.png) no-repeat left center;padding-left: 44px}
+tt {
+background-color: #DEEAC9;
+border: 1px solid #CAD5B7;
+padding: 1px 3px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
