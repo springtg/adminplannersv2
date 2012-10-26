@@ -25,7 +25,7 @@ class home extends CI_Controller  {
             $this->load->library('javascript');
             //$this->load->library('session');
             $this->load->library('smarty3','','smarty');
-            
+            $this->load->model("ku/template_model","template_model");
             
         }
         public function index()
@@ -37,6 +37,10 @@ class home extends CI_Controller  {
             
 	}
         function  im(){
+            $num=$this->template_model->CALC_FOUND_ROWS();
+            $Data["item-in-page"]=array(4,3,3,3,2);
+            $Data["num"]=$num;
+            $this->smarty->assign('Data', $Data);
             $this->smarty->display("impress/00_template");
         }
         function  ab(){
