@@ -6,6 +6,8 @@
             <link href="http://y2graphic.com/templates/v2/favicon.ico" rel="shortcut icon" type="image/x-icon" />
             <link href="{{base_url()}}Interdesign/im/css/css.css" rel="stylesheet"/>
             <link href="{{base_url()}}syslib/syscss/sysstyle.css" rel="stylesheet"/>
+            <link href="{{base_url()}}Interdesign/im/css/basic-animations.min.css" rel="stylesheet"/>
+            
             <script src="{{base_url()}}Interdesign/im/js/jquery-1.7.1.min.js"></script>
             <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&amp;subset&#61;latin,vietnamese' rel='stylesheet' type='text/css'/>
             <script src="{{base_url()}}Interdesign/im/js/jmpress.js"></script>
@@ -20,6 +22,8 @@
     </head>
 
     <body>
+        <a id="prev" href="#"></a>
+        <a id="next" href="#"></a>
         {{include file="../sys/01_notice.tpl"}}
         {{include file="../sys/02_script.tpl"}}
         {{include file="../impress/subs/01_menu.tpl"}}
@@ -27,7 +31,7 @@
         <div id="impress">
             <div id="contact" class="step" >
                 <div class="page">
-                    <h2 class="p12">Contact us</h2>
+                    <h2 data-jmpress="warp-right after 1500ms step" class="p12">Contact us</h2>
                     <div class="content">
                         <iframe style="border: none;width: 520px;height: 398px"
                                 src="http://localhost/AdminPlanners2.0/ku/page/contact"></iframe>	
@@ -41,35 +45,71 @@
 
             <div id="about" class="step" data-x="-1500" data-rotate="300">
                 <div class="page">
-                    <h2 class="pl12" style="padding: 12px">CHUYÊN THIẾT KẾ WEBSITE GIỚI THIỆU CÔNG TY, WEBSITE CÁ NHÂN.</h2>
+                    <h2 data-jmpress="warp-right after 1500ms step" class="pl12" style="padding: 12px">CHUYÊN THIẾT KẾ WEBSITE GIỚI THIỆU CÔNG TY, WEBSITE CÁ NHÂN.</h2>
                     <div class="content">
-
                         {{include file="../impress/pages/02_about.tpl"}}
                     </div>
                 </div>		
             </div>
 
             <div id="developer" class="step" data-y="-1000">
-                <div class="content">
-                    <h2>Sony Xperia S</h2>
-                    <p>Với màn hình 4,3 inch độ phân giải HD, camera 12 Megapixel và cấu hình vi xử lý lõi kép, Xperia S là smartphone cao cấp nhất của Sony hiện nay. Đây còn là model đầu tiên của Sony sau khi chính thức sở hữu toàn bộ hãng di động Sony Ericsson. Thiết kế chính là một trong những điểm nhấn đặc biệt trên model.</p>
-                </div>	
-            </div>
-
-            <div id="template" class="step" data-x="7500" data-scale='4'>
                 <div class="page">
-                    <h2 class="p12">Templates</h2>
-                    <div class="content">Loadding...</div>
-
+<!--                    <h2 data-jmpress="warp-right after 1500ms step" class="pl12" style="padding: 12px">CHUYÊN THIẾT KẾ WEBSITE GIỚI THIỆU CÔNG TY, WEBSITE CÁ NHÂN.</h2>-->
+                    <div class="content">
+                        {{include file="../impress/pages/03_developer.tpl"}}
+                    </div>
                 </div>	
             </div>
+                    
+            {{$type=mt_rand(0,4)}}
+            {{$type1=mt_rand(0,4)}}
+            {{$type2=mt_rand(0,4)}}
+            <div id="template" btype="{{$type}}-{{$type1}}-{{$type2}}" bstart="0" class="step" data-x="7500" data-scale='4'>
+                <div class="page">
+                    <h2 class="p12">
+                        Templates
+                    </h2>
+                    <div class="content">Loadding...</div>
+                </div>	
+            </div>
+            
+            {{$page=1}}
+            {{$foo=$Data["item-in-page"][$type]+$Data["item-in-page"][$type1]+$Data["item-in-page"][$type2]}}
+            {{while $foo < $Data["num"]}}
+                {{$type=mt_rand(0,4)}}
+                {{$type1=mt_rand(0,4)}}
+                {{$type2=mt_rand(0,4)}}
+                <div id="template-page-{{$page}}" btype="{{$type}}-{{$type1}}-{{$type2}}" bstart="{{$foo}}" class="step" data-x="{{mt_rand(-10000,10000)}}" data-y="{{mt_rand(-10000,10000)}}" data-z="{{$page*700-7000}}" data-rotate="{{mt_rand(1,360)}}" data-scale='4'>
+                    <div class="page">
+                        <h2 class="p12">Templates</h2>
+                        <tt class="prev">Prev</tt>
+                        <tt class="next">Next</tt>
+                        <div class="content">Loadding...</div>
 
-            <div id="effect" class="step" data-src="{{base_url('ku/home/ab')}}" data-x="4200" data-y='1600' data-rotate="500">
-                loadding...	
+                    </div>	
+                </div>
+                {{$foo=$foo+$Data["item-in-page"][$type]+$Data["item-in-page"][$type1]+$Data["item-in-page"][$type2]}}
+                {{$page=$page+1}}
+            {{/while}}
+            
+            <div id="effect" class="step" data-x="4200" data-y='1600' data-rotate="500">
+                <div class="page">
+                    <h2 data-jmpress="warp-right after 1500ms step" class="pl12" 
+                        style="padding: 12px">Đặc điểm nổi bật.</h2>
+                    <div class="content">
+                        {{include file="../impress/pages/05_effect.tpl"}}
+                    </div>
+                </div>		
             </div>
 
         </div>
         <script type="text/javascript">
+            if (typeof String.prototype.startsWith != 'function') {
+                // see below for better implementation!
+                String.prototype.startsWith = function (str){
+                    return this.indexOf(str) == 0;
+                };
+            }
             (function(){
                 $('#impress').jmpress();
                 
@@ -83,6 +123,15 @@
                 $(".step").on("impress:stepenter", function() {
                     //if (console.clear) { console.clear(); }
                 });
+                // Next slide
+                $('.next,#next').click(function(){
+                        $('#impress').jmpress('next');
+                });
+
+                // Prev slide
+                $('.prev,#prev').click(function(){
+                        $('#impress').jmpress('prev');
+                })
             })(jQuery)
             var areaContent;
             function addEditorContent(){
@@ -104,10 +153,18 @@
                 var currentSlide = $('.active').attr('id');
 
                 if (previousSlide !== currentSlide) {
-                    $("#menu li.navactive").removeClass("navactive");
-                    $("#menu li.nav"+currentSlide).addClass("navactive");
-                    if($("#"+currentSlide+" .content").html()=="Loadding..."){
-                        $("#"+currentSlide+" .content").load("{{base_url('ku/page')}}/"+currentSlide);
+                    if(currentSlide.startsWith("template")){
+                        var type=$("#"+currentSlide).attr("btype");
+                        var start=$("#"+currentSlide).attr("bstart");
+                        if($("#"+currentSlide+" .content").html()=="Loadding..."){
+                            $("#"+currentSlide+" .content").load("{{base_url('ku/page')}}/template/"+type+"/"+start)
+                        }
+                    }else{
+                        $("#menu li.navactive").removeClass("navactive");
+                        $("#menu li.nav"+currentSlide).addClass("navactive");
+                        if($("#"+currentSlide+" .content").html()=="Loadding..."){
+                            $("#"+currentSlide+" .content").load("{{base_url('ku/page')}}/"+currentSlide);
+                        }
                     }
                     if(currentSlide=="home"){
                         showSplash();

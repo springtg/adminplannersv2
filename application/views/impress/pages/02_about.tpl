@@ -1,5 +1,5 @@
 
-<div class="w260">
+<div class="w260" data-jmpress="drive-right after 1000ms step">
     <div class="c">
         <div class="thumb">
             <img width="48" src="{{base_url()}}Interdesign/im/img/folder_templates.png">
@@ -13,7 +13,7 @@
         </p>
     </div>
 </div>
-<div class="w260">
+<div class="w260" data-jmpress="drive-left after 1100ms step">
     <div class="c">
         <div class="thumb">
             <img width="48" src="{{base_url()}}Interdesign/im/img/services04.png">
@@ -27,7 +27,7 @@
         </p>
     </div>
 </div>
-<div class="w260">
+<div class="w260" data-jmpress="drive-right after 1200ms step">
     <div class="c">
         <div class="thumb">
             <img width="48" src="{{base_url()}}Interdesign/im/img/help_and_support.png">
@@ -41,7 +41,7 @@
         </p>
     </div>
 </div>
-<div class="w260">
+<div class="w260" data-jmpress="drive-left after 1300ms step">
     <div class="c">
         <div class="thumb">
             <img width="48" src="{{base_url()}}Interdesign/im/img/html5_64.png">
@@ -56,7 +56,7 @@
         </p>
     </div>
 </div>
-        <div class="w260">
+<div class="w260" data-jmpress="drive-right after 1400ms step">
     <div class="c">
         <div class="thumb">
             <img width="48" src="{{base_url()}}Interdesign/im/img/clock.png">
@@ -72,7 +72,7 @@
         </p>
     </div>
 </div>
-        <div class="w260">
+<div class="w260" data-jmpress="drive-left after 1500ms step">
     <div class="c">
         <div class="thumb">
             <img width="48" src="{{base_url()}}Interdesign/im/img/wapt.png">
