@@ -79,7 +79,7 @@
                 {{$type=mt_rand(0,4)}}
                 {{$type1=mt_rand(0,4)}}
                 {{$type2=mt_rand(0,4)}}
-                <div id="template-page-{{$page}}" btype="{{$type}}-{{$type1}}-{{$type2}}" bstart="{{$foo}}" class="step" data-x="{{mt_rand(-10000,10000)}}" data-y="{{mt_rand(-10000,10000)}}" data-z="{{$page*700-7000}}" data-rotate="{{mt_rand(1,360)}}" data-scale='4'>
+                <div id="template-page-{{$page}}" btype="{{$type}}-{{$type1}}-{{$type2}}" bstart="{{$foo}}" class="step" data-x="{{mt_rand(-100,100)*100}}" data-y="{{mt_rand(-100,100)*100}}" data-z="{{$page*1200-10000}}" data-rotate="{{mt_rand(1,360)}}" data-scale='4'>
                     <div class="page">
                         <h2 class="p12">Templates</h2>
                         <tt class="prev">Prev</tt>
