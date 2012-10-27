@@ -3,7 +3,6 @@
     <head>
         <title>Mr. Khương</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-            <link href="http://y2graphic.com/templates/v2/favicon.ico" rel="shortcut icon" type="image/x-icon" />
             <link href="{{base_url()}}Interdesign/im/css/css.css" rel="stylesheet"/>
             <link href="{{base_url()}}syslib/syscss/sysstyle.css" rel="stylesheet"/>
             <link href="{{base_url()}}Interdesign/im/css/basic-animations.min.css" rel="stylesheet"/>
@@ -52,7 +51,7 @@
                 </div>		
             </div>
 
-            <div id="developer" class="step" data-y="-1000">
+            <div id="developer" class="step" data-y="-1000" data-z="return Math.floor((Math.random()*1000)+1);">
                 <div class="page">
 <!--                    <h2 data-jmpress="warp-right after 1500ms step" class="pl12" style="padding: 12px">CHUYÊN THIẾT KẾ WEBSITE GIỚI THIỆU CÔNG TY, WEBSITE CÁ NHÂN.</h2>-->
                     <div class="content">
@@ -154,6 +153,8 @@
 
                 if (previousSlide !== currentSlide) {
                     if(currentSlide.startsWith("template")){
+                        $("#menu li.navactive").removeClass("navactive");
+                        $("#menu li.navtemplate").addClass("navactive");
                         var type=$("#"+currentSlide).attr("btype");
                         var start=$("#"+currentSlide).attr("bstart");
                         if($("#"+currentSlide+" .content").html()=="Loadding..."){
