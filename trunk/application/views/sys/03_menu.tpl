@@ -1,4 +1,4 @@
-<ul class="sysmenu">
+<!--<ul class="sysmenu">
     <li class="active">
         <a href=""><img class="ic " src="{{base_url()}}images/icon/other/home_2.png"/></a>
         <div>Home</div>
@@ -29,11 +29,28 @@
     </li>
     
 
-</ul>
+</ul>-->
 <ul class="sysnav">
-    <li><a href="">User Manage</a></li>
+    <li><a href="">Home</a></li>
+    <li><a href="">Content</a>
+        <ul class="l">
+            <li><a href="">Home</a></li>
+            <li><a href="">Content</a></li>
+            <li><a href="">Administrator</a></li>
+        </ul>
+    </li>
+    <li><a href="">Administrator</a></li>
+</ul>
+<ul class="sysnav" style="right: 0px">
+    <li class="fr"><a href="">User Manage</a></li>
     <li><a href="">Settings</a></li>
-    <li class="user"><a href="">Administrator</a></li>
+    <li class="user"><a href="">Administrator</a>
+        <ul class="r">
+            <li><a href="">Home</a></li>
+            <li><a href="">Content</a></li>
+            <li><a href="">Administrator</a></li>
+        </ul>
+    </li>
 </ul>
 <script>
     $('html').click(function(event){
