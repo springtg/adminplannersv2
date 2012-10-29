@@ -1,4 +1,33 @@
-
+<script>
+    function Subscribe(){
+        
+            if(isrunning)return;
+            var Subscribers     =   $("#Subscribers"  ).val();
+            isrunning=true;
+        
+            var url=baseurl+"video/home/Subscribe";
+            var data={
+                
+                    Subscribers:Subscribers
+                
+            };
+            jqxAjax(url,data,function(result){
+                isrunning=false;
+                try{
+                    if(result.code<0){
+                        ShowNoticeDialogMessage(result.msg);
+                        
+                    }else{
+                        ShowNoticeDialogMessage(result.msg);
+                        $("#Subscribers"  ).val("")
+                    }
+                }catch(err){
+                    ShowErrorDialogMessage(err);
+                }
+            });
+        
+    }
+</script>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];

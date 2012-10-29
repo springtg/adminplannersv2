@@ -10,7 +10,7 @@
 
             <a class="youtube" href="http://www.youtube.com/user/readtomychild" target="_blank"></a></div>
 
-        <div id="subscribes" class="left"><form>// Subscribers: <input class="text" type="text" /> <a class="subscribe-button" href=""></a></form></div>
+        <div id="subscribes" class="left"><form>// Subscribers: <input id="Subscribers" class="text" type="text" /> <a class="subscribe-button" href="JavaScript:Subscribe();"></a></form></div>
 
         <div class="clear"></div>
 
