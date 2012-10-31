@@ -65,7 +65,27 @@ class settings extends CI_Controller  {
             $this->smarty->view('admin-planners/settings/04_settings',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
-        
+        function FlexiGridData(){
+            $this->load->model('admin-planners/setting_model','setting_model');
+            $data=$this->setting_model->FlexiGridData();
+            header("Content-type: application/json");
+            $jsonData = array('page'=>$data["page"],'total'=>$data["total_rows"],'rows'=>array());
+            foreach($data["rows"] AS $row){
+                    //If cell's elements have named keys, they must match column names
+                    //Only cell's with named keys and matching columns are order independent.
+                    $entry = array('id'=>$row->ID,
+                            'cell'=>array(
+                                    'ID'    =>$row->ID,
+                                    'Key'   =>$row->Key,
+                                    'Value'=>$row->Value,
+                                    'Name'=>$row->Name,
+                                    'Type'=>$row->Type
+                            ),
+                    );
+                    $jsonData['rows'][] = $entry;
+            }
+            echo json_encode($jsonData);
+        }
         
 }
 
