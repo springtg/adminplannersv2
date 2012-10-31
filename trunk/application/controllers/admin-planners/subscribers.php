@@ -1,6 +1,6 @@
 <?php 
 session_start();
-class request extends CI_Controller  {
+class subscribers extends CI_Controller  {
 
         /**
         * Index Page for this controller.
@@ -26,7 +26,7 @@ class request extends CI_Controller  {
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/contact_model','contact_model');
-            if(!isset($_SESSION["JQX-DEL-REQUEST"]))$_SESSION["JQX-DEL-REQUEST"]=1;
+            
         }
         public function index()
 	{
@@ -61,38 +61,20 @@ class request extends CI_Controller  {
                     ,"value"=>"sendmail"       
                     ,"link"=>base_url("admin-planners/sendmail"))
             );
-            $Data["tab_config"]["tabindex"]="request";
+            $Data["tab_config"]["tabindex"]="subscribers";
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
             
             $this->smarty->view("sys/01_notice",'NOTICE');
             $this->smarty->view("sys/02_script",'SCRIPT');
             $this->smarty->view('admin-planners/tabs/01_tabs',"TABS");
-            $this->smarty->view('admin-planners/request/01_jqx',"JQXGRID");
+            $this->smarty->view('admin-planners/subscribers/01_jqx',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
-        
-        public function ChangeDeleteDisplay(){
-            
-            if(isset($_POST["showDelete"]) && $_POST["showDelete"]==0){
-                $_SESSION["JQX-DEL-REQUEST"]=0;
-                $code=1;
-                $msg="Deleted record have been hide.";
-            }elseif(isset($_POST["showDelete"]) && $_POST["showDelete"]==-1){
-                $code=1;
-                $msg="Only show deleted record.";
-                $_SESSION["JQX-DEL-REQUEST"]=-1;
-            }else{
-                $code=1;
-                $msg="Show all record.";
-                $_SESSION["JQX-DEL-REQUEST"]=1;
-            }
-            echo json_encode(array("code"=>$code,"msg"=>$msg));
-        }
-        public function delete(){
+        public function deleteSubscribers(){
             
             if(isset($_POST["ID"])){
-                if($this->contact_model->deleteRequest($_POST["ID"])){
+                if($this->contact_model->deleteSubscribers($_POST["ID"])){
                     $code=1;
                     $msg="Item have been deleted.";
                 }else{
@@ -105,40 +87,18 @@ class request extends CI_Controller  {
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
-        public function retore(){
-            
-            if(isset($_POST["ID"])){
-                if($this->contact_model->retoreRequest($_POST["ID"])){
-                    $code=1;
-                    $msg="Item have been retored.";
-                }else{
-                    $code=-1;
-                    $msg="Fail. Cant retore this item.";
-                }
-            }else{  
-                $code=-1;
-                $msg="Fail.";
-            }
-            echo json_encode(array("code"=>$code,"msg"=>$msg));
-        }
         public function jqxgrid(){
             $jqx_data=array();
             $result['total_rows']=0;
             //if($this->checkauthority()>=0){
-                $result=$this->contact_model->jqxgridRequest();
+                $result=$this->contact_model->jqxgridSubscribers();
                 $rows=$result['rows'];
                 // get data and store in a json array
                 foreach ($rows as $row) {
                     $jqx_data[] = array(
-                        'FullName'      => $row->FullName,
                         'Email'         => $row->Email,
-                        'Title'         => $row->Title,
-                        'Author'       => $row->Author,
-                        'Status'        => $row->Status,
                         'Insert'        => $row->Insert,
-                        'Update'        => $row->Update,
-                        'Delete'        => $row->Delete,
-                        'Request'         => json_encode(array(
+                        'Subscribers'         => json_encode(array(
                                         "ID"=>$row->ID,
                                         "Delete"=>$row->Delete
                                     ))

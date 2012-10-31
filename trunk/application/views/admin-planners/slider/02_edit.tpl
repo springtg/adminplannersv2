@@ -1,3 +1,7 @@
+<script type="text/javascript" src="{{base_url()}}syslib/tokeninput/jquery.tokeninput.js"></script>
+<link rel="stylesheet" href="{{base_url()}}syslib/tokeninput/token-input.css" type="text/css" />
+<link rel="stylesheet" href="{{base_url()}}syslib/tokeninput/token-input-facebook.css" type="text/css" />   
+
 <div style="padding: 20px">
     <table class="w320">
         <tr>
@@ -43,7 +47,7 @@
                     <div class="pa hover50 icon16 chooseimage chooseimage_icon"
                          onclick="BrowseServer( 'Images:/', 'Image' );"
                          >
-                </div>
+                    </div>
                 </div>
             </td>
         </tr>
@@ -92,23 +96,23 @@
             theme: "facebook",
             tokenLimit: 1,
         {{if isset($Data["slider"])}}
-                        prePopulate: [{
-                                VideoID: "{{$Data["slider"]["VideoID"]}}"
-                                ,VideoKey: "{{$Data["slider"]["VideoKey"]}}"
-                                ,Thumbs:"{{$Data["slider"]["Image"]}}"
-                                ,Title:"{{$Data["slider"]["Title"]}}"
-                            }],
-    {{/if}}
-                        onAdd: function (item) {
-                            $("#VideoID").val(item.VideoID);
-                            $("#Title").val(item.Title);
-                            $("#Image").val(item.Thumbs);
-                        },
-                        onDelete: function (item) {
-                            $("#VideoID").val("");
-                            $("#Title").val("");
-                            $("#Image").val("");
-                        }
-                    });
-                });
+            prePopulate: [{
+                    VideoID: "{{$Data["slider"]["VideoID"]}}"
+                    ,VideoKey: "{{$Data["slider"]["VideoKey"]}}"
+                    ,Thumbs:"{{$Data["slider"]["Image"]}}"
+                    ,Title:"{{$Data["slider"]["Title"]}}"
+                }],
+        {{/if}}
+            onAdd: function (item) {
+                $("#VideoID").val(item.VideoID);
+                $("#Title").val(item.Title);
+                $("#Image").val(item.Thumbs);
+            },
+            onDelete: function (item) {
+                $("#VideoID").val("");
+                $("#Title").val("");
+                $("#Image").val("");
+            }
+        });
+    });
 </script>

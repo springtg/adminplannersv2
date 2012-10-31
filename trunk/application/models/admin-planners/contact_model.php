@@ -12,6 +12,12 @@ class contact_model extends jqxGrid_CI_Model {
         $query=$this->db->get_where('tbl_contact', $where); 
         return $query->result();
     }
+    function getSubscribers(){
+        $where=array("Delete"=>null);
+        $this->db->group_by("Email"); 
+        $query=$this->db->get_where('tbl_subscribers', $where); 
+        return $query->result();
+    }
     function delete($ID){
         $this->db->set('Delete', 'NOW()', FALSE);
         $where=array("ID"=>$ID);
@@ -35,6 +41,15 @@ class contact_model extends jqxGrid_CI_Model {
         $where=array("ID"=>$ID);
         $this->db->where($where);
         $this->db->update('tbl_request'); 
+        $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
+        if($count==1) return true;
+        return false;
+    }
+    function deleteSubscribers($ID){
+        $this->db->set('Delete', 'NOW()', FALSE);
+        $where=array("ID"=>$ID);
+        $this->db->where($where);
+        $this->db->update('tbl_subscribers'); 
         $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
         if($count==1) return true;
         return false;
@@ -88,7 +103,21 @@ class contact_model extends jqxGrid_CI_Model {
         $this->init($configs);
         return $this->jqxBinding();
     }
-    
+    function jqxgridSubscribers(){
+        $configs["strQuery"]="
+            SELECT SQL_CALC_FOUND_ROWS `tbl_subscribers`.*
+            FROM `tbl_subscribers`
+            ";
+        $configs["strWhere"]="
+            WHERE `Delete` IS NULL
+            ";
+        $configs["strOrderBy"]=" ORDER BY `Insert` DESC";
+        $configs["fields"]=array(
+            "Subscribers"=>"`ID`"
+            );
+        $this->init($configs);
+        return $this->jqxBinding();
+    }
     
 }
 ?>
