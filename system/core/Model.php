@@ -68,6 +68,8 @@ class FlexiGrid_Model extends CI_Model {
         $this->configs["strGroupBy"]="";
         $this->configs["strOrderBy"]="";
         $this->configs["usinglimit"] = true;
+        $this->configs["filterfields"]=array();
+        $this->configs["fields"]=array();
     }
 
     function init($configs) {
@@ -81,6 +83,8 @@ class FlexiGrid_Model extends CI_Model {
             $this->configs["strGroupBy"] = $configs["strGroupBy"];
         if (isset($configs["fields"]))
             $this->configs["fields"] = $configs["fields"];
+        if (isset($configs["filterfields"]))
+            $this->configs["filterfields"] = $configs["filterfields"];
         if (isset($configs["usinglimit"]))
             $this->configs["usinglimit"] = $configs["usinglimit"];
     }
@@ -113,11 +117,6 @@ class FlexiGrid_Model extends CI_Model {
             if ($filterdatafield[0] === "_" && $filterdatafield[strlen($filterdatafield) - 1] === "_") {
                 $filterdatafield = substr($filterdatafield, 1, -1);
             }
-            if (count($fields) > 0 && isset($fields[$filterdatafield])) {
-                $filterdatafield = $fields[$filterdatafield];
-            } else {
-                $filterdatafield = "`$filterdatafield`";
-            }
             $filteroperator = "AND";
             $filtercondition = "CONTAINS";
             $filtervalue=$_POST['query'];
@@ -130,57 +129,76 @@ class FlexiGrid_Model extends CI_Model {
             $filtervalue = str_replace(
                     array_keys($vowels), array_values($vowels), $filtervalue
             );
-            $subfilter="";
-            switch ($filtercondition) {
-                case "NULL":
-                    $subfilter.= " ($filterdatafield is null)";
-                    break;
-                case "EMPTY":
-                    $subfilter .= " ($filterdatafield is null) or ($filterdatafield='')";
-                    break;
-                case "NOT_NULL":
-                    $subfilter .= " ($filterdatafield is not null)";
-                    break;
-                case "NOT_EMPTY":
-                    $subfilter .= " ($filterdatafield is not null) and ($filterdatafield <>'')";
-                    break;
-                case "CONTAINS_CASE_SENSITIVE":
-                case "CONTAINS":
-                    $subfilter .= " ($filterdatafield LIKE '%$filtervalue%')";
-                    break;
-                case "DOES_NOT_CONTAIN_CASE_SENSITIVE":
-                case "DOES_NOT_CONTAIN":
-                    $subfilter .= " ($filterdatafield NOT LIKE '%$filtervalue%')";
-                    break;
-                case "EQUAL_CASE_SENSITIVE":
-                case "EQUAL":
-                    $subfilter .= " ($filterdatafield = '$filtervalue')";
-                    break;
-                case "NOT_EQUAL":
-                    $subfilter .= " ($filterdatafield <> '$filtervalue')";
-                    break;
-                case "GREATER_THAN":
-                    $subfilter .= " ($filterdatafield > '$filtervalue')";
-                    break;
-                case "LESS_THAN":
-                    $subfilter .= " ($filterdatafield < '$filtervalue')";
-                    break;
-                case "GREATER_THAN_OR_EQUAL":
-                    $subfilter .= " ($filterdatafield >= '$filtervalue')";
-                    break;
-                case "LESS_THAN_OR_EQUAL":
-                    $subfilter .= " ($filterdatafield <= '$filtervalue')";
-                    break;
-                case "STARTS_WITH_CASE_SENSITIVE":
-                case "STARTS_WITH":
-                    $subfilter .= " ($filterdatafield LIKE '$filtervalue%')";
-                    break;
-                case "ENDS_WITH_CASE_SENSITIVE":
-                case "ENDS_WITH":
-                    $subfilter .= " ($filterdatafield LIKE '%$filtervalue')";
-                    break;
-                default :
+            if(strtoupper($filterdatafield)=="ALL"){
+                $subfilter="";
+                if(count($this->configs["filterfields"])>0){
+                    $subfilter="(";
+                    foreach ($this->configs["filterfields"] as $filterrow){
+                        $filterdatafield=$filterrow;
+                        $subfilter .= " ($filterdatafield LIKE '%$filtervalue%') OR ";
+                    }
+                    $subfilter.="false)";
+                }else{
                     $subfilter.= "true";
+                }
+            }else{
+                if (count($fields) > 0 && isset($fields[$filterdatafield])) {
+                    $filterdatafield = $fields[$filterdatafield];
+                } else {
+                    $filterdatafield = "`$filterdatafield`";
+                }
+                $subfilter="";
+                switch ($filtercondition) {
+                    case "NULL":
+                        $subfilter.= " ($filterdatafield is null)";
+                        break;
+                    case "EMPTY":
+                        $subfilter .= " ($filterdatafield is null) or ($filterdatafield='')";
+                        break;
+                    case "NOT_NULL":
+                        $subfilter .= " ($filterdatafield is not null)";
+                        break;
+                    case "NOT_EMPTY":
+                        $subfilter .= " ($filterdatafield is not null) and ($filterdatafield <>'')";
+                        break;
+                    case "CONTAINS_CASE_SENSITIVE":
+                    case "CONTAINS":
+                        $subfilter .= " ($filterdatafield LIKE '%$filtervalue%')";
+                        break;
+                    case "DOES_NOT_CONTAIN_CASE_SENSITIVE":
+                    case "DOES_NOT_CONTAIN":
+                        $subfilter .= " ($filterdatafield NOT LIKE '%$filtervalue%')";
+                        break;
+                    case "EQUAL_CASE_SENSITIVE":
+                    case "EQUAL":
+                        $subfilter .= " ($filterdatafield = '$filtervalue')";
+                        break;
+                    case "NOT_EQUAL":
+                        $subfilter .= " ($filterdatafield <> '$filtervalue')";
+                        break;
+                    case "GREATER_THAN":
+                        $subfilter .= " ($filterdatafield > '$filtervalue')";
+                        break;
+                    case "LESS_THAN":
+                        $subfilter .= " ($filterdatafield < '$filtervalue')";
+                        break;
+                    case "GREATER_THAN_OR_EQUAL":
+                        $subfilter .= " ($filterdatafield >= '$filtervalue')";
+                        break;
+                    case "LESS_THAN_OR_EQUAL":
+                        $subfilter .= " ($filterdatafield <= '$filtervalue')";
+                        break;
+                    case "STARTS_WITH_CASE_SENSITIVE":
+                    case "STARTS_WITH":
+                        $subfilter .= " ($filterdatafield LIKE '$filtervalue%')";
+                        break;
+                    case "ENDS_WITH_CASE_SENSITIVE":
+                    case "ENDS_WITH":
+                        $subfilter .= " ($filterdatafield LIKE '%$filtervalue')";
+                        break;
+                    default :
+                        $subfilter.= "true";
+                }
             }
             $where.=" $filteroperator $subfilter";
             
