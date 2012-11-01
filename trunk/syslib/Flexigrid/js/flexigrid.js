@@ -688,11 +688,31 @@
 					$(this).click(function (e) {
 						var obj = (e.target || e.srcElement);
 						if (obj.href || obj.type) return true;
-						$(this).toggleClass('trSelected');
+						
 						if (p.singleSelect && ! g.multisel ) {
 							$(this).siblings().removeClass('trSelected');
-							$(this).toggleClass('trSelected');
+							//$(this).toggleClass('trSelected');
+                                                        
 						}
+                                                $(this).toggleClass('trSelected');
+                                                if (p.onRowSelect) { 
+                                                        var data = null; 
+                                                        if ($(this).hasClass('trSelected')) { 
+                                                                var json; 
+                                                                var tds = $(this).find('td'); 
+                                                                json = '{"rowid":"' + $(this).attr('id') + '",'; 
+                                                                for (var i = 0; i < p.colModel.length; i++) { 
+                                                                        json += '"' + p.colModel[i].name + '":"' + $(tds[i]).text() + '"'; 
+                                                                        if ((i + 1) != p.colModel.length) 
+                                                                                json += ','; 
+                                                                } 
+                                                                json += '}'; 
+                                                                data = $.parseJSON(json); 
+                                                        } 
+                                                        p.onRowSelect($(this), data); 
+                                                } 
+                                                
+                                                
 					}).mousedown(function (e) {
 						if (e.shiftKey) {
 							$(this).toggleClass('trSelected');

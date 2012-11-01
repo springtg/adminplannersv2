@@ -53,6 +53,7 @@ img{border: none}
 .w100pc{width: 100%}
 .w100{width: 100px}
 .w120{width: 120px}
+.w160{width: 160px}
 .w240{width: 240px}
 .w320{width: 320px}
 .w80{width: 80px}
@@ -279,3 +280,4 @@ ul.sysnav li ul li{display: block;height: 26px;width: 100%;border-bottom: 1px so
 ul.sysnav li ul.r li a{text-align: right}
 ul.sysnav li ul li a{line-height: 26px}
 ul.sysnav li:hover ul{display: block}
+.disabled{opacity: .5}

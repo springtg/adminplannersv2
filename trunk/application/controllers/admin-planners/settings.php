@@ -23,12 +23,8 @@ class settings extends CI_Controller  {
             parent::__construct();
             $this->load->helper('url');
             $this->load->library('javascript');
-            $this->load->library('session');
             $this->load->library('smarty3','','smarty');
-            $this->load->model('admin-planners/video_model','video_model');
-            $this->load->model('admin-planners/log_model','log_model');
-            $this->load->model('admin-planners/youtube','youtube');
-            if(!isset($_SESSION["JQX-DEL-VIDEO"]))$_SESSION["JQX-DEL-VIDEO"]=1;
+            $this->load->model('admin-planners/setting_model','setting_model');
         }
         public function index()
 	{
@@ -65,8 +61,22 @@ class settings extends CI_Controller  {
             $this->smarty->view('admin-planners/settings/04_settings',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
+        function Edit(){
+            
+            $ID=isset($_POST["ID"])?$_POST["ID"]:"";
+            $row=$this->setting_model->get($ID);
+            if(isset($row[0])){
+                $row=  objectToArray($row[0]);
+            }else{
+                $row=null;
+            }
+            $Data["row"]=$row;
+            $this->smarty->assign('_SESSION', $_SESSION);
+            $this->smarty->assign('Data', $Data);
+            $this->smarty->display("admin-planners/Settings/02_edit");
+        }
         function FlexiGridData(){
-            $this->load->model('admin-planners/setting_model','setting_model');
+            
             $data=$this->setting_model->FlexiGridData();
             header("Content-type: application/json");
             $jsonData = array('page'=>$data["page"],'total'=>$data["total_rows"],'rows'=>array());
@@ -77,9 +87,9 @@ class settings extends CI_Controller  {
                             'cell'=>array(
                                     'ID'    =>$row->ID,
                                     'Key'   =>$row->Key,
-                                    'Value'=>$row->Value,
-                                    'Name'=>$row->Name,
-                                    'Type'=>$row->Type
+                                    'Value' =>$row->Value,
+                                    'Name'  =>$row->Name,
+                                    'Type'  =>$row->Type
                             ),
                     );
                     $jsonData['rows'][] = $entry;

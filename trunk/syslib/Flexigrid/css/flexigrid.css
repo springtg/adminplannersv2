@@ -413,6 +413,7 @@ div.colCopy {
 	border-bottom: 1px solid #fff;
 	vertical-align: top;
 	white-space: nowrap;
+        height: 24px;overflow: hidden;
 }
 
 .flexigrid div.hDiv th div {
@@ -443,7 +444,10 @@ div.colCopy {
 
 .flexigrid div.bDiv td div {
 	border-top: 0px solid #fff;
-	padding-bottom: 4px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        line-height: 16px;
+        height: 16px;overflow: hidden
 }
 
 .flexigrid tr td.sorted {
@@ -621,3 +625,12 @@ div.pGroup {
 	/* common inner cell properties*/ {
 	overflow: hidden;
 }
+.flexigrid div.fbutton .add {
+	background: url(images/add.png) no-repeat center left;
+}
+
+.flexigrid div.fbutton .delete {
+	background: url(images/close.png) no-repeat center left;
+}
+.flexigrid div.fbutton span.disabled{display: none}
+.flexigrid{display: inline-block;}

@@ -35,6 +35,7 @@
     }
     function htmlAjax(surl,sdata,obj,callback){
         isrunning=true;
+        ShowLoadding();
         jQuery.ajax({
             type:"POST", 
             data:sdata, 
@@ -42,13 +43,22 @@
             url:surl, 
             success: function (data){
                 isrunning=false;
-                $(obj).html(data);
+                HideLoadding(); 
+                if(typeof(obj)=="object"){
+                
+                }else if(typeof($(obj))=="object"){
+                    obj=$(obj);
+                }else{
+                    ShowErrorDialogMessage("Sorry. Element not found.");
+                }
+                obj.html(data);
                 if (callback && typeof(callback) === "function") {  
                     callback();  
                 } 
             },
             error: function (xhr, ajaxOptions, thrownError){
                 isrunning=false;
+                HideLoadding(); 
                 ShowErrorDialogMessage("Sorry. Your request could not be completed.<br/> Please check your input data.");
             }
         });
