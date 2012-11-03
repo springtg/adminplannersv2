@@ -49,7 +49,7 @@
         {{/if}}
     </table>
     <div>
-        <input type="button" class="classic-button" value="Back" onclick="jqxGrid.CancelEdit();"/>
+        <input type="button" class="classic-button" value="Back" onclick="$( '#frmelfinder' ).dialog({modal: true,minWidth: 700});"/>
         {{if isset($Data["row"])}}
             <input type="button" class="classic-button" value="Update" onclick="alert($('#txt_value').getCode());"/>
         {{else}}
@@ -66,6 +66,13 @@
                 wym: true,
                 airButtons: ['formatting', '|', 'bold', 'italic', 'deleted', '|','unorderedlist','orderedlist','outdent','indent','alignment','|','image','video','link','|','fontcolor','backcolor']
             });	
+            $('#myelfinder').elfinder({
+                url : '{{base_url()}}syslib/elfinder/php/connector.php',
+                lang : 'en',
+                getFileCallback : function(file) {
+                        alert(file);
+                }
+            })
         });
         </script>
     {{/if}}
@@ -73,3 +80,9 @@
 {{else}}
     Item not found
 {{/if}}
+<div id="frmelfinder" class="hidden" style="font-size: 15px">
+    
+    <div id="myelfinder" style="width: 100%;
+min-width: 400px;"></div>
+    
+</div>
