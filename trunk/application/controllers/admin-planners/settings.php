@@ -26,6 +26,22 @@ class settings extends CI_Controller  {
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/setting_model','setting_model');
         }
+        function gs(){
+            $a="1 2 3 4 5 6 7 8 9 10";
+            $a=  explode(" ", $a);
+            echo "<style>";
+            foreach ($a as $i){
+                $ipx=$i."px";
+                echo "
+                .br$i{-webkit-border-radius: $ipx;-moz-border-radius: $ipx;border-radius: $ipx}
+                .btrr$i{-webkit-border-top-right-radius: $ipx;-moz-border-radius-topright: $ipx;border-top-right-radius: $ipx}
+                .bbrr$i{-webkit-border-bottom-right-radius: $ipx;-moz-border-radius-bottomright: $ipx;border-bottom-right-radius: $ipx}
+                .bblr$i{-webkit-border-bottom-left-radius: $ipx;-moz-border-radius-bottomleft: $ipx;border-bottom-left-radius: $ipx}
+                .btlr$i{-webkit-border-top-left-radius: $ipx;-moz-border-radius-topleft: $ipx;border-top-left-radius: $ipx}";
+                
+                
+            }
+        }
         public function index()
 	{
             $Data["tab_config"]["tabs"]=array(
