@@ -5,6 +5,16 @@
 <script src="{{base_url()}}syslib/redactor/redactor.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="{{base_url()}}syslib/redactor/redactor.css">
 
+<!-- elFinder CSS (REQUIRED) -->
+<link rel="stylesheet" type="text/css" media="screen" href="{{base_url()}}syslib/elfinder/css/elfinder.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="{{base_url()}}syslib/elfinder/css/theme.css">
+
+<!-- elFinder JS (REQUIRED) -->
+<script type="text/javascript" src="{{base_url()}}syslib/elfinder/js/elfinder.min.js"></script>
+
+<!-- elFinder translation (OPTIONAL) -->
+<script type="text/javascript" src="{{base_url()}}syslib/elfinder/js/i18n/elfinder.ru.js"></script>
+
 <div style="padding-right: 2px;padding-left: 0px;">
     <div id="frmFlexiGrid">
         <table id="FlexiGrid"></table>
@@ -170,4 +180,5 @@ function removeEditorContent(ElementID){
 function UpdateItem(){
     
 }
+   
 </script>
