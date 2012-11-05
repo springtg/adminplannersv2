@@ -25,22 +25,17 @@ class settings extends CI_Controller  {
             $this->load->library('javascript');
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/setting_model','setting_model');
+            $this->load->model('admin-planners/log_model','log_model');
+            include APPPATH . 'libraries/defu.php';
+        }
+        function Init(){
+            $data=$this->setting_model->gets();
+            foreach ($data as $v){
+                $_SESSION["SETTINGS"][$v->Key]=$v->Value;
+            }
         }
         function gs(){
-            $a="1 2 3 4 5 6 7 8 9 10";
-            $a=  explode(" ", $a);
-            echo "<style>";
-            foreach ($a as $i){
-                $ipx=$i."px";
-                echo "
-                .br$i{-webkit-border-radius: $ipx;-moz-border-radius: $ipx;border-radius: $ipx}
-                .btrr$i{-webkit-border-top-right-radius: $ipx;-moz-border-radius-topright: $ipx;border-top-right-radius: $ipx}
-                .bbrr$i{-webkit-border-bottom-right-radius: $ipx;-moz-border-radius-bottomright: $ipx;border-bottom-right-radius: $ipx}
-                .bblr$i{-webkit-border-bottom-left-radius: $ipx;-moz-border-radius-bottomleft: $ipx;border-bottom-left-radius: $ipx}
-                .btlr$i{-webkit-border-top-left-radius: $ipx;-moz-border-radius-topleft: $ipx;border-top-left-radius: $ipx}";
-                
-                
-            }
+            print_r($_SESSION["SETTINGS"]);
         }
         public function index()
 	{
@@ -77,6 +72,75 @@ class settings extends CI_Controller  {
             $this->smarty->view('admin-planners/settings/04_settings',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
+        function Save(){
+            $msgs=array();
+            if( (!isset($_POST["ID"])) || $_POST["ID"]==""){
+                $msgs[]="Bad request.";
+            }
+            if( (!isset($_POST["Key"])) || $_POST["Key"]==""){
+                $msgs[]="Key does not empty.";
+            }
+            if( (!isset($_POST["Name"])) || $_POST["Name"]==""){
+                $msgs[]="Name does not empty.";
+            }
+            if( (!isset($_POST["Value"])) || $_POST["Value"]==""){
+                $msgs[]="Value does not empty.";
+            }
+            if(count($msgs)>0){
+                $code=-44;
+                $msg="";
+                foreach ($msgs as $m){
+                    $msg.="$m<br/>";
+                }
+            }else{
+                
+                $Params=array(
+                    "Name"=>$_POST["Name"],
+                    "Value"=>$_POST["Value"],
+                    "Log"=>print_r(array(
+                        "Action"=>"Update",
+                        "IP"=>getIP(),
+                        "Time"=>date("Y-m-d h:i:s"),
+                        "Params"=>array(
+                            "ID"=>$_POST["ID"],
+                            "Name"=>$_POST["Name"],
+                            "Value"=>$_POST["Value"],
+                            )
+                        ), true)
+                );
+                if($this->setting_model->update($_POST["ID"],$Params)){
+                    $this->log_model->insert(array("Table" => "settings","RowID"=>$_POST["ID"], "Action" => "Update", "Log" => $Params["Log"]));
+                    $code=1;
+                    $msg="Success. Video have been updated.";
+                }else{
+                    $code=-1;
+                    $msg="Fail. Cant update video information.";
+                }
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        function Delete(){
+            $ID=isset($_POST["ID"])?$_POST["ID"]:"";
+            $Params=array(
+                "Log"=>print_r(array(
+                    "Action"=>"Delete",
+                    "IP"=>getIP(),
+                    "Time"=>date("Y-m-d h:i:s"),
+                    "Params"=>array(
+                        "ID"=>$_POST["ID"],
+                        )
+                    ), true)
+            );
+            if($this->setting_model->delete($_POST["ID"])){
+                $this->log_model->insert(array("Table" => "settings","RowID"=>$_POST["ID"], "Action" => "Delete", "Log" => $Params["Log"]));
+                $code=1;
+                $msg="Success. Item have been deleted.";
+            }else{
+                $code=-1;
+                $msg="Fail. Cant delete this item.";
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
         function Edit(){
             
             $ID=isset($_POST["ID"])?$_POST["ID"]:"";
@@ -103,7 +167,7 @@ class settings extends CI_Controller  {
                             'cell'=>array(
                                     'ID'    =>$row->ID,
                                     'Key'   =>$row->Key,
-                                    'Value' =>$row->Value,
+                                    'Value' =>$row->Type=="html"?htmlentities($row->Value,ENT_QUOTES,'utf-8'):$row->Value,
                                     'Name'  =>$row->Name,
                                     'Type'  =>$row->Type
                             ),
