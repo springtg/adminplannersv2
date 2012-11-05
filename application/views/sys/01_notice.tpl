@@ -8,7 +8,7 @@
         border: 1px solid #DDD;
         line-height: 16px;
         height: 24px;
-        
+
         margin: 0;
         font-size: 11px;
     }
@@ -32,25 +32,23 @@
         background-image: -moz-linear-gradient(top,#DADADA,#FAFAFA);
         background-image: -o-linear-gradient(top,#DADADA,#FAFAFA);
     }
+    .classic-button.icon{
+        padding: 2px 20px 2px 36px;
+    }
     .classic-button:active{background: #ccc;}
     .classic-input{padding: 2px 4px;border: 1px solid #ddd;height: 18px;line-height: 16px;font-size: 11px;}
     .no-close .ui-dialog-titlebar-close {display: none }
     .ui-button.ui-corner-all{-moz-border-radius: 2px/*{cornerRadius}*/;-webkit-border-radius: 2px/*{cornerRadius}*/;border-radius: 2px/*{cornerRadius}*/;}
 </style>
-<ul id="myMenu" class="contextMenu hidden">
-        <li class="edit"><a href="#edit">Edit</a></li>
-        <li class="cut separator"><a href="#cut">Cut</a></li>
-        <li class="copy"><a href="#copy">Copy</a></li>
-        <li class="paste"><a href="#paste">Paste</a></li>
-        <li class="delete"><a href="#delete">Delete</a></li>
-        <li class="quit separator"><a href="#quit">Quit</a>
-            <ul>
-                <li class="nothing"><a href="#nothing">nothing</a></li>
-                <li class="nothing1"><a href="#nothing1">nothing1</a></li>
-                <li class="nothing2 separator"><a href="#nothing2">nothing2</a></li>
-                <li class="nothing3"><a href="#nothing3">nothing3</a></li>
-            </ul>
-        </li>
+<ul id="FlexiGridMenu" class="contextMenu hidden">
+    <li class="add"><a href="#add">Add</a></li>
+    <li class="edit"><a href="#edit">Edit</a></li>
+    <li class="delete"><a href="#delete">Delete</a></li>
+    <li class="cut separator"><a href="#cut">Cut</a></li>
+    <li class="copy"><a href="#copy">Copy</a></li>
+    <li class="paste"><a href="#paste">Paste</a></li>
+ 
+    <li class="quit separator"><a href="#quit">Quit</a></li>
 </ul>
 
 <span style="display: none">

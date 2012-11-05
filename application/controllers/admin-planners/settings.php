@@ -35,7 +35,11 @@ class settings extends CI_Controller  {
             }
         }
         function gs(){
-            print_r($_SESSION["SETTINGS"]);
+            $a=array("Name"=>"Trường","Company"=>"Sunsoft","obj"=>array("0"=>1,"a"=>3));
+            $string=  print_r($a,true);
+            echo "String:$string";
+            $arr=print_r_reverse($string);
+            print_r($arr);
         }
         public function index()
 	{
@@ -83,8 +87,14 @@ class settings extends CI_Controller  {
             if( (!isset($_POST["Name"])) || $_POST["Name"]==""){
                 $msgs[]="Name does not empty.";
             }
-            if( (!isset($_POST["Value"])) || $_POST["Value"]==""){
+            if( (isset($_POST["Value"])) && $_POST["Value"]==""){
                 $msgs[]="Value does not empty.";
+            }
+            if( (isset($_POST["link"])) && $_POST["link"]==""){
+                $msgs[]="Link does not empty.";
+            }
+            if( (isset($_POST["image"])) && $_POST["image"]==""){
+                $msgs[]="Image does not empty.";
             }
             if(count($msgs)>0){
                 $code=-44;
@@ -96,7 +106,9 @@ class settings extends CI_Controller  {
                 
                 $Params=array(
                     "Name"=>$_POST["Name"],
-                    "Value"=>$_POST["Value"],
+                    "Value"=>isset($_POST["Value"])?$_POST["Value"]:(
+                            json_encode(array("link"=>$_POST["link"],"image"=>$_POST["image"]))
+                        ),
                     "Log"=>print_r(array(
                         "Action"=>"Update",
                         "IP"=>getIP(),
@@ -104,17 +116,20 @@ class settings extends CI_Controller  {
                         "Params"=>array(
                             "ID"=>$_POST["ID"],
                             "Name"=>$_POST["Name"],
-                            "Value"=>$_POST["Value"],
+                            "Value"=>isset($_POST["Value"])?$_POST["Value"]:(
+                                    json_encode(array("link"=>$_POST["link"],"image"=>$_POST["image"]))
+                                ),
                             )
                         ), true)
                 );
+                //print_r($Params);return;
                 if($this->setting_model->update($_POST["ID"],$Params)){
-                    $this->log_model->insert(array("Table" => "settings","RowID"=>$_POST["ID"], "Action" => "Update", "Log" => $Params["Log"]));
+                    //$this->log_model->insert(array("Table" => "settings","RowID"=>$_POST["ID"], "Action" => "Update", "Log" => $Params["Log"]));
                     $code=1;
-                    $msg="Success. Video have been updated.";
+                    $msg="Success. Item have been updated.";
                 }else{
                     $code=-1;
-                    $msg="Fail. Cant update video information.";
+                    $msg="Fail. Cant update this Item . Please check item' information.";
                 }
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
@@ -151,6 +166,8 @@ class settings extends CI_Controller  {
                 $row=null;
             }
             $Data["row"]=$row;
+            if($Data["row"]["Type"]=="objectClassPartner")
+                $Data["row"]["Value"]=  json_decode ($Data["row"]["Value"]);
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
             $this->smarty->display("admin-planners/Settings/02_edit");
@@ -167,7 +184,7 @@ class settings extends CI_Controller  {
                             'cell'=>array(
                                     'ID'    =>$row->ID,
                                     'Key'   =>$row->Key,
-                                    'Value' =>$row->Type=="html"?htmlentities($row->Value,ENT_QUOTES,'utf-8'):$row->Value,
+                                    'Value' =>  htmlentities_UTF8($row->Value),
                                     'Name'  =>$row->Name,
                                     'Type'  =>$row->Type
                             ),

@@ -45,32 +45,26 @@ class authority extends CI_Controller  {
             $this->smarty->view('admin-planners/authority/01_jqx',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
-        public function jqxgrid_authority(){
-            $products=array();
-            $result['total_rows']=0;
-            //if($this->checkauthority()>=0){
-                $result=$this->authority_model->jqxgrid_authority();
-                $rows=$result['rows'];
-                // get data and store in a json array
-                foreach ($rows as $row) {
-                    $products[] = array(
-                            'Name'     => $row->Name,
-                            'Value'    => $row->Value,
-                            'Note'     => $row->Note,
-                            'Insert'   => $row->Insert,
-                            'Update'   => $row->Update,
-                            'Authority'   => json_encode(array(
-                                            "AuthorityID"=>$row->AuthorityID,
-                                            "Delete"=>$row->Delete
-                                        ))
+        function FlexiGridData(){
+            
+            $data=$this->authority_model->FlexiGridData();
+            header("Content-type: application/json");
+            $jsonData = array('page'=>$data["page"],'total'=>$data["total_rows"],'rows'=>array());
+            foreach($data["rows"] AS $row){
+                    //If cell's elements have named keys, they must match column names
+                    //Only cell's with named keys and matching columns are order independent.
+                    $entry = array('id'=>$row->ID,
+                            'cell'=>array(
+                                    'ID'    =>$row->ID,
+                                    'Key'   =>$row->Key,
+                                    'Value' =>  htmlentities_UTF8($row->Value),
+                                    'Name'  =>$row->Name,
+                                    'Type'  =>$row->Type
+                            ),
                     );
-                }
-            //}
-            $data[] = array(
-                'TotalRows' => $result['total_rows'],
-                'Rows' => $products
-            );
-            echo json_encode($data);
+                    $jsonData['rows'][] = $entry;
+            }
+            echo json_encode($jsonData);
         }
         
 }
