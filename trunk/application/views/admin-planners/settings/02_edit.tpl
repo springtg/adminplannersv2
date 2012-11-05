@@ -32,7 +32,29 @@
         <tr>
             <td class="w100">Value</td>
             <td colspan="3">
-                {{if $Data["row"]["Type"]=="html"}}
+                {{if $Data["row"]["Type"]=="objectClassPartner"}}
+                </td>
+            </tr>
+            <tr>
+                <td>Link</td>
+                <td colspan="3">
+                   <div class="pr10 w720">
+                        <input id="txt_link" type="text"  class="classic-input w100pc"
+                           value="{{$Data["row"]["Value"]->link|escape:'html'}}"
+                           />
+                    </div> 
+                </td>
+            </tr>
+            <tr>
+                <td>Image</td>
+                <td colspan="3">
+                    <div class="pr10 w720">
+                        <input id="txt_image" type="text"  class="classic-input w100pc"
+                           value="{{$Data["row"]["Value"]->image|escape:'html'}}"
+                           />
+                    </div>
+                </td>
+                {{elseif $Data["row"]["Type"]=="html"}}
                     <div class="w720" style="width: 730px">
                         <textarea id="txt_value" style="min-height: 96px" 
                                 class="classic-input Editor w100pc rsv ">{{$Data["row"]["Value"]}}</textarea>
@@ -40,25 +62,24 @@
                     <script type="text/javascript">
                     $(document).ready(function () {
                         $('#txt_value').redactor({
-                            air: true,
+                            //air: true,
                             //wym: true,
                             airButtons: ['formatting', '|', 'bold', 'italic', 'deleted', '|','unorderedlist','orderedlist','outdent','indent','alignment','|','image','video','link','|','fontcolor','backcolor']
                         });	
                     });
                     </script>
-                {{elseif $Data["row"]["Type"]=="text"}}
-                    <div class="pr10 w720">
-                        <textarea id="txt_value" style="min-height: 96px" 
-                                class="classic-input Editor w100pc rsv ">{{$Data["row"]["Value"]|escape:'html'}}</textarea>
-                    </div>
-                {{else}}
+                {{elseif $Data["row"]["Type"]=="string"}}
                     <div class="pr10 w720">
                         <input id="txt_value" type="text"  class="classic-input w100pc"
                            value="{{$Data["row"]["Value"]|escape:'html'}}"
                            />
                     </div>
-                {{/if}}
-                
+                {{else}}
+                    <div class="pr10 w720">
+                        <textarea id="txt_value" style="min-height: 96px" 
+                                class="classic-input Editor w100pc rsv ">{{$Data["row"]["Value"]|escape:'html'}}</textarea>
+                    </div>
+                {{/if}}        
             </td>
         </tr>
     </table>

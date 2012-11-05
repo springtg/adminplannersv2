@@ -8,15 +8,11 @@
 <script src="{{base_url()}}syslib/contextMenu/jquery.contextMenu.js" type="text/javascript"></script>
 <link href="{{base_url()}}syslib/contextMenu/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
 
-<!-- elFinder CSS (REQUIRED) -->
-<link rel="stylesheet" type="text/css" media="screen" href="{{base_url()}}syslib/elfinder/css/elfinder.min.css">
+
+<!--<link rel="stylesheet" type="text/css" media="screen" href="{{base_url()}}syslib/elfinder/css/elfinder.min.css">
 <link rel="stylesheet" type="text/css" media="screen" href="{{base_url()}}syslib/elfinder/css/theme.css">
-
-<!-- elFinder JS (REQUIRED) -->
 <script type="text/javascript" src="{{base_url()}}syslib/elfinder/js/elfinder.min.js"></script>
-
-<!-- elFinder translation (OPTIONAL) -->
-<script type="text/javascript" src="{{base_url()}}syslib/elfinder/js/i18n/elfinder.ru.js"></script>
+<script type="text/javascript" src="{{base_url()}}syslib/elfinder/js/i18n/elfinder.ru.js"></script>-->
 
 <div style="padding-right: 2px;padding-left: 0px;">
     <div id="frmFlexiGrid">
@@ -42,7 +38,7 @@
         //contextMenu
         function _contextMenu(){
             $("#FlexiGrid,#gadien").contextMenu({
-                    menu: 'myMenu'
+                    menu: 'FlexiGridMenu'
             },
                     function(action, el, pos) {
                     alert(
@@ -83,7 +79,7 @@
                 sortname: "Name",
                 sortorder: "ASC",
         
-                usepager: true,
+                usepager: false,
                 title: 'Settings',
                 useRp: true,
                 rp: 15,
@@ -190,12 +186,9 @@
             Save:function (){
                 if(isrunning)return;
                 console.log("Save ↵ Call");
-                var ID,Key,Name,Value,url,data;
-                try{
-                    Value = $('#txt_value').getCode()
-                }catch(e){
-                    Value = $('#txt_value').val()
-                }
+                var ID,Key,Name,Value,link,image,url,data;
+                
+                
                 ID = $('#txt_id').val()
                 Key = $('#txt_key').val()
                 Name = $('#txt_name').val()
@@ -203,8 +196,21 @@
                 data={
                     ID      :   ID,
                     Key     :   Key,
-                    Name    :   Name,
-                    Value   :   Value
+                    Name    :   Name
+                }
+                if($("#txt_link").length){
+                    data.link=$("#txt_link").val();
+                }
+                if($("#txt_image").length){
+                    data.image=$("#txt_image").val();
+                }
+                if($('#txt_value').length){
+                    try{
+                        Value = $('#txt_value').getCode()
+                    }catch(e){
+                        Value = $('#txt_value').val()
+                    }
+                    data.Value=Value;
                 }
                 isrunning=true;
                 debugAjax(url,data,function(result){

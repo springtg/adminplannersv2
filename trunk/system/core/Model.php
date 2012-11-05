@@ -92,7 +92,7 @@ class FlexiGrid_Model extends CI_Model {
     function Binding() {
 
 
-
+        $_SESSION["P"]=$_POST;
         $query = isset($_POST['query']) ? $_POST['query'] : false;
         $qtype = isset($_POST['qtype']) ? $_POST['qtype'] : false;
 
@@ -111,7 +111,7 @@ class FlexiGrid_Model extends CI_Model {
         }
 
         //FILTER
-        if ( isset($_POST['qtype']) && isset($_POST['query']) ) {
+        if ( isset($_POST['qtype']) && isset($_POST['query']) && $_POST['qtype']!="" ) {
             $filterdatafield = $_POST['qtype'];
             //fix filterdatafield
             if ($filterdatafield[0] === "_" && $filterdatafield[strlen($filterdatafield) - 1] === "_") {

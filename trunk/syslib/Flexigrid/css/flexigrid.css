@@ -626,11 +626,20 @@ div.pGroup {
 	overflow: hidden;
 }
 .flexigrid div.fbutton .add {
-	background: url(images/add.png) no-repeat center left;
+	background: url('../../sysimages/16/add_1.png') no-repeat center left;
 }
 
 .flexigrid div.fbutton .delete {
-	background: url(images/close.png) no-repeat center left;
+	background: url('../../sysimages/16/delete.png') no-repeat center left;
+}
+.flexigrid div.fbutton .edit {
+	background: url('../../sysimages/16/icon_edit.png') no-repeat center left;
+}
+.flexigrid div.fbutton .setting {
+	background: url('../../sysimages/16/option.gif') no-repeat center left;
+}
+.flexigrid div.fbutton .search {
+	background: url('../../sysimages/16/toolbar_find.png') no-repeat center left;
 }
 .flexigrid div.fbutton span.disabled{display: none}
 .flexigrid{display: inline-block;}
