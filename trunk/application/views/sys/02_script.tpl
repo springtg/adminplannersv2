@@ -33,6 +33,40 @@
             }
         });
     }
+    function debugAjax(surl,sdata,callback){
+        isrunning=true;
+        ShowLoadding();
+        jQuery.ajax({
+            type:"POST", 
+            data:sdata, 
+            dataType:"text", 
+            url:surl, 
+            success: function (data){
+                isrunning=false;
+                HideLoadding(); 
+                try{
+                    
+                    var result=JSON.parse(data);
+                    
+                    if (callback && typeof(callback) === "function") { 
+                        try{
+                            callback(result);  
+                        }catch(e){
+                            ShowErrorDialogMessage(e.message);
+                        }
+                    } 
+                }catch(err){
+                    ShowErrorDialogMessage("JSON Error:<font color='red'>"+err.message+"</font><br/>Content: <pre>"+data+"</pre>");
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError){
+                isrunning=false;
+                HideLoadding();
+                ShowErrorDialogMessage("<b>Status</b>:<font color='red'>"+xhr.status+"</font><br/><b>ThrownError</b>:"+thrownError+"<br/>"+surl);
+            
+            }
+        });
+    }
     function htmlAjax(surl,sdata,obj,callback){
         isrunning=true;
         ShowLoadding();

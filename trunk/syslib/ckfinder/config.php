@@ -62,7 +62,7 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = 'http://localhost/AdminPlanners2.0/f';
+$baseUrl = 'http://localhost/AdminPlanners2.0/f/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the

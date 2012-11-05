@@ -689,56 +689,58 @@
 						var obj = (e.target || e.srcElement);
 						if (obj.href || obj.type) return true;
 						
-						if (p.singleSelect && ! g.multisel ) {
-							$(this).siblings().removeClass('trSelected');
-							//$(this).toggleClass('trSelected');
-                                                        
-						}
-                                                $(this).toggleClass('trSelected');
+//						if (p.singleSelect && ! g.multisel ) {
+//							$(this).siblings().removeClass('trSelected');
+//							//$(this).toggleClass('trSelected');
+//                                                        
+//						}
+//                                                $(this).toggleClass('trSelected');
                                                 if (p.onRowSelect) { 
-                                                        var data = null; 
+                                                        var data = new Object(); 
                                                         if ($(this).hasClass('trSelected')) { 
-                                                                var json; 
                                                                 var tds = $(this).find('td'); 
-                                                                json = '{"rowid":"' + $(this).attr('id') + '",'; 
+                                                                data.rowid=$(this).attr('id');
                                                                 for (var i = 0; i < p.colModel.length; i++) { 
-                                                                        json += '"' + p.colModel[i].name + '":"' + $(tds[i]).text() + '"'; 
-                                                                        if ((i + 1) != p.colModel.length) 
-                                                                                json += ','; 
+                                                                    data[p.colModel[i].name]=$(tds[i]).text();
                                                                 } 
-                                                                json += '}'; 
-                                                                data = $.parseJSON(json); 
+                                                                console.log(data);
                                                         } 
                                                         p.onRowSelect($(this), data); 
                                                 } 
                                                 
                                                 
 					}).mousedown(function (e) {
-						if (e.shiftKey) {
-							$(this).toggleClass('trSelected');
-							g.multisel = true;
-							this.focus();
-							$(g.gDiv).noSelect();
+//						if (e.shiftKey) {
+//							$(this).toggleClass('trSelected');
+//							g.multisel = true;
+//							this.focus();
+//							$(g.gDiv).noSelect();
+//						}
+//						if (e.ctrlKey)
+//						{
+//							$(this).toggleClass('trSelected');
+//							g.multisel = true;
+//							this.focus();
+//						}
+					}).mouseup(function (e) {
+                                                var obj = (e.target || e.srcElement);
+						if (obj.href || obj.type) return true;
+                                                if (p.singleSelect && ! g.multisel ) {
+							$(this).siblings().removeClass('trSelected');
 						}
-						if (e.ctrlKey)
-						{
-							$(this).toggleClass('trSelected');
-							g.multisel = true;
-							this.focus();
-						}
-					}).mouseup(function () {
-						if (g.multisel && ! e.ctrlKey) {
-							g.multisel = false;
-							$(g.gDiv).noSelect(false);
-						}
+                                                $(this).toggleClass('trSelected');
+//						if (g.multisel && ! e.ctrlKey) {
+//							g.multisel = false;
+//							$(g.gDiv).noSelect(false);
+//						}
 					}).dblclick(function () {
 						if (p.onDoubleClick) {
 							p.onDoubleClick(this, g, p);
 						}
 					}).hover(function (e) {
-						if (g.multisel && e.shiftKey) {
-							$(this).toggleClass('trSelected');
-						}
+//						if (g.multisel && e.shiftKey) {
+//							$(this).toggleClass('trSelected');
+//						}
 					}, function () {});
 					if ($.browser.msie && $.browser.version < 7.0) {
 						$(this).hover(function () {

@@ -37,6 +37,21 @@
     .no-close .ui-dialog-titlebar-close {display: none }
     .ui-button.ui-corner-all{-moz-border-radius: 2px/*{cornerRadius}*/;-webkit-border-radius: 2px/*{cornerRadius}*/;border-radius: 2px/*{cornerRadius}*/;}
 </style>
+<ul id="myMenu" class="contextMenu hidden">
+        <li class="edit"><a href="#edit">Edit</a></li>
+        <li class="cut separator"><a href="#cut">Cut</a></li>
+        <li class="copy"><a href="#copy">Copy</a></li>
+        <li class="paste"><a href="#paste">Paste</a></li>
+        <li class="delete"><a href="#delete">Delete</a></li>
+        <li class="quit separator"><a href="#quit">Quit</a>
+            <ul>
+                <li class="nothing"><a href="#nothing">nothing</a></li>
+                <li class="nothing1"><a href="#nothing1">nothing1</a></li>
+                <li class="nothing2 separator"><a href="#nothing2">nothing2</a></li>
+                <li class="nothing3"><a href="#nothing3">nothing3</a></li>
+            </ul>
+        </li>
+</ul>
 
 <span style="display: none">
     <iframe
@@ -52,7 +67,7 @@
         ></iframe>
     <div id="loadding-dialog" class="uidialog" title="Loadding...">Processing. Please, wait...</div>
     <div id="dialog" class="uidialog" title="Dialog Title">I'm in a dialog</div>
-    <div id="error-dialog-message" title="Error !"></div>
+    <div id="error-dialog-message" title="<font color='red'>Error !</font>"></div>
     <div id="notice-dialog-message" title="Notice !"></div>
     <div id="confirm-dialog-message" title="Confirm !"></div>
 </span>
@@ -158,7 +173,7 @@
     function CloseConfirmDialogMessage(confirm){
         if(typeof(confirm)=="object"){
             confirm.dialog( "close" );
-        }else if(typeof(confirm)=="string"){
+        }else{
             $( "#confirm-dialog-message" ).dialog( "close" );
         }
     }
