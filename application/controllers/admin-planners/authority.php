@@ -26,23 +26,41 @@ class authority extends CI_Controller  {
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/authority_model','authority_model');
+            include APPPATH . 'libraries/defu.php';
         }
         public function index()
 	{
             $Data["tab_config"]["tabs"]=array(
-                "system"   =>array("display"=>"Hệ Thống"          ,"value"=>"system"     ,"link"=>""),
-                "authority" =>array("display"=>"Quyền"            ,"value"=>"authority"   ,"link"=>""),
-                "account"   =>array("display"=>"Tài Khoản"        ,"value"=>"account"     ,"link"=>""),
-                "group"     =>array("display"=>"Nhóm"             ,"value"=>"group"       ,"link"=>"")
+                "content"   =>array(
+                    "display"=>"Content"
+                    ,"value"=>"content"   
+                    ,"link"=>  base_url("admin-planners/content")
+                    ),
+                "video"     =>array(
+                    "display"=>"Video"        
+                    ,"value"=>"video"     
+                    ,"link"=>base_url("admin-planners/video")),
+                "slider"    =>array(
+                    "display"=>"Slider in Home Page" 
+                    ,"value"=>"slider"     
+                    ,"link"=>base_url("admin-planners/slider")),
+                "contact"   =>array(
+                    "display"=>"Contact"      
+                    ,"value"=>"contact"       
+                    ,"link"=>base_url("admin-planners/contact")),
+                "request"   =>array(
+                    "display"=>"Request"      
+                    ,"value"=>"request"       
+                    ,"link"=>base_url("admin-planners/request"))
             );
-            $Data["tab_config"]["tabindex"]="authority";
+            $Data["tab_config"]["tabindex"]="video";
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
             
             $this->smarty->view("sys/01_notice",'NOTICE');
             $this->smarty->view("sys/02_script",'SCRIPT');
             $this->smarty->view('admin-planners/tabs/01_tabs',"TABS");
-            $this->smarty->view('admin-planners/authority/01_jqx',"JQXGRID");
+            $this->smarty->view('admin-planners/authority/02_FG',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
         function FlexiGridData(){
@@ -55,11 +73,15 @@ class authority extends CI_Controller  {
                     //Only cell's with named keys and matching columns are order independent.
                     $entry = array('id'=>$row->ID,
                             'cell'=>array(
-                                    'ID'    =>$row->ID,
-                                    'Key'   =>$row->Key,
-                                    'Value' =>  htmlentities_UTF8($row->Value),
-                                    'Name'  =>$row->Name,
-                                    'Type'  =>$row->Type
+                                'ID'        =>$row->ID,
+                                'Keyword'   =>$row->Keyword,
+                                'Value'     =>$row->Value,
+                                'Name'      =>$row->Name,
+                                'Note'      =>htmlentities_UTF8($row->Note),
+                                'Insert'    =>$row->Insert,
+                                'Update'    =>$row->Update,
+                                'Delete'    =>$row->Delete,
+                                'Lock'      =>$row->Lock,
                             ),
                     );
                     $jsonData['rows'][] = $entry;

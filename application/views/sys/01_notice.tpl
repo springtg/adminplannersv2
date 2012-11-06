@@ -44,6 +44,7 @@
     <li class="add"><a href="#add">Add</a></li>
     <li class="edit"><a href="#edit">Edit</a></li>
     <li class="delete"><a href="#delete">Delete</a></li>
+    <li class="restore"><a href="#restore">Restore</a></li>
     <li class="cut separator"><a href="#cut">Cut</a></li>
     <li class="copy"><a href="#copy">Copy</a></li>
     <li class="paste"><a href="#paste">Paste</a></li>
