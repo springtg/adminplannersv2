@@ -37,9 +37,10 @@ class settings extends CI_Controller  {
         function gs(){
             $a=array("Name"=>"Trường","Company"=>"Sunsoft","obj"=>array("0"=>1,"a"=>3));
             $string=  print_r($a,true);
-            echo "String:$string";
+            //echo "String:$string";
             $arr=print_r_reverse($string);
             print_r($arr);
+            
         }
         public function index()
 	{

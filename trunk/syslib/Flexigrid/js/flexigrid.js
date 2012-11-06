@@ -695,18 +695,7 @@
 //                                                        
 //						}
 //                                                $(this).toggleClass('trSelected');
-                                                if (p.onRowSelect) { 
-                                                        var data = new Object(); 
-                                                        if ($(this).hasClass('trSelected')) { 
-                                                                var tds = $(this).find('td'); 
-                                                                data.rowid=$(this).attr('id');
-                                                                for (var i = 0; i < p.colModel.length; i++) { 
-                                                                    data[p.colModel[i].name]=$(tds[i]).text();
-                                                                } 
-                                                                console.log(data);
-                                                        } 
-                                                        p.onRowSelect($(this), data); 
-                                                } 
+                                                
                                                 
                                                 
 					}).mousedown(function (e) {
@@ -728,7 +717,21 @@
                                                 if (p.singleSelect && ! g.multisel ) {
 							$(this).siblings().removeClass('trSelected');
 						}
-                                                $(this).toggleClass('trSelected');
+                                                if (!$(this).hasClass('trSelected')) { 
+                                                    $(this).toggleClass('trSelected');
+                                                }
+                                                if (p.onRowSelect) { 
+                                                        var data = new Object(); 
+                                                        if ($(this).hasClass('trSelected')) { 
+                                                                var tds = $(this).find('td'); 
+                                                                data.rowid=$(this).attr('id');
+                                                                for (var i = 0; i < p.colModel.length; i++) { 
+                                                                    data[p.colModel[i].name]=$(tds[i]).text();
+                                                                } 
+                                                                console.log(data);
+                                                        } 
+                                                        p.onRowSelect($(this), data); 
+                                                } 
 //						if (g.multisel && ! e.ctrlKey) {
 //							g.multisel = false;
 //							$(g.gDiv).noSelect(false);
