@@ -98,10 +98,11 @@
         }
         this.cdm.dialog({
             autoOpen            : false,
-            //resizable   : false,
+            resizable   : false,
             //height      :140,
+            width      :480,
             modal       : true,
-            hide        : "explode",
+            //hide        : "explode",
             title: title==undefined?"Confirm Dialog?":title
             ,buttons: {
                 Ok: function() {
@@ -200,8 +201,9 @@
         obj.dialog({
             //resizable   : false,
             //height      :140,
+            width      :'auto',
             modal       : true,
-            hide        : "explode",
+            //hide        : "explode",
             title: title==undefined?"Confirm Dialog":title,
             buttons: {
                 Ok: function() {
@@ -234,8 +236,9 @@
         obj.dialog({
             modal: true,
             //autoOpen            : false,
+            width      :'auto',
             closeOnEscape       : false,
-            hide                : "explode",
+            //hide                : "explode",
             buttons: {
                 Ok: function() {
                     $( this ).dialog( "close" );
@@ -266,9 +269,10 @@
         obj.dialog({
             modal: true,
             //autoOpen            : false,
+            width      :'auto',
             title: title==undefined?"Notice message !":title,
             closeOnEscape       : false,
-            hide                : "explode",
+            //hide                : "explode",
             buttons: {
                 Ok: function() {
                     $( this ).dialog( "close" );

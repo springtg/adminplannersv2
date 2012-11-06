@@ -74,24 +74,37 @@ if (!function_exists("convertUrl")) {
 if (!function_exists("ShowError")) {
 
     function ShowError(
-    $Error = array(
-        "color" => "",
-        "errortype" => "404",
-        "title" => "Webpage not found.",
-        "title" => "Webpage not found.",
-        "message" => "The 404 or Not Found, the server could not find what was requested",
-        "homelink" => ""
-    )
+        $Error = array(
+            "color" => "",
+            "errortype" => "404",
+            "title" => "Webpage not found.",
+            "message" => "The 404 or Not Found, the server could not find what was requested",
+            "homelink" => ""
+        )
     ) {
-        die('
-                <link href="' . base_url("syslib/syscss/sysstyle.css") . '" rel="stylesheet" type="text/css" />
-                <div class="MrKhuong' . $Error["color"] . '">
-                    <div class="tit"><span>' . $Error["errortype"] . '</span>' . $Error["title"] . '</div>
-                    <p>' . $Error["message"] . '</p>
-                    <a href="javascript:window.history.back()" class="back">Go back</a>
-                    <a href="' . ($Error["homelink"] == "" ? base_url("home") : $Error["homelink"]) . '" class="home">Go home</a>
-                </div>
-            ');
+        die('<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <style>
+            .KERROR{font-family:tahoma;font-size:11px;border: 1px solid red;padding: 1px;position: absolute;left: 50%;top: 50%;margin: -50px 0 0 -160px;width: 320px;height: 100px;z-index: 9999;background: #fff;-moz-box-shadow: 0 4px 10px #666;-webkit-box-shadow: 0 4px 10px #666;box-shadow: 0 4px 10px #666;-ms-filter: \'progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, direction=270, strength=7)\';filter: progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, direction=270, strength=7);}
+            .KERROR .tit{text-align: center;padding: 8px 12px;background: red;color: #fff;}
+            .KERROR .tit span{font-weight: bold;padding-right: 12px}
+            .KERROR p{color: red;padding: 8px 12px;margin: 0}
+            .KERROR .back{color: red;padding: 8px 32px;margin: 0;position: absolute;bottom: 0;left: 0}
+            .KERROR .home{color: red;padding: 8px 32px;margin: 0;position: absolute;bottom: 0;right: 0}
+            .KERROR .back:hover,.KERROR .home:hover{font-weight: bold}
+            .KERROR.blue{border: 1px solid blue;}
+            .KERROR.blue .tit{background: blue;}
+            .KERROR.blue .back,.KERROR.blue .home,.KERROR.blue p{color: blue;}
+            .KERROR.orange{border: 1px solid orange;}
+            .KERROR.orange .tit{background: orange;}
+            .KERROR.orange .back,.KERROR.orange .home,.KERROR.orange p{color: orange;}
+            </style>
+            <div class="KERROR ' . $Error["color"] . '">
+                <div class="tit"><span>' . $Error["errortype"] . '</span>' . $Error["title"] . '</div>
+                <p>' . $Error["message"] . '</p>
+                <a href="javascript:window.history.back()" class="back">Go back</a>
+                <a href="' . ($Error["homelink"] == "" ? base_url("home") : $Error["homelink"]) . '" class="home">Go home</a>
+            </div>
+        ');
     }
 
 }
