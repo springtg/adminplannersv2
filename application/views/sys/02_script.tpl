@@ -100,5 +100,15 @@
     function tab(){
     
     }
-    
+    function chkb(chk){
+        $(chk).toggleClass("cked");
+    }
+    function rdbck(rdb){
+        if($(rdb).attr("group"))
+            $(".radio.cked[group='"+$(rdb).attr("group")+"']").removeClass("cked");
+        else
+            $(".radio.cked").removeClass("cked");
+        $(rdb).addClass("cked");
+            
+    }
 </script>

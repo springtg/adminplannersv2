@@ -10,7 +10,47 @@
         Loadding...
     </div>
 </div>
+<div class="frmsetting hidden" style="width: 480px">
+    <div class="grid_12">
+        <div class="grid_6" >
+            <div class="mr4 ml-1" style="border: 1px solid #ccc">
+                <div class="lh20 fwb pl12 mb4" style="background: #ddd">Tùy chỉnh hiện thị cột</div>
+                <div class="grid_x pb4 ml4 checkbox" onclick="chkb(this);">
+                    <div class="grid_x w16px mr12 ic" style="height: 16px;"></div>
+                    <div class="grid_5 lh16 label">Name</div>
+                </div>
+                <div class="grid_x pb4 ml4 checkbox cked" onclick="chkb(this);">
+                    <div class="grid_x w16px mr12 ic " style="height: 16px;"></div>
+                    <div class="grid_5 lh16 label">Keyword</div>
+                </div>
+                <div class="grid_x pb4 ml4 checkbox" onclick="chkb(this);">
+                    <div class="grid_x w16px mr12 ic" style="height: 16px;"></div>
+                    <div class="grid_5 lh16 label">Note</div>
+                </div>
 
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="grid_6" >
+            <div class="ml4 mr-1" style="border: 1px solid #ccc">
+                <div class="lh20 fwb pl12 mb4" style="background: #ddd">Tùy chỉnh hiện thị dữ liệu</div>
+                <div class="grid_x pb4 ml4 radio" onclick="rdbck(this)">
+                    <div class="grid_x w14px mr12 ic" style="height: 14px;"></div>
+                    <div class="grid_5 lh16 label">Hiện tất cả dữ liệu</div>
+                </div>
+                <div class="grid_x pb4 ml4 radio cked" onclick="rdbck(this)">
+                    <div class="grid_x w14px mr12 ic " style="height: 14px;"></div>
+                    <div class="grid_5 lh16 label">Ẩn dữ liệu đã xóa</div>
+                </div>
+                <div class="grid_x pb4 ml4 radio" onclick="rdbck(this)">
+                    <div class="grid_x w14px mr12 ic" style="height: 14px;"></div>
+                    <div class="grid_5 lh16 label">Chỉ hiện dữ liệu đã xóa</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     var FlexiGrid=(function () {
         //Creating the demo window
@@ -29,12 +69,19 @@
                     menu: 'FlexiGridMenu'
             },
                     function(action, el, pos) {
+                    var items = $('.trSelected');
+                    var ID,url,data;
+                    if(items.length==1){
+                        
+                        ID = items[0].id.substr(3);
+                    }
                     alert(
-                            'Action: ' + action + '\n\n' +
-                            'Element ID: ' + $(el).attr('id') + '\n\n' + 
-                            'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' + 
-                            'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
-                            );
+                        'Action: ' + action + '\n\n' +
+                        'Element ID: ' + $(el).attr('id') + '\n\n' + 
+                        'FlexiGrid Row ID: ' + ID + '\n\n' +
+                        'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' + 
+                        'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
+                    );
             });
 
         }
@@ -57,12 +104,12 @@
                     {display: 'Lock'        , name : 'Lock'   , width : 80    , sortable : true  , align: 'right'  , hide: false}
                 ],
                 buttons : [
-                    {name: 'Add', bclass: 'add', onpress : HandleEvent},
-                    {name: 'Edit', bclass: 'edit', onpress : FlexiGrid.Edit},
-                    {name: 'Delete', bclass: 'delete', onpress : FlexiGrid.Delete},
+                    {name: 'Add'        , bclass: 'add'     , onpress : HandleEvent},
+                    {name: 'Edit'       , bclass: 'edit'    , onpress : FlexiGrid.Edit},
+                    {name: 'Delete'     , bclass: 'delete'  , onpress : FlexiGrid.Delete},
                     {separator: true},
-                    {name: 'Search', bclass: 'search', onpress : FlexiGrid.Filter },
-                    {name: 'Settings', bclass: 'setting', onpress : HandleEvent}
+                    {name: 'Search'     , bclass: 'search'  , onpress : FlexiGrid.Filter },
+                    {name: 'Settings'   , bclass: 'setting' , onpress : FlexiGrid.Setting}
                 ],
                 searchitems : [
                     {display: 'All'     , name : 'All'  , isdefault: true},
@@ -73,7 +120,7 @@
                 sortname: "Name",
                 sortorder: "ASC",
                 nomsg: 'No data to display',
-                usepager: false,
+                usepager: true,
                 title: 'Authority',
                 useRp: true,
                 rp: 15,
@@ -127,6 +174,7 @@
             },
             Setting: function () {
                 console.log("Setting ↵ Call");
+                ShowConfirmDialogMessage($(".frmsetting"), "Tùy Chỉnh");
             },
             Refresh:function (){
                 console.log("Refresh ↵ Call");
@@ -232,13 +280,6 @@
     };
 } ());
 
-//$('#flex1').flexigrid({onRowSelect:function(e,r){alert(r[0].id);}}); 
-function procMe( celDiv, id ) {
-$( celDiv ).click( function() {
-    //alert( id );
-    alert(this.innerHTML); 
-});
-}
 function HandleEvent(com, grid) {
 if (com == 'Delete') {
     var items = $('.trSelected');
@@ -292,8 +333,9 @@ if(areaContent) {
 function UpdateItem(){
     
 }
-    $(document).ready(function () {
-        FlexiGrid.init();
-    });
+
+$(document).ready(function () {
+    FlexiGrid.init();
+});
   
 </script>

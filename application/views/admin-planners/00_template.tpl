@@ -9,6 +9,7 @@
         <link href="{{base_url()}}syslib/tab/tab.css" type="text/css" rel="stylesheet"/>
         <link href="{{base_url()}}syslib/syscss/sysstyle.css" type="text/css" rel="stylesheet"/>
         <link href="{{base_url()}}syslib/syscss/bubble.css" type="text/css" rel="stylesheet"/>
+        <link href="{{base_url()}}syslib/syscss/24_grid_960.css" type="text/css" rel="stylesheet"/>
     </head>
     <body style="overflow-y: scroll;">
     {{if isset($NOTICE)}}{{$NOTICE}}{{/if}}
@@ -45,7 +46,6 @@
 </span>
 
 <div style="min-width: 960px">
-    <div class="header-fade"></div>
     <div class="syshead">
         {{include file='../sys/03_menu.tpl'}}
     </div>
