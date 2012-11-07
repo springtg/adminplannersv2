@@ -26,6 +26,7 @@ class product extends CI_Controller  {
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/product_model','product_model');
+            $this->load->model('admin-planners/setting_model','setting_model');
             include APPPATH . 'libraries/defu.php';
             if(!isset($_SESSION["JQX-DEL-PRO"]))$_SESSION["JQX-DEL-PRO"]=0;
             $this->_configs["colModel"]=array(
@@ -61,6 +62,30 @@ class product extends CI_Controller  {
             );
             $Data["tab_config"]["tabindex"]="product";
             $Data["flexigrid_settings"]["colModel"]=$this->_configs["colModel"];
+            foreach ($Data["flexigrid_settings"]["colModel"] as $col){
+                $Data["admin-product-settings"]["colModel"][$col["display"]]=$col["hide"];
+            }
+            $Data["admin-product-settings"]["display"]=1;
+            $Params=array(
+                "Key"=>"admin-product-settings",
+                "Name"=>"admin-product-settings",
+                "Type"=>"settings",
+                "Value"=>json_encode($Data["admin-product-settings"]),
+                "Log"=>print_r(array(
+                    "Action"=>"Insert",
+                    "IP"=>getIP(),
+                    "Time"=>date("Y-m-d h:i:s"),
+                    "Params"=>array(
+                        "Key"=>"admin-product-settings",
+                        "Name"=>"admin-product-settings",
+                        "Type"=>"settings",
+                        "Value"=>json_encode($Data["admin-product-settings"])
+                        )
+                    ), true)
+            );
+            //$exists = $this->db->select("ID")->where("ID", 10)->get()->row_array();
+            $this->setting_model->insert_onduplicate_update("admin-product-settings",$Params);
+            //$this->setting_model->insert($Params);
             $Data["flexigrid_settings"]["filterModel"]=filterModel($Data["flexigrid_settings"]["colModel"]);
             
             $this->smarty->assign('_SESSION', $_SESSION);

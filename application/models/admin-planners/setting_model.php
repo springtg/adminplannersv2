@@ -16,9 +16,29 @@ class setting_model extends FlexiGrid_Model {
         $query=$this->db->get_where('adp_settings'); 
         return $query->result();
     }
+    function insert($Params){
+        $this->db->insert('adp_settings', $Params); 
+        $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
+        if($count==1) return true;
+        return false;
+    }
     function update($ID,$Params){
         $this->db->where('ID', $ID);
         $this->db->update('adp_settings', $Params); 
+        $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
+        if($count==1) return true;
+        return false;
+    }
+    function insert_onduplicate_update($Name,$Params){
+        $exists = $this->db->select("ID")->where("Name", $Name)->get("adp_settings")->row_array();
+        if($exists){
+            $this->db->where("Name", $Name);
+            $this->db->update('adp_settings', $Params);
+        }else{
+            $this->db->insert('adp_settings', $Params); 
+        }
+        //$this->db->where('ID', $ID);
+        //$this->db->update('adp_settings', $Params); 
         $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
         if($count==1) return true;
         return false;
