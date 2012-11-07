@@ -1457,7 +1457,28 @@
 			});
 		}
 	}; //end noSelect
-  $.fn.flexSearch = function(p) { // function to search grid
-    return this.each( function() { if (this.grid&&this.p.searchitems) this.grid.doSearch(); });
-  }; //end flexSearch
+        $.fn.flexSearch = function(p) { // function to search grid
+            return this.each( function() { if (this.grid&&this.p.searchitems) this.grid.doSearch(); });
+        }; //end flexSearch
+        $.fn.showColumn = function (columnName, visible) {        
+
+                if (visible == undefined) visible = true;
+
+                var grd = this.closest('.flexigrid');        
+                var colHeader = $('th[abbr=' + columnName + ']', grd);
+                var colIndex = $(colHeader).attr('axis').replace(/col/, "");
+
+                $(colHeader).toggle(visible);
+
+                $('tbody tr', grd).each(
+                    function () {                
+                        $('td:eq(' + colIndex + ')', this).toggle(visible);
+                    }
+                ); 
+            };
+
+            $.fn.hideColumn = function (columnName) {
+                this.showColumn(columnName, false);
+            }
+
 })(jQuery);
