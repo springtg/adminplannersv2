@@ -163,11 +163,12 @@
                 },
                 onRowSelect: function (row, data) { 
                     $('#FlexiGridMenu').enableContextMenuItems();
+                    $('#FlexiGridMenu').showContextMenuItems();
                     if(data.Lock==1){ $('#FlexiGridMenu').disableContextMenuItems('#edit,#delete,#restore,#status,#public,#private'); }
                     else{ 
                         try{
-                            if(data.Delete.trim()!=""){ $('#FlexiGridMenu').disableContextMenuItems('#delete,#status') }
-                            else if(data.Delete.trim()==""){ $('#FlexiGridMenu').disableContextMenuItems('#restore') }
+                            if(data.Delete.trim()!=""){ $('#FlexiGridMenu').hideContextMenuItems('#delete,#status') }
+                            else if(data.Delete.trim()==""){ $('#FlexiGridMenu').hideContextMenuItems('#restore') }
                         }catch(e){ }
                         try{
                             if(data.Status.trim()=="Public"){ $('#FlexiGridMenu').disableContextMenuItems('#public') }
