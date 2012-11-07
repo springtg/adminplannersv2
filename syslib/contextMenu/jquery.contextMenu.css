@@ -17,7 +17,7 @@
         position: relative;
 }
 
-.contextMenu A ,.contextMenu LI:hover UL LI A{
+.contextMenu A ,.contextMenu LI:hover UL LI A,.contextMenu LI:hover  LI A{
 	color: #333;
 	text-decoration: none;
 	display: block;
@@ -61,7 +61,12 @@
 .contextMenu LI.copy    A { background-image: url(images/page_white_copy.png); }
 .contextMenu LI.paste   A { background-image: url(images/page_white_paste.png); }
 .contextMenu LI.delete  A { background-image: url(images/page_white_delete.png); }
+.contextMenu LI.restore A { background-image: url(images/page_white_delete.png); }
+.contextMenu LI.status  A { background-image: url(../sysimages/16/switch_arrow.png); }
+.contextMenu LI.public  A,.contextMenu LI.status LI.public  A { background-image: url(../sysimages/16/unlock_green.png); }
+.contextMenu LI.private A,.contextMenu LI.status LI.private  A { background-image: url(../sysimages/16/lock_red.png); }
 .contextMenu LI.quit    A { background-image: url(images/door.png); }
 .contextMenu LI UL{display: none;position: absolute;top: 4px;left: 112px;width: 120px;}
+.contextMenu LI.disabled:hover UL{display: none}
 .contextMenu LI:hover UL{display: block}
-.contextMenu LI:hover UL LI A{background: none}
+.contextMenu LI:hover LI A{background: none}

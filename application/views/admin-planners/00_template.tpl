@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Admin Planners!</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <script src="{{base_url()}}js/jquery-1.7.2.js"></script>
         <script src="{{base_url()}}js/vadilation.js"></script>
         <script src="{{base_url()}}syslib/slimScroll/slimScroll.js"></script>
@@ -53,7 +53,7 @@
         <div style="">
             <div class="pets tab4">
                 <div class="left">
-                    {{$TABS}}
+                    {{include file="../admin-planners/tabs/01_tabs.tpl"}}
                     <div class="bd">
                         {{if isset($JQXGRID)}}
                             {{if isset($_SESSION["ADP-USER"])}}

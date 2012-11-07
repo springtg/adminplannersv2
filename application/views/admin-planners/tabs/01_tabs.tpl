@@ -22,11 +22,11 @@
         {{if isset($Data["tab_config"]["tabs"])}}
             {{foreach $Data["tab_config"]["tabs"] as $key=>$tab}}
                 {{if $Data["tab_config"]["tabindex"]==$key}}
-                    <li class="hover">
+                    <li class="hover tab-{{$key}}">
                         <a href="{{$tab["link"]}}"><span></span>{{$tab["display"]}}<span class="tabdes"></span></a>
                     </li>  
                 {{else}}
-                    <li>
+                    <li class="tab-{{$key}}">
                         <a href="{{$tab["link"]}}"><span></span>{{$tab["display"]}}</a>
                     </li> 
                 {{/if}}
@@ -38,3 +38,9 @@
 
     </ul>
 </div>
+<script>
+    function tab(t){
+        $(".tab-nav li.hover").removeClass("hover");
+        $(".tab-nav li.tab-"+t).addClass("hover");
+    }
+</script>

@@ -182,4 +182,21 @@ if (!function_exists("print_r_reverse")) {
     return $result;
 }
 }
+if (!function_exists("filterModel")) {
+    function filterModel($colModel){
+        $filterModel[]=array(   "display"=>"All"          ,"name"=>"All"     ,"isdefault"=>true );
+        foreach ($colModel as $col){
+            if($col["filter"])
+            $filterModel[]=array(   "display"=>$col["display"]          ,"name"=>$col["name"] );
+        }
+        return $filterModel;
+    }
+}
+if (!function_exists("ChangeDisplay")) {
+    function ChangeDisplay($name="",$value=1){
+        $value=isset($_POST["showDelete"])?$_POST["showDelete"]:1;
+        $_SESSION[$name]=$value;
+        return true;
+    }
+}
 ?>

@@ -45,10 +45,12 @@
     <li class="edit"><a href="#edit">Edit</a></li>
     <li class="delete"><a href="#delete">Delete</a></li>
     <li class="restore"><a href="#restore">Restore</a></li>
-    <li class="cut separator"><a href="#cut">Cut</a></li>
-    <li class="copy"><a href="#copy">Copy</a></li>
-    <li class="paste"><a href="#paste">Paste</a></li>
- 
+    <li class="status separator more"><a href="#status">Status</a>
+        <ul>
+            <li class="private"><a href="#private">Private</a></li>
+            <li class="public"><a href="#public">Public</a></li>
+        </ul>
+    </li>
     <li class="quit separator"><a href="#quit">Quit</a></li>
 </ul>
 
@@ -100,7 +102,7 @@
             autoOpen            : false,
             resizable   : false,
             //height      :140,
-            width      :480,
+            width      :'auto',
             modal       : true,
             //hide        : "explode",
             title: title==undefined?"Confirm Dialog?":title
@@ -200,7 +202,7 @@
         
         obj.dialog({
             //resizable   : false,
-            //height      :140,
+            minwidth      :240,
             width      :'auto',
             modal       : true,
             //hide        : "explode",
@@ -236,6 +238,7 @@
         obj.dialog({
             modal: true,
             //autoOpen            : false,
+            minwidth      :240,
             width      :'auto',
             closeOnEscape       : false,
             //hide                : "explode",
@@ -269,6 +272,7 @@
         obj.dialog({
             modal: true,
             //autoOpen            : false,
+            minwidth      :240,
             width      :'auto',
             title: title==undefined?"Notice message !":title,
             closeOnEscape       : false,
