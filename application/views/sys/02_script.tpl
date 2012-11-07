@@ -18,14 +18,17 @@
                         try{
                             callback(result);  
                         }catch(e){
+                            console.log("Error:"+err.message+"\nContent:"+data+"\n↵ Error");
                             ShowErrorDialogMessage(e.message);
                         }
                     } 
                 }catch(err){
+                    console.log("JSON Error:"+err.message+"\nContent:"+data+"\n↵ Error");
                     ShowErrorDialogMessage("Sorry. Your request could not be completed.<br/> Please check your input data.");
                 }
             },
             error: function (xhr, ajaxOptions, thrownError){
+                console.log("Status:"+xhr.status+"\nThrownError:"+thrownError+"\nURL:"+surl+"\n↵ Error");
                 isrunning=false;
                 HideLoadding();
                 ShowErrorDialogMessage("Sorry. Your request could not be completed.<br/> Please check your input data.");
@@ -52,14 +55,17 @@
                         try{
                             callback(result);  
                         }catch(e){
+                            console.log("Error:"+err.message+"\nContent:"+data+"\n↵ Error");
                             ShowErrorDialogMessage(e.message);
                         }
                     } 
                 }catch(err){
+                    console.log("JSON Error:"+err.message+"\nContent:"+data+"\n↵ Error");
                     ShowErrorDialogMessage("JSON Error:<font color='red'>"+err.message+"</font><br/>Content: <pre>"+data+"</pre>");
                 }
             },
             error: function (xhr, ajaxOptions, thrownError){
+                console.log("Status:"+xhr.status+"\nThrownError:"+thrownError+"\nURL:"+surl+"\n↵ Error");
                 isrunning=false;
                 HideLoadding();
                 ShowErrorDialogMessage("<b>Status</b>:<font color='red'>"+xhr.status+"</font><br/><b>ThrownError</b>:"+thrownError+"<br/>"+surl);
@@ -78,19 +84,26 @@
             success: function (data){
                 isrunning=false;
                 HideLoadding(); 
-                if(typeof(obj)=="object"){
-                
-                }else if(typeof($(obj))=="object"){
-                    obj=$(obj);
-                }else{
-                    ShowErrorDialogMessage("Sorry. Element not found.");
+                try{
+                    if(typeof(obj)=="object"){
+
+                    }else if(typeof($(obj))=="object"){
+                        obj=$(obj);
+                    }else{
+                        console.log("Sorry. Element not found.\n↵ Error");
+                        ShowErrorDialogMessage("Sorry. Element not found.");
+                    }
+                    obj.html(data);
+                    if (callback && typeof(callback) === "function") {  
+                        callback();  
+                    }
+                }catch(e){
+                    console.log("Error:"+err.message+"\nContent:"+data+"\n↵ Error");
+                    ShowErrorDialogMessage(e.message);
                 }
-                obj.html(data);
-                if (callback && typeof(callback) === "function") {  
-                    callback();  
-                } 
             },
             error: function (xhr, ajaxOptions, thrownError){
+                console.log("Status:"+xhr.status+"\nThrownError:"+thrownError+"\nURL:"+surl+"\n↵ Error");
                 isrunning=false;
                 HideLoadding(); 
                 ShowErrorDialogMessage("Sorry. Your request could not be completed.<br/> Please check your input data.");

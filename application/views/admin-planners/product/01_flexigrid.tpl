@@ -103,18 +103,24 @@
             console.log("FlexiGrid Create ↵ Call");
             //http://code.google.com/p/flexigrid/source/browse/trunk/flexigrid.js?r=2
             $("#FlexiGrid").flexigrid({
-                url: '{{base_url()}}admin-planners/authority/FlexiGridData',
+                url: '{{base_url()}}admin-planners/product/FlexiGridData',
                 dataType: 'json',
                 colModel : [
-                    {display: 'ID'          , name : 'ID'       , width : 60    , sortable : false  , align: 'center'  },
-                    {display: 'Name'        , name : 'Name'     , width : 100   , sortable : true   , align: 'left'     },
-                    {display: 'Keyword'     , name : 'Keyword'  , width : 100   , sortable : true   , align: 'left'},
-                    {display: 'Value'       , name : 'Value'    , width : 60    , sortable : true   , align: 'left'},
-                    {display: 'Note'        , name : 'Note'     , width : 180   , sortable : true   , align: 'left'},
-                    {display: 'Insert'      , name : 'Insert'   , width : 80    , sortable : true  , align: 'right'  },
-                    {display: 'Update'      , name : 'Update'   , width : 80    , sortable : true  , align: 'right'  , hide: true},
-                    {display: 'Delete'      , name : 'Delete'   , width : 80    , sortable : true  , align: 'right'  , hide: false},
-                    {display: 'Lock'        , name : 'Lock'   , width : 80    , sortable : true  , align: 'right'  , hide: false}
+                    {display: 'ProductID'       , name : 'ProductID'        , width : 60    , sortable : false  , align: 'center'   },
+                    {display: 'ProductName'     , name : 'ProductName'      , width : 180   , sortable : true   , align: 'left'     },
+                    {display: 'QuantityPerUnit' , name : 'QuantityPerUnit'  , width : 100   , sortable : true   , align: 'left'     },
+                    {display: 'UnitPrice'       , name : 'UnitPrice'        , width : 60    , sortable : true   , align: 'right'    },
+                    {display: 'UnitsInStock'    , name : 'UnitsInStock'     , width : 80    , sortable : true   , align: 'right'    },
+                    {display: 'UnitsOnOrder'    , name : 'UnitsOnOrder'     , width : 80    , sortable : true   , align: 'right'    },
+                    {display: 'ProductTitle'    , name : 'ProductTitle'     , width : 180   , sortable : true   , align: 'left'     },
+                    {display: 'StartDate'       , name : 'StartDate'        , width : 100   , sortable : true   , align: 'right'    },
+                    {display: 'EndDate'         , name : 'EndDate'          , width : 100   , sortable : true   , align: 'right'    },
+                    {display: 'Amount'          , name : 'Amount'           , width : 40    , sortable : true   , align: 'right'    },
+                    {display: 'Supplier'        , name : 'Supplier'         , width : 120   , sortable : true   , align: 'left'     },
+                    {display: 'Status'          , name : 'Status'           , width : 80    , sortable : true   , align: 'left'     },
+                    {display: 'Insert'          , name : 'Insert'           , width : 80    , sortable : true   , align: 'right'    },
+                    {display: 'Update'          , name : 'Update'           , width : 80    , sortable : true   , align: 'right'    , hide: true},
+                    {display: 'Delete'          , name : 'Delete'           , width : 80    , sortable : true   , align: 'right'    , hide: true}
                 ],
                 buttons : [
                     {name: 'Add'        , bclass: 'add'     , onpress : HandleEvent},
@@ -125,23 +131,23 @@
                     {name: 'Settings'   , bclass: 'setting' , onpress : FlexiGrid.Setting}
                 ],
                 searchitems : [
-                    {display: 'All'     , name : 'All'  , isdefault: true},
-                    {display: 'Name'    , name : 'Name' },
-                    {display: 'Keyword'   , name : 'Keyword'},
-                    {display: 'Note'   , name : 'Note'}
+                    {display: 'All'             , name : 'All'  , isdefault: true},
+                    {display: 'ProductName'     , name : 'ProductName' },
+                    {display: 'ProductTitle'    , name : 'ProductTitle'}
                 ],
-                sortname: "Name",
-                sortorder: "ASC",
+                //sortname: "ProductName",
+                //sortorder: "ASC",
                 nomsg: 'No data to display',
                 usepager: true,
-                title: 'Authority',
+                title: 'Product',
                 useRp: true,
                 rp: 15,
                 showTableToggleBtn: true,
                 showToggleBtn: false,
-                width: 480,
+                width: $("#frmFlexiGrid").width(),//960,
+                procmsg: 'Processing, please wait ...',
                 onSubmit: addFormData,
-                height: 200,
+                height: 400,
                 singleSelect: true,
                 onSuccess:function(){
                     _contextMenu();
