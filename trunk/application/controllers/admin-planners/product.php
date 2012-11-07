@@ -27,26 +27,116 @@ class product extends CI_Controller  {
             $this->load->library('smarty3','','smarty');
             $this->load->model('admin-planners/product_model','product_model');
             include APPPATH . 'libraries/defu.php';
+            if(!isset($_SESSION["JQX-DEL-PRO"]))$_SESSION["JQX-DEL-PRO"]=0;
+            $this->_configs["colModel"]=array(
+                array(  "display"       =>"Product ID"          ,"name"=>"ProductID"        ,"width"=>60        ,"sortable"=>true       ,"align"=>"center"      ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Product Name"        ,"name"=>"ProductName"      ,"width"=>180       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>true ),
+                array(  "display"       =>"Quantity Per Unit"   ,"name"=>"QuantityPerUnit"  ,"width"=>100       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Unit Price"          ,"name"=>"UnitPrice"        ,"width"=> 60       ,"sortable"=>true       ,"align"=>"right"       ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Units In Stock"      ,"name"=>"UnitsInStock"     ,"width"=> 80       ,"sortable"=>true       ,"align"=>"right"       ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Units On Order"      ,"name"=>"UnitsOnOrder"     ,"width"=> 80       ,"sortable"=>true       ,"align"=>"right"       ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Product Title"       ,"name"=>"ProductTitle"     ,"width"=>180       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>true ),
+                array(  "display"       =>"Start Date"          ,"name"=>"StartDate"        ,"width"=>100       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"End Date"            ,"name"=>"EndDate"          ,"width"=>100       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Amount"              ,"name"=>"Amount"           ,"width"=> 40       ,"sortable"=>true       ,"align"=>"right"       ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Supplier"            ,"name"=>"Supplier"         ,"width"=>120       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>true ),
+                array(  "display"       =>"Status"              ,"name"=>"Status"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Insert"              ,"name"=>"Insert"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Update"              ,"name"=>"Update"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>true       ,"filter"=>false),
+                array(  "display"       =>"Delete"              ,"name"=>"Delete"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>true       ,"filter"=>false)
+            );
         }
         public function index()
 	{
+            
             $Data["tab_config"]["tabs"]=array(
                 "product"   =>array(
                     "display"=>"Product"
-                    ,"value"=>"product"   
                     ,"link"=>  base_url("admin-planners/product")
+                    ),
+                "edit"   =>array(
+                    "display"=>"Edit"
+                    ,"link"=>  "javascript:FlexiGrid.ShowDetail();"
                     )
             );
             $Data["tab_config"]["tabindex"]="product";
+            $Data["flexigrid_settings"]["colModel"]=$this->_configs["colModel"];
+            $Data["flexigrid_settings"]["filterModel"]=filterModel($Data["flexigrid_settings"]["colModel"]);
+            
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
-            
             $this->smarty->view("sys/01_notice",'NOTICE');
             $this->smarty->view("sys/02_script",'SCRIPT');
             $this->smarty->view('admin-planners/tabs/01_tabs',"TABS");
             $this->smarty->view('admin-planners/product/01_flexigrid',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
+        public function ChangeDeleteDisplay(){
+            ChangeDisplay("JQX-DEL-PRO", $_POST["showDelete"]);
+            $code=1;
+            $msg="Data display have been change.";
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        function Edit(){
+            $Data=null;
+            $this->smarty->assign('_SESSION', $_SESSION);
+            $this->smarty->assign('Data', $Data);
+            $this->smarty->display("admin-planners/product/02_edit");
+        }
+        public function Delete(){
+            if(isset($_POST["ID"])){
+                $ip=  getIP();
+                if($this->product_model->delete($_POST["ID"])){
+                    $code=1;
+                    $msg="Item đã được xóa.";
+                }else{
+                    $code=-1;
+                    $msg="Lỗi. Chưa xóa được item.";
+                }
+            }else{  
+                $code=-1;
+                $msg="Không xác định được dữ liệu cần xóa.";
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        public function Restore(){
+            if(isset($_POST["ID"])){
+                $ip=  getIP();
+                if($this->product_model->restore($_POST["ID"])){
+                    $code=1;
+                    $msg="Item đã được khôi phục.";
+                }else{
+                    $code=-1;
+                    $msg="Lỗi. Chưa khôi phục được item.";
+                }
+            }else{  
+                $code=-1;
+                $msg="Không xác định được dữ liệu cần khôi phục.";
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        public function ChangeStatus(){
+            
+            if(isset($_POST["Status"]) && isset($_POST["ID"])){
+                $Params=array(
+                    "Status"=>$_POST["Status"]
+                );
+                //$ip=  getIP();
+                //$VideoParams["Log"]="    IP : $ip \n    Action : Change Status \n    RowID : ".$_POST["VideoID"]."\n    New Status : ".$_POST["Status"];
+                if($this->product_model->update($_POST["ID"],$Params)){
+                    //$this->log_model->insert(array("Table"=>"Video","RowID"=>$_POST["VideoID"],"Action"=>"Change Status","Log"=>$VideoParams["Log"]));
+                    $code=1;
+                    $msg="Trạng thái Item đã được thay đổi.";
+                }else{
+                    $code=-1;
+                    $msg="Lỗi. Không thể thay đổi trạng thái Item.";
+                }
+            }else{  
+                $code=-1;
+                $msg="Không xác định được dữ liệu.";
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
         function FlexiGridData(){
             
             $data=$this->product_model->FlexiGridData();
@@ -58,16 +148,16 @@ class product extends CI_Controller  {
                     $entry = array('id'=>$row->ProductID,
                             'cell'=>array(
                                 'ProductID'         =>$row->ProductID,
-                                'ProductName'       =>$row->ProductName,
-                                'QuantityPerUnit'   =>$row->QuantityPerUnit,
+                                'ProductName'       =>  htmlentities_UTF8($row->ProductName),
+                                'QuantityPerUnit'   =>  htmlentities_UTF8($row->QuantityPerUnit),
                                 'UnitPrice'         =>$row->UnitPrice,
                                 'UnitsInStock'      =>$row->UnitsInStock,
                                 'UnitsOnOrder'      =>$row->UnitsOnOrder,
-                                'ProductTitle'      =>$row->ProductTitle,
+                                'ProductTitle'      =>  htmlentities_UTF8($row->ProductTitle),
                                 'StartDate'         =>$row->StartDate,
                                 'EndDate'           =>$row->EndDate,
                                 'Amount'            =>$row->Amount,
-                                'Supplier'          =>$row->Supplier,
+                                'Supplier'          =>htmlentities_UTF8($row->Supplier),
                                 'Status'            =>$row->Status,
                                 'Insert'            =>$row->Insert,
                                 'Update'            =>$row->Update,

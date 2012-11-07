@@ -161,7 +161,42 @@ if(jQuery)( function() {
 			});
 			return( $(this) );
 		},
-		
+		//Hide context meni items on the fly
+                hideContextMenuItems: function(o) {
+			if( o == undefined ) {
+				// Disable all
+				$(this).find('LI').addClass('hidden');
+				return( $(this) );
+			}
+			$(this).each( function() {
+				if( o != undefined ) {
+					var d = o.split(',');
+					for( var i = 0; i < d.length; i++ ) {
+						$(this).find('A[href="' + d[i] + '"]').parent().addClass('hidden');
+						
+					}
+				}
+			});
+			return( $(this) );
+		},
+                //Show context meni items on the fly
+                showContextMenuItems: function(o) {
+			if( o == undefined ) {
+				// Disable all
+				$(this).find('LI').removeClass('hidden');
+				return( $(this) );
+			}
+			$(this).each( function() {
+				if( o != undefined ) {
+					var d = o.split(',');
+					for( var i = 0; i < d.length; i++ ) {
+						$(this).find('A[href="' + d[i] + '"]').parent().removeClass('hidden');
+						
+					}
+				}
+			});
+			return( $(this) );
+		},
 		// Enable context menu items on the fly
 		enableContextMenuItems: function(o) {
 			if( o == undefined ) {

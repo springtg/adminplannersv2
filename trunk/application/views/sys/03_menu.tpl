@@ -53,15 +53,15 @@
     </li>
 </ul>
 <script>
-    $('html').click(function(event){
-        console.log('click - body');
-    });
-    $('.sysnav').click(function(event){
-        console.log('click - sysnav');
-        event.stopPropagation();
-    });
-    $('.sysmenu').click(function(event){
-        console.log('click - sysmenu');
-        event.stopPropagation();
-    });
+//    $('html').click(function(event){
+//        console.log('click - body');
+//    });
+//    $('.sysnav').click(function(event){
+//        console.log('click - sysnav');
+//        event.stopPropagation();
+//    });
+//    $('.sysmenu').click(function(event){
+//        console.log('click - sysmenu');
+//        event.stopPropagation();
+//    });
 </script>
