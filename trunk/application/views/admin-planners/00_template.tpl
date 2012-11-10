@@ -12,9 +12,8 @@
         <link href="{{base_url()}}syslib/syscss/24_grid_960.css" type="text/css" rel="stylesheet"/>
     </head>
     <body style="overflow-y: scroll;">
-    {{if isset($NOTICE)}}{{$NOTICE}}{{/if}}
-{{if isset($SCRIPT)}}{{$SCRIPT}}{{/if}}
-
+    {{include file='../sys/01_notice.tpl'}}
+    {{include file='../sys/02_script.tpl'}}
 <span style="display: none">
     <div title="Đăng nhập" class="dialog-login" style="position: relative">
         <center>

@@ -12,6 +12,11 @@ class setting_model extends FlexiGrid_Model {
         $query=$this->db->get_where('adp_settings', $where); 
         return $query->result();
     }
+    function getByKey($Key=""){
+        $where=array("Key"=>$Key);
+        $query=$this->db->get_where('adp_settings', $where); 
+        return $query->result();
+    }
     function gets(){
         $query=$this->db->get_where('adp_settings'); 
         return $query->result();

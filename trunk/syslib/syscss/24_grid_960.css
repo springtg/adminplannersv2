@@ -18,7 +18,8 @@ body {
   min-width: 960px;
 /*  font-family: tahoma,arial,sans-serif;font-size: 11px;*/
 }
-
+.l50pc{left: 50%}
+.t50pc{top: 50%}
 /* Containers
 ----------------------------------------------------------------------------------------------------*/
 .container_24 {
@@ -216,8 +217,55 @@ body {
 	width:960px;
 }
 
+/* Prefix Extra Space << 24 Columns
+----------------------------------------------------------------------------------------------------*/
+.reprefix-1 {
+	margin-left:-40px;
+}
 
+.reprefix-2 {
+	margin-left:-80px;
+}
 
+.reprefix-3 {
+	margin-left:-120px;
+}
+
+.reprefix-4 {
+	margin-left:-160px;
+}
+
+.reprefix-5 {
+	margin-left:-200px;
+}
+
+.reprefix-6 {
+	margin-left:-240px;
+}
+
+.reprefix-7 {
+	margin-left:-280px;
+}
+
+.reprefix-8 {
+	margin-left:-320px;
+}
+
+.reprefix-9 {
+	margin-left:-360px;
+}
+
+.reprefix-10 {
+	margin-left:-400px;
+}
+
+.reprefix-11 {
+	margin-left:-440px;
+}
+
+.reprefix-12 {
+	margin-left:-480px;
+}
 
 /* Prefix Extra Space >> 24 Columns
 ----------------------------------------------------------------------------------------------------*/
@@ -696,6 +744,7 @@ body {
 .mr4{margin-right : 4px}
 .mb4{margin-bottom : 4px}
 .ml4{margin-left : 4px}
+.pt3{padding-top : 3px}
 .pt4{padding-top : 4px}
 .pr4{padding-right : 4px}
 .pb4{padding-bottom : 4px}
@@ -704,6 +753,7 @@ body {
 .mr8{margin-right : 8px}
 .mb8{margin-bottom : 8px}
 .ml8{margin-left : 8px}
+.pt7{padding-top : 7px}
 .pt8{padding-top : 8px}
 .pr8{padding-right : 8px}
 .pb8{padding-bottom : 8px}
@@ -713,6 +763,7 @@ body {
 .mr12{margin-right : 12px}
 .mb12{margin-bottom : 12px}
 .ml12{margin-left : 12px}
+.pt11{padding-top : 11px}
 .pt12{padding-top : 12px}
 .pr12{padding-right : 12px}
 .pb12{padding-bottom : 12px}
@@ -724,6 +775,7 @@ body {
 .mr16{margin-right : 16px}
 .mb16{margin-bottom : 16px}
 .ml16{margin-left : 16px}
+.pt15{padding-top : 15px}
 .pt16{padding-top : 16px}
 .pr16{padding-right : 16px}
 .pb16{padding-bottom : 16px}
@@ -965,3 +1017,38 @@ body {
 .radio.cked:hover .ic{background: url('../sysimages/16/roundbg_classic_hover_checked.png') no-repeat center}
 .checkbox.cked .ic{background: url('../sysimages/16/checkbox_classic_hover_checked.png') no-repeat center}
 .checkbox .ic{background: url('../sysimages/16/checkbox_classic_hover.png') no-repeat center}
+.ovfh{overflow: hidden}
+.classic-select {
+        padding: 2px 2px 2px 4px;
+        border: 1px solid #DDD;
+        line-height: 16px;
+        height: 24px;
+
+        margin: 0;
+        font-size: 11px;
+    }
+    .classic-button{ 
+        border-radius: none;
+        padding: 2px 20px;
+        border: 1px solid #ccc;
+        line-height: 16px;
+        height: 24px;
+        font-size: 11px;
+        margin: 0;outline: none;
+        background-color: #E8E8E8;
+        background-image: -webkit-gradient(linear,0 0,0 100%,from(#FAFAFA),to(#DADADA));
+        background-image: -moz-linear-gradient(top,#FAFAFA,#DADADA);
+        background-image: -o-linear-gradient(top,#FAFAFA,#DADADA);
+    }
+    .classic-button:focus,.classic-button:hover{
+        background: #ccc;border: 1px solid #aaa;
+        background-color: #DADADA;
+        background-image: -webkit-gradient(linear,0 0,0 100%,from(#DADADA),to(#FAFAFA));
+        background-image: -moz-linear-gradient(top,#DADADA,#FAFAFA);
+        background-image: -o-linear-gradient(top,#DADADA,#FAFAFA);
+    }
+    .classic-button.icon{
+        padding: 2px 20px 2px 36px;
+    }
+    .classic-button:active{background: #ccc;}
+    .classic-input{padding: 2px 4px;border: 1px solid #ddd;height: 18px;line-height: 16px;font-size: 11px;}

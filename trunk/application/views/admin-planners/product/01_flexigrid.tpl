@@ -18,7 +18,7 @@
                 <div class="lh20 fwb pl12" style="background: #ddd">Tùy chỉnh hiện thị cột</div>
                 <div class="pt4" style="max-height: 200px;overflow-x: auto">
                     {{for $col=0 to count($Data["flexigrid_settings"]["colModel"])-1}}
-                    <div class="grid_x pb4 ml4 checkbox {{if !$Data["flexigrid_settings"]["colModel"][$col]["hide"]}}cked{{/if}}" value="{{$col}}" >
+                    <div class="grid_x pb4 ml4 checkbox {{if !$Data["flexigrid_settings"]["colModel"][$col]["hide"]}}cked{{/if}}" value="{{$col}}" col="{{$Data["flexigrid_settings"]["colModel"][$col]["name"]}}">
                         <div class="grid_x w16px mr4 ic" style="height: 16px;"></div>
                         <div class="grid_4 lh16 label">{{$Data["flexigrid_settings"]["colModel"][$col]["display"]}}</div>
                     </div>
@@ -65,14 +65,16 @@
             $(".columnsSetings .checkbox").click(function(){
                 try{
                     var value=$(this).attr("value");
+                    var col=$(this).attr("col");
                     if ($(this).hasClass('cked')) {
-                        console.log("Hide column:"+value+" ↵ Call");
+                        console.log("Hide column:"+col+" ↵ Call");
                         //$('#FlexiGrid').hideColumn(value);
                         $("#FlexiGrid").flexToggleCol(value,false);//.flexReload();
+                        FlexiGrid.DisplayColumnChange(col,1);
                     }else{
-                        console.log("Show column:"+value+" ↵ Call");
+                        console.log("Show column:"+col+" ↵ Call");
                         $("#FlexiGrid").flexToggleCol(value,true);//.flexReload();
-                        //$('#FlexiGrid').showColumn(value);  
+                        FlexiGrid.DisplayColumnChange(col,0);
                     }
                 }catch(e){console.log("Change Display Setting:\nError"+e.message+" ↵ Call");}
                 chkb(this);
@@ -364,6 +366,23 @@
                 var url=baseurl+"admin-planners/"+ccontroller+"/ChangeDeleteDisplay/";
                 var data={
                     showDelete  :   v
+                };
+                jqxAjax(url,data,function(result){
+                    isrunning=false;
+                    if(result.code>=0){
+                        FlexiGrid.Refresh();
+                    }else{
+                        ShowNoticeDialogMessage(result.msg);
+                    }
+                });
+            },
+            DisplayColumnChange:function(col,hide){
+                if(isrunning)return;
+                isrunning=true;
+                var url=baseurl+"admin-planners/"+ccontroller+"/ChangeColumnDisplay/";
+                var data={
+                    col:col,
+                    hide  :   hide
                 };
                 jqxAjax(url,data,function(result){
                     isrunning=false;
