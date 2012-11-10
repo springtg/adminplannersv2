@@ -58,7 +58,9 @@ class home extends CI_Controller  {
             
             $this->smarty->display("admin-planners/00_template");
 	}
-        
+        function login(){
+            $this->smarty->display("admin-planners/01_login");
+        }
         
 }
 
