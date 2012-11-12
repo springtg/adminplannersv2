@@ -45,36 +45,34 @@ class settings extends CI_Controller  {
         public function index()
 	{
             $Data["tab_config"]["tabs"]=array(
-                "content"   =>array(
-                    "display"=>"Content"
-                    ,"value"=>"content"   
-                    ,"link"=>  base_url("admin-planners/content")
-                    ),
-                "video"     =>array(
-                    "display"=>"Video"        
-                    ,"value"=>"video"     
-                    ,"link"=>base_url("admin-planners/video")),
-                "slider"    =>array(
-                    "display"=>"Slider in Home Page" 
-                    ,"value"=>"slider"     
-                    ,"link"=>base_url("admin-planners/slider")),
-                "contact"   =>array(
-                    "display"=>"Contact"      
-                    ,"value"=>"contact"       
-                    ,"link"=>base_url("admin-planners/contact")),
-                "request"   =>array(
-                    "display"=>"Request"      
-                    ,"value"=>"request"       
-                    ,"link"=>base_url("admin-planners/request"))
+                "settings"   =>array(
+                    "display"=>"Settings"
+                    ,"link"=>  base_url("admin-planners/settings")),
+                "settings_"     =>array(
+                    "display"=>"Settings"        
+                    ,"link"=>base_url("admin-planners/settings/settings2"))
             );
-            $Data["tab_config"]["tabindex"]="video";
+            $Data["tab_config"]["tabindex"]="settings";
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
-            
-            $this->smarty->view("sys/01_notice",'NOTICE');
-            $this->smarty->view("sys/02_script",'SCRIPT');
-            $this->smarty->view('admin-planners/tabs/01_tabs',"TABS");
             $this->smarty->view('admin-planners/settings/04_settings',"JQXGRID");
+            $this->smarty->display("admin-planners/00_template");
+	}
+        public function settings2()
+	{
+            $Data["tab_config"]["tabs"]=array(
+                "settings"   =>array(
+                    "display"=>"Settings"
+                    ,"link"=>  base_url("admin-planners/settings")),
+                "settings_"     =>array(
+                    "display"=>"Settings"        
+                    ,"link"=>base_url("admin-planners/settings/settings2"))
+            );
+            $Data["settings"]=$this->setting_model->gets();
+            $Data["tab_config"]["tabindex"]="settings_";
+            $this->smarty->assign('_SESSION', $_SESSION);
+            $this->smarty->assign('Data', $Data);
+            $this->smarty->view('admin-planners/settings/01_setting',"JQXGRID");
             $this->smarty->display("admin-planners/00_template");
 	}
         function Save(){

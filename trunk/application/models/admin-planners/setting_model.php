@@ -18,8 +18,13 @@ class setting_model extends FlexiGrid_Model {
         return $query->result();
     }
     function gets(){
-        $query=$this->db->get_where('adp_settings'); 
-        return $query->result();
+        
+        return  $this->db
+                ->where(array(
+                    "Lock <>"=>"1"
+                ))
+                ->get('adp_settings')
+                ->result();
     }
     function insert($Params){
         $this->db->insert('adp_settings', $Params); 

@@ -22,7 +22,19 @@
         Loadding...
     </div>
 </div>
-
+<ul id="FlexiGridMenu" class="contextMenu hidden">
+    <li class="add"><a href="#add">Add</a></li>
+    <li class="edit"><a href="#edit">Edit</a></li>
+    <li class="delete"><a href="#delete">Delete</a></li>
+    <li class="restore"><a href="#restore">Restore</a></li>
+    <li class="status separator more"><a href="#status">Status</a>
+        <ul>
+            <li class="private"><a href="#private">Private</a></li>
+            <li class="public"><a href="#public">Public</a></li>
+        </ul>
+    </li>
+    <li class="quit separator"><a href="#quit">Quit</a></li>
+</ul>
 <script type="text/javascript">
     var FlexiGrid=(function () {
         //Creating the demo window
@@ -37,17 +49,19 @@
         };
         //contextMenu
         function _contextMenu(){
-            $("#FlexiGrid,#gadien").contextMenu({
-                    menu: 'FlexiGridMenu'
-            },
-                    function(action, el, pos) {
-                    alert(
-                            'Action: ' + action + '\n\n' +
-                            'Element ID: ' + $(el).attr('id') + '\n\n' + 
-                            'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' + 
-                            'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
-                            );
-            });
+            if($("#FlexiGridMenu").length){
+                $("#FlexiGrid").contextMenu({
+                        menu: 'FlexiGridMenu'
+                },
+                        function(action, el, pos) {
+                        alert(
+                                'Action: ' + action + '\n\n' +
+                                'Element ID: ' + $(el).attr('id') + '\n\n' + 
+                                'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' + 
+                                'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
+                                );
+                });
+            }
 
         }
         //create jqgrid
@@ -64,9 +78,9 @@
                     {display: 'Type'        , name : 'Type'     , width : 80    , sortable : true   , align: 'left',process: procMe}
                 ],
                 buttons : [
-                    {name: 'Add', bclass: 'add', onpress : HandleEvent},
-                    {name: 'Edit', bclass: 'edit', onpress : FlexiGrid.Edit},
-                    {name: 'Delete', bclass: 'delete', onpress : FlexiGrid.Delete},
+                    //{name: 'Add', bclass: 'add', onpress : HandleEvent},
+                    //{name: 'Edit', bclass: 'edit', onpress : FlexiGrid.Edit},
+                    //{name: 'Delete', bclass: 'delete', onpress : FlexiGrid.Delete},
                     {separator: true},
                     {name: 'Search', bclass: 'search', onpress : HandleEvent},
                     {name: 'Settings', bclass: 'setting', onpress : HandleEvent}
@@ -218,6 +232,7 @@
                     if(result.code>=0){
                         FlexiGrid.CancelEdit();
                         FlexiGrid.Refresh();
+                
                     }else{
                         ShowNoticeDialogMessage(result.msg);
                     }
@@ -294,7 +309,7 @@ function UpdateItem(){
     });
   
 </script>
-<div id="gadien" style="width: 60px;height: 6px;border: 1px solid #ccc;background: #fff;padding: 1px;position: relative;">
+<!--<div id="gadien" style="width: 60px;height: 6px;border: 1px solid #ccc;background: #fff;padding: 1px;position: relative;">
     <div style="height: 6px;
          background-image:  -webkit-linear-gradient(left, 
          rgb(5,255,55) 10%, 
@@ -313,4 +328,4 @@ function UpdateItem(){
         &nbsp;
         <div style="position: absolute;top: 1px;right: 1px;height: 6px;width: 10%;background: #fff"
     </div>
-</div>
+</div>-->

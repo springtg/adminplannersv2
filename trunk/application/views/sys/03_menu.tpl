@@ -1,39 +1,7 @@
-<!--<ul class="sysmenu">
-    <li class="active">
-        <a href=""><img class="ic " src="{{base_url()}}images/icon/other/home_2.png"/></a>
-        <div>Home</div>
-    </li>
-    <li>
-        <a href=""><img class="ic " src="{{base_url()}}images/icon/other/settings1.png"/></a>
-        <div>Settings</div>
-    </li>
-    <li>
-        <a href=""><img class="ic " src="{{base_url()}}images/icon/other/27_edit_text.png"/></a>
-        <div>Contents</div>
-    </li>
-    <li>
-        <a href=""><img class="ic " src="{{base_url()}}images/icon/other/movies.png"/></a>
-        <div>Videos</div>
-    </li>
-    <li>
-        <a href=""><img class="ic " src="{{base_url()}}images/icon/other/insert_image.png"/></a>
-        <div>Sliders</div>
-    </li>
-    <li>
-        <a href=""><img class="ic " src="{{base_url()}}images/icon/other/kolourpaint.png"/></a>
-        <div>Images</div>
-    </li>
-    <li>
-        <a href=""><img class="ic " src="{{base_url()}}images/icon/other/contact.png"/></a>
-        <div>Contacts</div>
-    </li>
-    
-
-</ul>-->
 <ul class="sysnav">
     <li><a href="">Home</a></li>
-    <li><a href="">Website Setting</a></li>
-    <li><a href="">Products</a>
+    <li><a href="{{base_url('admin-planners/settings')}}">Website Setting</a></li>
+    <li><a href="{{base_url('admin-planners/product')}}">Products</a>
         <ul class="l">
             <li><a href="">Home</a></li>
             <li><a href="">Content</a></li>
@@ -53,7 +21,7 @@
         <li><a class="user" href="">{{$_SESSION["ADP-USER"]["Name"]}}</a>
             <ul class="r">
                 <li><a href="">My Account</a></li>
-                <li><a href="">Authority</a></li>
+                <li><a href="{{base_url('admin-planners/authority/MyAuthority')}}">My Authority</a></li>
                 <li><a href="">Account Setting</a></li>
                 <li><a href="{{base_url("sys/excution/logout")}}">Logout</a></li>
             </ul>

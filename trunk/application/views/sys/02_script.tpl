@@ -55,7 +55,7 @@
                         try{
                             callback(result);  
                         }catch(e){
-                            console.log("Error:"+err.message+"\nContent:"+data+"\n↵ Error");
+                            console.log("Error:"+e.message+"\nContent:"+data+"\n↵ Error");
                             ShowErrorDialogMessage(e.message);
                         }
                     } 
@@ -98,7 +98,7 @@
                         callback();  
                     }
                 }catch(e){
-                    console.log("Error:"+err.message+"\nContent:"+data+"\n↵ Error");
+                    console.log("Error:"+e.message+"\nContent:"+data+"\n↵ Error");
                     ShowErrorDialogMessage(e.message);
                 }
             },

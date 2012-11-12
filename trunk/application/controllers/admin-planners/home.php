@@ -59,9 +59,6 @@ class home extends CI_Controller  {
             $this->smarty->display("admin-planners/00_template");
 	}
         function login(){
-            $authority=";admin;;product;;";
-            $authority=  preg_split("~;~", $authority, -1, PREG_SPLIT_NO_EMPTY);
-            print_r($authority);
             $this->smarty->display("admin-planners/01_login");
         }
         

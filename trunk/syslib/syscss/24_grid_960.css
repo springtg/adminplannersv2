@@ -1018,6 +1018,9 @@ body {
 .checkbox.cked .ic{background: url('../sysimages/16/checkbox_classic_hover_checked.png') no-repeat center}
 .checkbox .ic{background: url('../sysimages/16/checkbox_classic_hover.png') no-repeat center}
 .ovfh{overflow: hidden}
+.ovfa{overflow: auto}
+.ovfxa{overflow-x: auto}
+.ovfya{overflow-y: auto}
 .classic-select {
     padding: 2px 2px 2px 4px;
     border: 1px solid #DDD;
@@ -1108,3 +1111,4 @@ body {
     -moz-box-shadow: 0 1px 3px rgba(0,0,0,.2);
     box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
 }
+p,pre{margin: 0;line-height: 16px}

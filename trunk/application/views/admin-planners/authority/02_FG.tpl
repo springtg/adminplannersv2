@@ -78,10 +78,11 @@
         };
         //contextMenu
         function _contextMenu(){
-            $("#FlexiGrid").contextMenu({
+            if($("#FlexiGridMenu").length){
+                $("#FlexiGrid").contextMenu({
                     menu: 'FlexiGridMenu'
-            },
-                    function(action, el, pos) {
+                },
+                function(action, el, pos) {
                     var items = $('.trSelected');
                     var ID,url,data;
                     if(items.length==1){
@@ -89,14 +90,14 @@
                         ID = items[0].id.substr(3);
                     }
                     alert(
-                        'Action: ' + action + '\n\n' +
+                    'Action: ' + action + '\n\n' +
                         'Element ID: ' + $(el).attr('id') + '\n\n' + 
                         'FlexiGrid Row ID: ' + ID + '\n\n' +
                         'X: ' + pos.x + '  Y: ' + pos.y + ' (relative to element)\n\n' + 
                         'X: ' + pos.docX + '  Y: ' + pos.docY+ ' (relative to document)'
-                    );
-            });
-
+                );
+                });
+            }
         }
         //create jqgrid
         function _createGrid() {
@@ -117,10 +118,10 @@
                     {display: 'Lock'        , name : 'Lock'   , width : 80    , sortable : true  , align: 'right'  , hide: false}
                 ],
                 buttons : [
-                    {name: 'Add'        , bclass: 'add'     , onpress : HandleEvent},
-                    {name: 'Edit'       , bclass: 'edit'    , onpress : FlexiGrid.Edit},
-                    {name: 'Delete'     , bclass: 'delete'  , onpress : FlexiGrid.Delete},
-                    {separator: true},
+                    //{name: 'Add'        , bclass: 'add'     , onpress : HandleEvent},
+                    //{name: 'Edit'       , bclass: 'edit'    , onpress : FlexiGrid.Edit},
+                    //{name: 'Delete'     , bclass: 'delete'  , onpress : FlexiGrid.Delete},
+                    //{separator: true},
                     {name: 'Search'     , bclass: 'search'  , onpress : FlexiGrid.Filter },
                     {name: 'Settings'   , bclass: 'setting' , onpress : FlexiGrid.Setting}
                 ],
@@ -290,65 +291,65 @@
             ChangeStatus:function (ID,Status){
                 console.log("ChangeStatus ↵ Call");
             }
-    };
-} ());
+        };
+    } ());
 
-function HandleEvent(com, grid) {
-if (com == 'Delete') {
-    var items = $('.trSelected');
-    if(items.length==1){
-        items=items[0].id.substr(3);
-        ShowNoticeDialogMessage("Bạn muốn xóa dòng đang chọn? ");
-    }else{
-        ShowNoticeDialogMessage("Hãy chọn một(chỉ một) dòng cần xóa.");
-    }
-} else if (com == 'Add') {
+    function HandleEvent(com, grid) {
+        if (com == 'Delete') {
+            var items = $('.trSelected');
+            if(items.length==1){
+                items=items[0].id.substr(3);
+                ShowNoticeDialogMessage("Bạn muốn xóa dòng đang chọn? ");
+            }else{
+                ShowNoticeDialogMessage("Hãy chọn một(chỉ một) dòng cần xóa.");
+            }
+        } else if (com == 'Add') {
             
-} else if (com == 'Edit') {
-    var items = $('.trSelected');
-    if(items.length==1){
-        items=items[0].id.substr(3);
-        removeEditorContent("txt_value");
-        htmlAjax("{{base_url()}}admin-planners/settings/Edit", { ID : items}, $("#frmDetail"))
-        $("#frmFlexiGrid").hide();
-        $("#frmDetail").show();
+        } else if (com == 'Edit') {
+            var items = $('.trSelected');
+            if(items.length==1){
+                items=items[0].id.substr(3);
+                removeEditorContent("txt_value");
+                htmlAjax("{{base_url()}}admin-planners/settings/Edit", { ID : items}, $("#frmDetail"))
+                $("#frmFlexiGrid").hide();
+                $("#frmDetail").show();
                 
-    }else{
-        ShowNoticeDialogMessage("Hãy chọn một(chỉ một) dòng cần sửa.");
+            }else{
+                ShowNoticeDialogMessage("Hãy chọn một(chỉ một) dòng cần sửa.");
+            }
+                
+        }
     }
-                
-}
-}
-//This function adds paramaters to the post of flexigrid. You can add a verification as well by return to false if you don't want flexigrid to submit			
-function addFormData(){
-//passing a form object to serializeArray will get the valid data from all the objects, but, if the you pass a non-form object, you have to specify the input elements that the data will come from
-var dt = $('#sform').serializeArray();
-$("#FlexiGrid").flexOptions({params: dt});
-return true;
-}
+    //This function adds paramaters to the post of flexigrid. You can add a verification as well by return to false if you don't want flexigrid to submit			
+    function addFormData(){
+        //passing a form object to serializeArray will get the valid data from all the objects, but, if the you pass a non-form object, you have to specify the input elements that the data will come from
+        var dt = $('#sform').serializeArray();
+        $("#FlexiGrid").flexOptions({params: dt});
+        return true;
+    }
 	
-$('#sform').submit(function (){
-$('#FlexiGrid').flexOptions({newp: 1}).flexReload();
-return false;
-});
-var areaContent;
-function addEditorContent(ElementID){
-if(!areaContent) {
-    areaContent = new nicEditor({fullPanel : true}).panelInstance(ElementID,{hasPanel : true});
-}
-}
-function removeEditorContent(ElementID){
-if(areaContent) {
-    areaContent.removeInstance(ElementID);
-    areaContent = null;
-}
-}
-function UpdateItem(){
+    $('#sform').submit(function (){
+        $('#FlexiGrid').flexOptions({newp: 1}).flexReload();
+        return false;
+    });
+    var areaContent;
+    function addEditorContent(ElementID){
+        if(!areaContent) {
+            areaContent = new nicEditor({fullPanel : true}).panelInstance(ElementID,{hasPanel : true});
+        }
+    }
+    function removeEditorContent(ElementID){
+        if(areaContent) {
+            areaContent.removeInstance(ElementID);
+            areaContent = null;
+        }
+    }
+    function UpdateItem(){
     
-}
+    }
 
-$(document).ready(function () {
-    FlexiGrid.init();
-});
+    $(document).ready(function () {
+        FlexiGrid.init();
+    });
   
 </script>
