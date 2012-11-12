@@ -6,18 +6,6 @@
     </div>
 </div>
 <div class="hd" style="position: relative;">
-    <div style="position: absolute;top: 0;right: 8px">
-        {{if isset($_SESSION["ADP-USER"])}}
-            <b>{{$_SESSION["ADP-USER"]["name"]}}</b>
-            <a href="{{base_url("sys/excution/logout")}}">
-                Logout
-            </a>
-        {{else}}
-            <a href="javascript:login.Show();">
-                Login
-            </a>
-        {{/if}}
-    </div>
     <ul class="tab-nav">
         {{if isset($Data["tab_config"]["tabs"])}}
             {{foreach $Data["tab_config"]["tabs"] as $key=>$tab}}

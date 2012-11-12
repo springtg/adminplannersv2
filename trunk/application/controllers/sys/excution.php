@@ -38,21 +38,32 @@ class excution extends CI_Controller  {
             echo "<script>history.back();</script>";
         }
         function login(){
-            $users=array(
-                "admin"=>array("name"=>"Administrator","password"=>"5a029c0258e9a8cebf4d644b74370c0c"),//@a-'
-                "guest"=>array("name"=>"Guest","password"=>"2632a9189905c888ead002e11e5c4446")//a-'
-            );
-            
-            $code=-1;
-            $msg="Login Fail. User name or Password is not validate.";
+            $this->load->model('admin-planners/account_model','account_model');
             if(isset($_POST["username"]) && isset($_POST["password"])){
-                if($users[$_POST["username"]]["password"]==md5($_POST["password"])){
-                    $code=1;
-                    $msg="Đăng nhập thành công";
-                    $_SESSION["ADP-USER"]=$users[$_POST["username"]];
+                $account=$this->account_model->login($_POST["username"],md5($_POST["password"]));
+                if(count($account)>0){
+                    $_SESSION["ADP-USER"]=objectToArray($account[0]);
+                    $authority=$_SESSION["ADP-USER"]["Authority"].$_SESSION["ADP-USER"]["GroupAuthority"];
+                    $authority=  preg_split("~;~", $authority, -1, PREG_SPLIT_NO_EMPTY);
+                    $authority=$this->account_model->getAuthoritys($authority);
+                    $_SESSION["ADP-USER"]["Au"]=$authority;
+                    $result=array(
+                    "code"      =>  0,
+                    "msg"       => "Login successful."
+                    );
+                }else{
+                    $result=array(
+                    "code"      =>  -1,
+                    "msg"       => "Login fail.Please, check Username or Password <br/>"
+                    );
                 }
+            }else{
+                $result=array(
+                    "code"      =>  -1,
+                    "msg"       => "Bad request!"
+                );
             }
-            echo json_encode(array("code"=>$code,"msg"=>$msg));
+            echo json_encode($result);
         }
         function getAlias(){
             $code=1;
