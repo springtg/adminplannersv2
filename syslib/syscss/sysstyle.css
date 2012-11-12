@@ -267,8 +267,7 @@ ul.sysnav li a{
 }
 ul.sysnav li{}
 ul.sysnav li:hover{background: #CCC}
-ul.sysnav li.user{padding-left: 8px;}
-ul.sysnav li.user a{
+ul.sysnav li a.user{
     background: url(../sysimg/bg-user-icon.png) no-repeat left center;padding-left: 44px}
 tt {
 background-color: #DEEAC9;
@@ -280,7 +279,7 @@ border-radius: 3px;
 }
 .fl{float: left}
 .fr{float: right}
-ul.sysnav li ul{position: absolute;top: 28px;min-width: 240px;border-top: 1px solid #bbb;display: none}
+ul.sysnav li ul{position: absolute;top: 28px;min-width: 160px;border-top: 1px solid #bbb;display: none}
 ul.sysnav li ul.l{left: -1px;}
 ul.sysnav li ul.r{right: 1px;}
 ul.sysnav li ul li{display: block;height: 26px;width: 100%;border-bottom: 1px solid #bbb;border-right: 1px solid #bbb;background: #d7d7d7}

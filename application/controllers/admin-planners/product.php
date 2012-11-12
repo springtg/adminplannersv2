@@ -99,7 +99,7 @@ class product extends CI_Controller  {
             
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
-            if(isset($_SESSION["ADP-USER"]) || true){
+            if(isset($_SESSION["ADP-USER"])){
                 $this->smarty->view('admin-planners/product/01_flexigrid',"JQXGRID");
                 $this->smarty->display("admin-planners/00_template");
             }else{
