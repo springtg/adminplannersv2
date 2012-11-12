@@ -11,6 +11,19 @@
         Loadding...
     </div>
 </div>
+<ul id="FlexiGridMenu" class="contextMenu hidden">
+    <li class="add"><a href="#add">Add</a></li>
+    <li class="edit"><a href="#edit">Edit</a></li>
+    <li class="delete"><a href="#delete">Delete</a></li>
+    <li class="restore"><a href="#restore">Restore</a></li>
+    <li class="status separator more"><a href="#status">Status</a>
+        <ul>
+            <li class="private"><a href="#private">Private</a></li>
+            <li class="public"><a href="#public">Public</a></li>
+        </ul>
+    </li>
+    <li class="quit separator"><a href="#quit">Quit</a></li>
+</ul>
 <div class="frmsetting hidden" style="width: 480px">
     <div class="grid_12">
         <div class="grid_6" >
@@ -91,45 +104,46 @@
         };
         //contextMenu
         function _contextMenu(){
-            $("#FlexiGrid").contextMenu({
-                menu: 'FlexiGridMenu'
-            },
-            function(action, el, pos) {
-                var items = $('.trSelected');
-                var ID,url,data;
-                if(items.length==1){
-                    ID = items[0].id.substr(3);
-                    switch(action){
-                        case "add":
-                            console.log("Content menu : Add\tID:"+ID+" ↵ Call");
-                            FlexiGrid.Add();
-                            break;
-                        case "edit":
-                            console.log("Content menu : Edit\tID:"+ID+" ↵ Call");
-                            FlexiGrid.Edit(ID);
-                            break;
-                        case "delete":
-                            console.log("Content menu : Delete\tID:"+ID+" ↵ Call");
-                            FlexiGrid.Delete(ID);
-                            break;
-                        case "restore":
-                            console.log("Content menu : Restore\tID:"+ID+" ↵ Call");
-                            FlexiGrid.Restore(ID);
-                            break;
-                        case "public":
-                            console.log("Content menu : Public\tID:"+ID+" ↵ Call");
-                            FlexiGrid.ChangeStatus(ID,"Public");
-                            break;
-                        case "private":
-                            console.log("Content menu : Private\tID:"+ID+" ↵ Call");
-                            FlexiGrid.ChangeStatus(ID,"Private");
-                            break;
+            if($("#FlexiGridMenu").length){
+                $("#FlexiGrid").contextMenu({
+                    menu: 'FlexiGridMenu'
+                },
+                function(action, el, pos) {
+                    var items = $('.trSelected');
+                    var ID,url,data;
+                    if(items.length==1){
+                        ID = items[0].id.substr(3);
+                        switch(action){
+                            case "add":
+                                console.log("Content menu : Add\tID:"+ID+" ↵ Call");
+                                FlexiGrid.Add();
+                                break;
+                            case "edit":
+                                console.log("Content menu : Edit\tID:"+ID+" ↵ Call");
+                                FlexiGrid.Edit(ID);
+                                break;
+                            case "delete":
+                                console.log("Content menu : Delete\tID:"+ID+" ↵ Call");
+                                FlexiGrid.Delete(ID);
+                                break;
+                            case "restore":
+                                console.log("Content menu : Restore\tID:"+ID+" ↵ Call");
+                                FlexiGrid.Restore(ID);
+                                break;
+                            case "public":
+                                console.log("Content menu : Public\tID:"+ID+" ↵ Call");
+                                FlexiGrid.ChangeStatus(ID,"Public");
+                                break;
+                            case "private":
+                                console.log("Content menu : Private\tID:"+ID+" ↵ Call");
+                                FlexiGrid.ChangeStatus(ID,"Private");
+                                break;
+                        }
+                    }else{
+                        ShowNoticeDialogMessage("Không hỗ trợ contact menu với nhiều item được chọn.<br/>Vui lòng chỉ chọn 1 item.");
                     }
-                }else{
-                    ShowNoticeDialogMessage("Không hỗ trợ contact menu với nhiều item được chọn.<br/>Vui lòng chỉ chọn 1 item.");
-                }
-            });
-
+                });
+            }
         }
         //create jqgrid
         function _createGrid() {

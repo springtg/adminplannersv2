@@ -40,20 +40,6 @@
     .no-close .ui-dialog-titlebar-close {display: none }
     .ui-button.ui-corner-all{-moz-border-radius: 2px/*{cornerRadius}*/;-webkit-border-radius: 2px/*{cornerRadius}*/;border-radius: 2px/*{cornerRadius}*/;}
 </style>
-<ul id="FlexiGridMenu" class="contextMenu hidden">
-    <li class="add"><a href="#add">Add</a></li>
-    <li class="edit"><a href="#edit">Edit</a></li>
-    <li class="delete"><a href="#delete">Delete</a></li>
-    <li class="restore"><a href="#restore">Restore</a></li>
-    <li class="status separator more"><a href="#status">Status</a>
-        <ul>
-            <li class="private"><a href="#private">Private</a></li>
-            <li class="public"><a href="#public">Public</a></li>
-        </ul>
-    </li>
-    <li class="quit separator"><a href="#quit">Quit</a></li>
-</ul>
-
 <span style="display: none">
     <iframe
         id		= 'integration_asynchronous'

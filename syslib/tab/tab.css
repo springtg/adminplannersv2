@@ -71,7 +71,7 @@ list-style: none;
      border: 1px solid #BEA787;
 }
 pets .left{width:278px; float:left; padding:13px 0 0 10px; position:relative}
-.pets .left h4{height:30px; line-height:30px; padding-left:5px; margin:0 0 5px 48px; color:#ffbf00; font-weight:bold; background:url(../img/icon.gif) no-repeat 0 -43px}
+.pets .left h4.h4{height:30px; line-height:30px; padding-left:5px; margin:0 0 5px 48px; color:#ffbf00; font-weight:bold; background:url(../img/icon.gif) no-repeat 0 -43px}
 .pets .left .hd{height:25px;line-height:25px; padding-left:5px; margin-right:5px; }
 .pets .left .hd li{float:left;cursor:pointer;text-align:center; position:relative; margin:0 3px 0 0;
 /*      width:62px;*/padding: 0 12px;
