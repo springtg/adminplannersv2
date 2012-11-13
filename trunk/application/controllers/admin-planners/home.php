@@ -59,6 +59,11 @@ class home extends CI_Controller  {
             $this->smarty->display("admin-planners/00_template");
 	}
         function login(){
+            $this->load->model('admin-planners/account_model','account_model');
+            $account=$this->account_model->login(2,1);
+            $authority=  preg_split("~;~", ";admin;", -1, PREG_SPLIT_NO_EMPTY);
+            $authority=$this->account_model->getAuthoritys($authority);
+            print_r($authority);
             $this->smarty->display("admin-planners/01_login");
         }
         

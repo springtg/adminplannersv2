@@ -1,6 +1,8 @@
 <ul class="sysnav">
     <li><a href="">Home</a></li>
     <li><a href="{{base_url('admin-planners/settings')}}">Website Setting</a></li>
+    <li><a href="{{base_url('admin-planners/video')}}">Video</a></li>
+    <li><a href="{{base_url('admin-planners/slider')}}">Slider</a></li>
     <li><a href="{{base_url('admin-planners/product')}}">Products</a>
         <ul class="l">
             <li><a href="">Home</a></li>

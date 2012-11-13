@@ -1,6 +1,6 @@
 <?php
 
-class video_model extends jqxGrid_CI_Model {
+class video_model extends FlexiGrid_Model {
 
     function __construct()
     {
@@ -88,7 +88,28 @@ class video_model extends jqxGrid_CI_Model {
         $this->init($configs);
         return $this->jqxBinding();
     }
-    
+    function FlexiGridData(){
+        $configs["strQuery"]="
+             SELECT SQL_CALC_FOUND_ROWS `tbl_video`.*
+            FROM `tbl_video`
+            ";
+        $configs["strWhere"]="
+            WHERE true
+            ";
+        if(isset($_SESSION["JQX-DEL-VIDEO"]) && $_SESSION["JQX-DEL-VIDEO"]==0){
+            $configs["strWhere"].=" AND `tbl_video`.`Delete` IS NULL";
+        }elseif(isset($_SESSION["JQX-DEL-VIDEO"]) && $_SESSION["JQX-DEL-VIDEO"]==-1){
+            $configs["strWhere"].=" AND `tbl_video`.`Delete` IS NOT NULL";
+        }
+        $configs["fields"]=array(
+            "ID"=>"VideoID",
+            );
+        $configs["filterfields"]=array(
+            "Title"=>"Title"
+        );
+        $this->init($configs);
+        return $this->Binding();
+    }
     
 }
 ?>

@@ -8,8 +8,11 @@
                 <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">
                     {{$s->Name}}
                 </h4>
-                <div class="pa r8 t8" style="cursor: pointer" onclick="Detail('{{$s->ID}}')">
-                    Edit
+                <div class="pa r8 t8">
+                    {{if $s->Type=="text" or $s->Type=="html" or $s->Type=="array"}}
+                    <span class="mr12" style="cursor: pointer" onclick="Expand('{{$s->ID}}')">Expand</span>
+                    {{/if}}
+                    <span style="cursor: pointer" onclick="Detail('{{$s->ID}}')">Edit</span>
                 </div>
                 <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">
                     {{if $s->Type=="text"}}
