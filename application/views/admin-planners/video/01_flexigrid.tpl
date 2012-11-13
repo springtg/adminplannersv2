@@ -3,6 +3,8 @@
 <script src="{{base_url()}}syslib/contextMenu/jquery.contextMenu.js" type="text/javascript"></script>
 <link href="{{base_url()}}syslib/contextMenu/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
 
+<script type="text/javascript" src="{{base_url()}}syslib/ckfinder/ckfinder.js"></script>
+<script type="text/javascript" src="{{base_url()}}syslib/ckfinder/browse.js"></script>
 <div style="padding-right: 2px;padding-left: 0px;">
     <div id="frmFlexiGrid">
         <table id="FlexiGrid"></table>
@@ -61,9 +63,9 @@
     </div>
 </div>
 <script type="text/javascript">
+    var ccontroller="video_climb";
     var FlexiGrid=(function () {
         //Creating the demo window
-        var ccontroller="video";
         function _createWindows() {
             console.log("createWindows ↵ Call");
         };
@@ -105,7 +107,7 @@
         //contextMenu
         function _contextMenu(){
             if($("#FlexiGridMenu").length){
-                $("#FlexiGrid").contextMenu({
+                $("#FlexiGrid,.sysnav").contextMenu({
                     menu: 'FlexiGridMenu'
                 },
                 function(action, el, pos) {
@@ -226,7 +228,7 @@
             Delete:function (ID){
                 if(isrunning)return;
                 console.log("Delete:"+ID+" ↵ Call");
-                ShowConfirmDialogMessage("Bạn muốn xóa dòng đang chọn?","Delete selected items?",function(){
+                ShowConfirmDialogMessage("Do you want delete this item?","Delete selected items?",function(){
                     var url,data;
                     url="{{base_url()}}admin-planners/"+ccontroller+"/Delete";
                     data={
@@ -247,7 +249,7 @@
             Restore:function (ID){
                 if(isrunning)return;
                 console.log("Restore:"+ID+" ↵ Call");
-                ShowConfirmDialogMessage("Bạn muốn khôi phục dòng đang chọn?","Restore selected items?",function(){
+                ShowConfirmDialogMessage("Do you want restore this item?","Restore selected items?",function(){
                     var url,data;
                     url="{{base_url()}}admin-planners/"+ccontroller+"/Restore";
                     data={
@@ -320,39 +322,40 @@
             },
             Save:function (){
                 if(isrunning)return;
-                console.log("Save ↵ Call");
-                var ID,Key,Name,Value,link,image,url,data;                                
-                ID = $('#txt_id').val()
-                Key = $('#txt_key').val()
-                Name = $('#txt_name').val()
-                url="{{base_url()}}admin-planners/"+ccontroller+"/Save";
-                data={
-                    ID      :   ID,
-                    Key     :   Key,
-                    Name    :   Name
-                }
-                if($("#txt_link").length){
-                    data.link=$("#txt_link").val();
-                }
-                if($("#txt_image").length){
-                    data.image=$("#txt_image").val();
-                }
-                if($('#txt_value').length){
-                    try{
-                        Value = $('#txt_value').getCode()
-                    }catch(e){
-                        Value = $('#txt_value').val()
-                    }
-                    data.Value=Value;
-                }
+                var VideoKey   =   $("#VideoKey"  ).val();
+                var Title       =   $("#Title"      ).val();
+                var Thumbs      =   $("#Thumbs"     ).val();
+                var Source      =   $("#Link"     ).val();
+                var Description =   $("#Description").val();
+                var Tag         =   $("#Tag"        ).val();
                 isrunning=true;
-                debugAjax(url,data,function(result){
+        
+                var url=baseurl+"admin-planners/"+ccontroller+"/Save";
+                var data={
+                    Params:{
+                        VideoKey:VideoKey,
+                        Title:Title,
+                        Thumbs:Thumbs,
+                        Source:Source,
+                        Description:Description,
+                        Tag:Tag
+                    }
+                };
+                if($("#VideoID").val()!=""){
+                    data.Params.VideoID=$("#VideoID").val();
+                }
+                jqxAjax(url,data,function(result){
                     isrunning=false;
-                    if(result.code>=0){
-                        FlexiGrid.CancelEdit();
-                        FlexiGrid.Refresh();
-                    }else{
-                        ShowNoticeDialogMessage(result.msg);
+                    try{
+                        if(result.code<0){
+                            ShowNoticeDialogMessage(result.msg);
+                        }else{
+                            FlexiGrid.CancelEdit();
+                            FlexiGrid.Refresh();
+                            ShowNoticeDialogMessage(result.msg,"Notice Message");
+                        }
+                    }catch(err){
+                        ShowErrorDialogMessage(err);
                     }
                 });
             },
@@ -436,7 +439,51 @@
     function UpdateItem(){
     
     }
-
+    function getAlias(){
+        var url=baseurl+"sys/excution/getAlias";
+        var data={
+            string:$("#Title").val()
+        };
+        jqxAjax(url,data,function(result){
+            isrunning=false;
+            try{
+                if(result.code>=0){
+                    $("#Alias").val(result.msg);
+                }
+            }catch(err){
+                
+            }
+        });
+    }
+    function getYoutubeInfo(){
+        if(isrunning)return;
+        if( (!_FcheckFilled($("#Link").val())) && (!_FcheckFilled($("#VideoKey").val()))){
+            ShowNoticeDialogMessage("Please enter Youtube link or Youtube Key.");
+            return;
+        }
+        var url=baseurl+"admin-planners/"+ccontroller+"/YoutubeInfo";
+        var data={
+            url:$("#Link").val(),
+            key:$("#VideoKey").val()
+        };
+        jqxAjax(url,data,function(video){
+            isrunning=false;
+            try{
+                $("#Link").val(video.watchURL);
+                $("#Title").val(video.title);
+                $("#Alias").val(video.alias);
+                $("#VideoKey").val(video.key);
+                $("#Author").val(video.author);
+                $("#Thumbs").val(video.thumbnail);
+                $("#Description").val(video.description);
+                $("#Embel").val(video.embed);
+                $("#Length").val(video.length);
+                $("img.thumbs").attr("src",video.thumbnail);
+            }catch(err){
+                ShowErrorDialogMessage("Cant get video information.<br/> Please check your Youtube link or Youtube Key.");
+            }
+        });
+    }
     $(document).ready(function () {
         FlexiGrid.init();
     

@@ -1,6 +1,6 @@
 <?php 
 session_start();
-class video extends CI_Controller  {
+class video_climb extends CI_Controller  {
 
         /**
         * Index Page for this controller.
@@ -139,7 +139,7 @@ class video extends CI_Controller  {
             }
             echo $json_response;
         }
-        public function EditVideo(){
+        public function Edit(){
             $Data["categorys"]=array(
                 "Music"=>"Music",
                 "Comedy"=>"Comedy",
@@ -158,17 +158,17 @@ class video extends CI_Controller  {
                 
                 
             );
-            if(isset($_POST["VideoID"])){
-                $video=$this->video_model->getVideo($_POST["VideoID"]);
+            if(isset($_POST["ID"])){
+                $video=$this->video_model->getVideo($_POST["ID"]);
                 if(count($video)>0){
                     $Data["video"]=  objectToArray($video[0]);
                     $this->smarty->assign('Data', $Data);
                 }
             }
             $this->smarty->assign('Data', $Data);
-            $this->smarty->display('admin-planners/video/02_edit');
+            $this->smarty->display('admin-planners/video/02_edit_climb');
         }      
-        public function savevideo(){
+        public function Save(){
             $vlows=array("\\\"","\\'");
             $vals=array("\"","'");
             $Params=$_POST["Params"];
@@ -180,31 +180,12 @@ class video extends CI_Controller  {
             if( (!isset($Params["VideoKey"])) || $Params["VideoKey"]==""){
                 $msgs[]="Key does not empty.";
             }
-            if( (!isset($Params["Length"])) || $Params["Length"]=="" || !is_numeric($Params["Length"])){
-                $msgs[]="Length does not empty and Length must be numeric.";
-            }
-            if( (!isset($Params["Author"])) || $Params["Author"]==""){
-                $msgs[]="Author does not empty.";
-            }
             if( (!isset($Params["Title"])) || $Params["Title"]==""){
                 $msgs[]="Title does not empty.";
             }
-//            if( (!isset($Params["Categorys"])) || $Params["Categorys"]==""){
-//                $msgs[]="Please, choose the Categorys.";
-//            }
             if( (!isset($Params["Thumbs"])) || $Params["Thumbs"]==""){
                 $msgs[]="Thumbs does not empty.";
             }
-//            if( (!isset($Params["Description"])) || $Params["Description"]==""){
-//                $msgs[]="Description does not empty.";
-//            }
-//            if( (!isset($Params["Tag"])) || $Params["Tag"]==""){
-//                $msgs[]="Tag does not empty.";
-//            }
-            if( (!isset($Params["Embel"])) || $Params["Embel"]==""){
-                $msgs[]="Embel does not empty.";
-            }
-            
             if(count($msgs)>0){
                 $code=-44;
                 $msg="";
@@ -214,16 +195,13 @@ class video extends CI_Controller  {
             }else{
                 $VideoParams=array(
                     "VideoKey"=>$Params["VideoKey"],
-                    "Author"=>$Params["Author"],
                     "Alias"=>  converturl($Params["Title"]),
                     "Title"=>$Params["Title"],
-                    "Category"=>$Params["Categorys"],
                     "Thumbs"=>$Params["Thumbs"],
                     "Description"=>$Params["Description"],
                     "Source"=>$Params["Source"],
-                    "Tag"=>$Params["Tag"],
-                    "Embel"=>$Params["Embel"],
-                    "Length"=>$Params["Length"]
+                    "Tag"=>$Params["Tag"]
+                    
                 );
                 //$VideoParams["Embel"]=  str_replace($vlows, $vals,$_REQUEST["Params"]["Embel"]);
                 //echo"<pre>";print_r($VideoParams);echo"</pre>";return;
@@ -231,7 +209,7 @@ class video extends CI_Controller  {
                     $ip = getIP();
                     $VideoParams["Log"] = "    IP : $ip \n    Action : Update \n    RowID : " . $Params["VideoID"] . "\n    VideoKey : " . $Params["VideoKey"];
                     if($this->video_model->updateVideo($Params["VideoID"],$VideoParams)){
-                        $this->log_model->insert(array("Table" => "Video","RowID"=>$Params["VideoID"], "Action" => "Update", "Log" => $VideoParams["Log"]));
+                        //$this->log_model->insert(array("Table" => "Video","RowID"=>$Params["VideoID"], "Action" => "Update", "Log" => $VideoParams["Log"]));
                         $code=1;
                         $msg="Success. Video have been updated.";
                     }else{
@@ -242,7 +220,7 @@ class video extends CI_Controller  {
                     $ip=  getIP();
                     $VideoParams["Log"]="    IP : $ip \n    Action : Insert \n    VideoKey : ".$Params["VideoKey"];
                     if($this->video_model->insertVideo($VideoParams)){
-                        $this->log_model->insert(array("Table"=>"Video","Action"=>"Insert","Log"=>$VideoParams["Log"]));
+                        //$this->log_model->insert(array("Table"=>"Video","Action"=>"Insert","Log"=>$VideoParams["Log"]));
                         $code=1;
                         $msg="Success. Video have been added to database.";
                     }else{
@@ -256,14 +234,16 @@ class video extends CI_Controller  {
         }
         public function ChangeStatus(){
             
-            if(isset($_POST["Status"]) && isset($_POST["VideoID"])){
-                $VideoParams=array(
-                    "Status"=>$_POST["Status"]
+            if(isset($_POST["Status"]) && isset($_POST["ID"])){
+                $ID=$_POST["ID"];
+                $Status=$_POST["Status"];
+                $Params=array(
+                    "Status"=>$Status
                 );
                 $ip=  getIP();
-                $VideoParams["Log"]="    IP : $ip \n    Action : Change Status \n    RowID : ".$_POST["VideoID"]."\n    New Status : ".$_POST["Status"];
-                if($this->video_model->updateVideo($_POST["VideoID"],$VideoParams)){
-                    $this->log_model->insert(array("Table"=>"Video","RowID"=>$_POST["VideoID"],"Action"=>"Change Status","Log"=>$VideoParams["Log"]));
+                $Params["Log"]="    IP : $ip \n    Action : Change Status \n    RowID : $ID\n    New Status : $Status";
+                if($this->video_model->update($ID,$Params)){
+                    //$this->log_model->insert(array("Table"=>"Video","RowID"=>$ID,"Action"=>"Change Status","Log"=>$Params["Log"]));
                     $code=1;
                     $msg="Status' video have been changed.";
                 }else{
@@ -276,31 +256,43 @@ class video extends CI_Controller  {
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
-        public function ChangeDeleteDisplay(){
+        public function ChangeColumnDisplay(){
             
-            if(isset($_POST["showDelete"]) && $_POST["showDelete"]==0){
-                $_SESSION["JQX-DEL-VIDEO"]=0;
-                $code=1;
-                $msg="Deleted record have been hide.";
-            }elseif(isset($_POST["showDelete"]) && $_POST["showDelete"]==-1){
-                $code=1;
-                $msg="Only show deleted record.";
-                $_SESSION["JQX-DEL-VIDEO"]=-1;
-            }else{
-                $code=1;
-                $msg="Show all record.";
-                $_SESSION["JQX-DEL-VIDEO"]=1;
-            }
+            $_SESSION["admin-video-setting"]["colModel"][$_POST["col"]]=$_POST["hide"]==1?true:false;
+            $Params=array(
+                "Key"=>"admin-video-settings",
+                "Name"=>"admin-video-settings",
+                "Type"=>"settings",
+                "Value"=>json_encode($_SESSION["admin-video-setting"])
+            );
+            $this->setting_model->insert_onduplicate_update("admin-video-settings",$Params);
+            $code=1;
+            $msg="Data display have been change.";
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
-        public function delete(){
+        public function ChangeDeleteDisplay(){
+            ChangeDisplay("JQX-DEL-VIDEO", $_POST["showDelete"]);
+            $_SESSION["admin-video-setting"]["display"]=$_POST["showDelete"];
+            $Params=array(
+                "Key"=>"admin-video-settings",
+                "Name"=>"admin-video-settings",
+                "Type"=>"settings",
+                "Value"=>json_encode($_SESSION["admin-video-setting"])
+            );
+            $this->setting_model->insert_onduplicate_update("admin-video-settings",$Params);
+            $code=1;
+            $msg="Data display have been change.";
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        public function Delete(){
             
-            if(isset($_POST["VideoID"])){
+            if(isset($_POST["ID"])){
+                $ID=$_POST["ID"];
                 $ip=  getIP();
-                $VideoParams["Log"]="    IP : $ip \n    Action : Delete \n    RowID : ".$_POST["VideoID"];
+                $Params["Log"]="    IP : $ip \n    Action : Delete \n    RowID : $ID";
                 
-                if($this->video_model->delete($_POST["VideoID"])){
-                    $this->log_model->insert(array("Table"=>"Video","RowID"=>$_POST["VideoID"],"Action"=>"Delete","Log"=>$VideoParams["Log"]));
+                if($this->video_model->delete($ID)){
+                    //$this->log_model->insert(array("Table"=>"Video","RowID"=>$ID,"Action"=>"Delete","Log"=>$Params["Log"]));
                     $code=1;
                     $msg="Video have been deleted.";
                 }else{
@@ -313,13 +305,14 @@ class video extends CI_Controller  {
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
-        public function retore(){
+        public function Restore(){
             
-            if(isset($_POST["VideoID"])){
+            if(isset($_POST["ID"])){
+                $ID=$_POST["ID"];
                 $ip=  getIP();
-                $VideoParams["Log"]="    IP : $ip \n    Action : Restore \n    RowID : ".$_POST["VideoID"];
-                if($this->video_model->retore($_POST["VideoID"])){
-                    $this->log_model->insert(array("Table"=>"Video","Action"=>"Restore","RowID"=>$_POST["VideoID"],"Log"=>$VideoParams["Log"]));
+                $Params["Log"]="    IP : $ip \n    Action : Restore \n    RowID : $ID";
+                if($this->video_model->retore($ID)){
+                    //$this->log_model->insert(array("Table"=>"Video","Action"=>"Restore","RowID"=>$ID,"Log"=>$Params["Log"]));
                     $code=1;
                     $msg="Video have been retored.";
                 }else{
@@ -331,50 +324,6 @@ class video extends CI_Controller  {
                 $msg="Fail.";
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
-        }
-        public function jqxgrid_video(){
-            $jqx_data=array();
-            $result['total_rows']=0;
-            //if($this->checkauthority()>=0){
-                $result=$this->video_model->jqxgrid_video();
-                $rows=$result['rows'];
-                // get data and store in a json array
-                foreach ($rows as $row) {
-                    $ca_value="";
-                    $ca_arr=  explode(",,", ",".$row->Category.",");
-                    foreach ($ca_arr as $ca){
-                        if($ca!=null && $ca!="")
-                        $ca_value.="<span class=\"mlr2 bgceb\">$ca</span>";
-                    }
-                    $jqx_data[] = array(
-                        'VideoKey'      => $row->VideoKey,
-                        'Title'         => $row->Title,
-                        'Category'      => $ca_value,
-                        'Alias'         => $row->Alias,
-                        'Source'        => $row->Source,
-                        'Tag'           => $row->Tag,
-                        'Thumbs'        => $row->Thumbs,
-                        'Author'        => $row->Author,
-                        'Length'        => $row->Length,
-                        'Status'        => json_encode(array(
-                                        "VideoID"=>$row->VideoID,
-                                        "Status"=>$row->Status
-                                    )),
-                        'Insert'        => $row->Insert,
-                        'Update'        => $row->Update,
-                        'Delete'        => $row->Delete,
-                        'Video'         => json_encode(array(
-                                        "VideoID"=>$row->VideoID,
-                                        "Delete"=>$row->Delete
-                                    ))
-                    );
-                }
-            //}
-            $data[] = array(
-                'TotalRows' => $result['total_rows'],
-                'Rows' => $jqx_data
-            );
-            echo json_encode($data);
         }
         function FlexiGridData(){
             

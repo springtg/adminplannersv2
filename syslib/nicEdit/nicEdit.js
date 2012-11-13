@@ -982,6 +982,9 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
                                         case 'img':
 						this.inputs[itm] = new bkElement('img').setAttributes({id : itm}).setStyle(field.style).addEvent("click",fn).appendTo(contain);
 						break;
+                                        case 'div':
+						this.inputs[itm] = new bkElement('div').setAttributes({id : itm}).setStyle(field.style).addEvent("click",fn).appendTo(contain);
+						break;
 					case 'select':
 						this.inputs[itm] = new bkElement('select').setAttributes({id : itm}).setStyle({border : '1px solid #ccc', 'float' : 'left', margin : '2px 0'}).appendTo(contain);
 						for(opt in field.options) {
@@ -1306,7 +1309,7 @@ var nicImageButton = nicEditorAdvancedButton.extend({
 		this.addForm({
 			'' : {type : 'title', txt : 'Add/Edit Image'},
 			'src' : {type : 'text', txt : 'URL', 'value' : 'http://', style : {width: '150px'}},
-			'chooseimg' : {type : 'img', txt : '', style : {width: '16px',height:"16px",top:"32px",left:"220px",position:"absolute",border:"none",cursor:"pointer",background:"url(../../images/icon/16/pictures_folder_black.png) center no-repeat"},fn:function(){BrowseServer( 'Images:/', 'src' );}},
+			'chooseimg' : {type : 'div', txt : '', style : {width: '16px',height:"16px",top:"32px",left:"220px",position:"absolute",border:"none",cursor:"pointer"},fn:function(){BrowseServer( 'Images:/', 'src' );}},
                         //'choose' : {type : 'button', txt : '','value':'Choose', style : {width: '100px'},fn:function(){BrowseServer( 'Images:/', 'src' );}},
                         'alt' : {type : 'text', txt : 'Alt Text', style : {width: '100px'}},
                         'iwidth' : {type : 'text', txt : 'Width', style : {width: '50px'}},
@@ -1329,13 +1332,19 @@ var nicImageButton = nicEditorAdvancedButton.extend({
 			this.im = this.findElm('IMG','src',tmp);
 		}
 		if(this.im) {
+                        
 			this.im.setAttributes({
 				src : this.inputs['src'].value,
 				alt : this.inputs['alt'].value,
-				align : this.inputs['align'].value,
-                                width : this.inputs['iwidth'].value,
-                                height : this.inputs['iheight'].value
+				align : this.inputs['align'].value                                
 			});
+                        try{
+                            if(this.inputs['iwidth'].value>0)this.im.setAttributes({width : this.inputs['iwidth'].value});
+                        }catch(e){}
+                        try{
+                            if(this.inputs['iheight'].value>0)this.im.setAttributes({height : this.inputs['iheight'].value});
+                        }catch(e){}
+                                
 		}
 	}
 });
