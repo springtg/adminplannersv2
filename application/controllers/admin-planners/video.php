@@ -28,50 +28,75 @@ class video extends CI_Controller  {
             $this->load->model('admin-planners/video_model','video_model');
             $this->load->model('admin-planners/log_model','log_model');
             $this->load->model('admin-planners/youtube','youtube');
-            if(!isset($_SESSION["JQX-DEL-VIDEO"]))$_SESSION["JQX-DEL-VIDEO"]=1;
+            if(!isset($_SESSION["JQX-DEL-VIDEO"]))$_SESSION["JQX-DEL-VIDEO"]=0;
+            $this->load->model('admin-planners/setting_model','setting_model');
+            include APPPATH . 'libraries/defu.php';
+            $this->InitSetting();
         }
-        public function index()
-	{
+        function InitSetting(){
+            $colModel=array(
+                array(  "display"       =>"Video Key"           ,"name"=>"VideoKey"         ,"width"=>60        ,"sortable"=>true       ,"align"=>"center"      ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Title"               ,"name"=>"Title"            ,"width"=>180       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>true ),
+                array(  "display"       =>"Alias"               ,"name"=>"Alias"            ,"width"=>180       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Source"              ,"name"=>"Source"           ,"width"=>120       ,"sortable"=>true       ,"align"=>"right"       ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Thumbs"              ,"name"=>"Thumbs"           ,"width"=>120       ,"sortable"=>true       ,"align"=>"right"       ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Status"              ,"name"=>"Status"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Insert"              ,"name"=>"Insert"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Update"              ,"name"=>"Update"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>true       ,"filter"=>false),
+                array(  "display"       =>"Delete"              ,"name"=>"Delete"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>true       ,"filter"=>false)
+            );
+            if(isset($_SESSION["ADP-USER"])){
+                if(!isset($_SESSION["admin-video-setting"])){
+                    $data=$this->setting_model->getByKey("admin-video-settings");
+                    if(isset($data[0])){
+                        $_SESSION["admin-video-setting"]   =  objectToArray(@json_decode($data[0]->Value));
+
+                    }
+                }
+                $setting= $_SESSION["admin-video-setting"]["colModel"];
+                for($i=0;$i<count($colModel);$i++){
+                    if(isset($setting[$colModel[$i]["name"]])){
+                        $colModel[$i]["hide"]=(bool)$setting[$colModel[$i]["name"]];
+                    }
+                }
+                
+            }
+            $this->_configs["colModel"]=$colModel;
+        }
+        public function index(){
             $Data["tab_config"]["tabs"]=array(
-                "content"   =>array(
-                    "display"=>"Content"
-                    ,"value"=>"content"   
-                    ,"link"=>  base_url("admin-planners/content")
+                "video"   =>array(
+                    "display"=>"Video"
+                    ,"link"=>  base_url("admin-planners/video")
                     ),
-                "video"     =>array(
-                    "display"=>"Video"        
-                    ,"value"=>"video"     
-                    ,"link"=>base_url("admin-planners/video")),
-                "slider"    =>array(
-                    "display"=>"Slider in Home Page" 
-                    ,"value"=>"slider"     
-                    ,"link"=>base_url("admin-planners/slider")),
-                "contact"   =>array(
-                    "display"=>"Contact"      
-                    ,"value"=>"contact"       
-                    ,"link"=>base_url("admin-planners/contact")),
-                "request"   =>array(
-                    "display"=>"Request"      
-                    ,"value"=>"request"       
-                    ,"link"=>base_url("admin-planners/request")),
-                "subscribers"   =>array(
-                    "display"=>"Subscribers"      
-                    ,"value"=>"subscribers"       
-                    ,"link"=>base_url("admin-planners/subscribers")),
-                "sendmail"   =>array(
-                    "display"=>"Send Mail"      
-                    ,"value"=>"sendmail"       
-                    ,"link"=>base_url("admin-planners/sendmail"))
+                "edit"   =>array(
+                    "display"=>"Edit"
+                    ,"link"=>  "javascript:FlexiGrid.ShowDetail();"
+                    )
             );
             $Data["tab_config"]["tabindex"]="video";
+            $Data["flexigrid_settings"]["colModel"]=$this->_configs["colModel"];
+            foreach ($Data["flexigrid_settings"]["colModel"] as $col){
+                $Data["admin-video-settings"]["colModel"][$col["name"]]=$col["hide"];
+            }
+            $Data["admin-video-settings"]["display"]=1;
+            $Params=array(
+                "Key"=>"admin-video-settings",
+                "Name"=>"admin-video-settings",
+                "Type"=>"settings",
+                "Value"=>json_encode($Data["admin-video-settings"])
+            );
+            $this->setting_model->insert_onduplicate_update("admin-video-settings",$Params);
+            $Data["flexigrid_settings"]["filterModel"]=filterModel($Data["flexigrid_settings"]["colModel"]);
+            
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
-            
-            $this->smarty->view("sys/01_notice",'NOTICE');
-            $this->smarty->view("sys/02_script",'SCRIPT');
-            $this->smarty->view('admin-planners/tabs/01_tabs',"TABS");
-            $this->smarty->view('admin-planners/video/01_jqx',"JQXGRID");
-            $this->smarty->display("admin-planners/00_template");
+            if(isset($_SESSION["ADP-USER"])){
+                $this->smarty->view('admin-planners/video/01_flexigrid',"JQXGRID");
+                $this->smarty->display("admin-planners/00_template");
+            }else{
+                $this->smarty->display("admin-planners/01_login");
+            }
 	}
         public function checkVideoExist($ID){
             
@@ -142,8 +167,7 @@ class video extends CI_Controller  {
             }
             $this->smarty->assign('Data', $Data);
             $this->smarty->display('admin-planners/video/02_edit');
-        }
-        
+        }      
         public function savevideo(){
             $vlows=array("\\\"","\\'");
             $vals=array("\"","'");
@@ -352,7 +376,34 @@ class video extends CI_Controller  {
             );
             echo json_encode($data);
         }
-        
+        function FlexiGridData(){
+            
+            $data=$this->video_model->FlexiGridData();
+            header("Content-type: application/json");
+            $jsonData = array('page'=>$data["page"],'total'=>$data["total_rows"],'rows'=>array());
+            foreach($data["rows"] AS $row){
+                    //If cell's elements have named keys, they must match column names
+                    //Only cell's with named keys and matching columns are order independent.
+                    $entry = array('id'=>$row->VideoID,
+                            'cell'=>array(
+                                'VideoKey'      => $row->VideoKey,
+                                'Title'         => $row->Title,
+                                'Alias'         => $row->Alias,
+                                'Source'        => $row->Source,
+                                'Tag'           => $row->Tag,
+                                'Thumbs'        => $row->Thumbs,
+                                'Author'        => $row->Author,
+                                'Length'        => $row->Length,
+                                'Status'            =>$row->Status,
+                                'Insert'            =>$row->Insert,
+                                'Update'            =>$row->Update,
+                                'Delete'            =>$row->Delete
+                            ),
+                    );
+                    $jsonData['rows'][] = $entry;
+            }
+            echo json_encode($jsonData);
+        }
 }
 
 /* End of file welcome.php */

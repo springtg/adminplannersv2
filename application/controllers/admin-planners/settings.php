@@ -72,8 +72,12 @@ class settings extends CI_Controller  {
             $Data["tab_config"]["tabindex"]="settings_";
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
-            $this->smarty->view('admin-planners/settings/01_setting',"JQXGRID");
-            $this->smarty->display("admin-planners/00_template");
+            if(isset($_SESSION["ADP-USER"])){
+                $this->smarty->view('admin-planners/settings/01_setting',"JQXGRID");
+                $this->smarty->display("admin-planners/00_template");
+            }else{
+                $this->smarty->display("admin-planners/01_login");
+            }
 	}
         function Save(){
             $msgs=array();

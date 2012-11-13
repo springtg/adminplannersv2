@@ -23,6 +23,7 @@ class setting_model extends FlexiGrid_Model {
                 ->where(array(
                     "Lock <>"=>"1"
                 ))
+                ->order_by("CHAR_LENGTH(`Value`)","ASC")
                 ->get('adp_settings')
                 ->result();
     }
