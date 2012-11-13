@@ -2,7 +2,9 @@
 <script type="text/javascript" src="{{base_url()}}syslib/Flexigrid/js/flexigrid.js"></script>
 <script src="{{base_url()}}syslib/contextMenu/jquery.contextMenu.js" type="text/javascript"></script>
 <link href="{{base_url()}}syslib/contextMenu/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
-
+<script src="{{base_url()}}syslib/nicEdit/nicEdit.js" type="text/javascript"></script>
+<script type="text/javascript" src="{{base_url()}}syslib/ckfinder/ckfinder.js"></script>
+<script type="text/javascript" src="{{base_url()}}syslib/ckfinder/browse.js"></script>
 <div style="padding-right: 2px;padding-left: 0px;">
     <div id="frmFlexiGrid">
         <table id="FlexiGrid"></table>
@@ -317,8 +319,15 @@
                 console.log("CancelEdit ↵ Call");
                 FlexiGrid.HideDetail();
                 tab(ccontroller);
+                removeEditorContent("txtContent");
             },
             Save:function (){
+                var AlbumItems =$("#AlbumItems img");
+                var Album;
+                for(var i=0;i<AlbumItems.length;i++){
+                    Album[i]= AlbumItems[i].src;
+                }
+                console.log(Album);return;
                 if(isrunning)return;
                 console.log("Save ↵ Call");
                 var ID,Key,Name,Value,link,image,url,data;                                
@@ -441,5 +450,48 @@
         FlexiGrid.init();
     
     });
-  
+    function DelAlbumItem(obj){
+        $(obj).parents("div.AlbumItem").remove();
+    }
+    function AddAlbumItem(){
+        var AlbumItems =$("#AlbumItems");
+        var srcImg=$("#txtAddImage").val();
+        if(!_FcheckFilled(srcImg)){return}
+        var AlbumItem=
+        '<div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">\
+            <div class="pt1 pb1 pl1 pr1">\
+                <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">\
+                    Album item\
+                </h4>\
+                <div class="pa r8 t8">\
+                    <span style="cursor: pointer" onclick="DelAlbumItem(this)">Del</span>\
+                </div>\
+                <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">\
+                    <img class="w100pc" src="'+srcImg+'"/>\
+                </div>\
+            </div>\
+        </div>';
+        AlbumItems.append(AlbumItem);
+    }
+    function GenAlbumItemFromContent(){
+        var AlbumItems =$("#AlbumItems");
+        $("#tdContent .nicEdit-main img").each(function(){
+            var srcImg=$(this).attr("src");
+            var AlbumItem=
+            '<div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">\
+                <div class="pt1 pb1 pl1 pr1">\
+                    <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">\
+                        Album item\
+                    </h4>\
+                    <div class="pa r8 t8">\
+                        <span style="cursor: pointer" onclick="DelAlbumItem(this)">Del</span>\
+                    </div>\
+                    <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">\
+                        <img class="w100pc" src="'+srcImg+'"/>\
+                    </div>\
+                </div>\
+            </div>';
+            AlbumItems.append(AlbumItem);
+        });
+    }
 </script>

@@ -1,23 +1,213 @@
 <div id="tabs">
     <ul>
-        <li><a href="#tabs-1">Cơ bản</a></li>
-        <li><a href="#tabs-2">Mở rộng</a></li>
-        <li><a href="#tabs-3">Hướng Dẫn</a></li>
+        <li><a href="#tabs-1">Product Information</a></li>
+        <li><a href="#tabs-2">Album of product</a></li>
+        <li><a href="#tabs-3">guide</a></li>
     </ul>
     <div id="tabs-1">
-        <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+        <table class="w720px">
+            <tr>
+                <td class="w100 tar red">Product Name</td>
+                <td>
+                    <div class="pr10">
+                        <input id="Link" type="text"  class="classic-input w100pc"
+                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               />
+                    </div>
+                </td>
+                <td class="w100 tar red">Alias</td>
+                <td>
+                    <div class="pr10">
+                        <input id="Link" type="text"  class="classic-input w100pc"
+                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w100 tar red">Product Title</td>
+                <td>
+                    <div class="pr10">
+                        <input id="Link" type="text"  class="classic-input w100pc"
+                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               />
+                    </div>
+                </td>
+                <td class="w100 tar red">Product Image</td>
+                <td>
+                    <div class="pr10 pr">
+                        <input id="txtImage" type="text"  class="classic-input w100pc"
+                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               />
+                        <div class="pa hover50 icon16 chooseimage chooseimage_icon"
+                             onclick="BrowseServer( 'Images:/', 'txtImage' );"
+                             title="Choose image from my host"
+                             >
+                        </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w100 tar red">Category</td>
+                <td>
+
+                    <select class="classic-select w100pc">
+                        <option>Unknown</option>
+                    </select>
+
+                </td>
+                <td class="w100 tar">Supplier</td>
+                <td>
+                    <div class="pr10">
+                        <input id="Link" type="text"  class="classic-input w100pc"
+                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w100 tar red">Amount</td>
+                <td colspan="3">
+                    <table class="m0 p0 w100pc" style="border: none;border-spacing: 0">
+                        <tr>
+                            <td class="m0 p0">
+                                <div class="pr10">
+                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                           />
+                                </div>
+                            </td>
+                            <td class="w100 tar red">Quantity Per Unit</td>
+                            <td>
+                                <div class="pr10">
+                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                           />
+                                </div>
+                            </td>
+                            <td class="w100 tar red">Start Date</td>
+                            <td>
+                                <div class="pr10">
+                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                           />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="w100 tar red">Unit Price</td>
+                <td colspan="3">
+                    <table class="m0 p0 w100pc" style="border: none;border-spacing: 0">
+                        <tr>
+                            <td class="m0 p0">
+                                <div class="pr10">
+                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                           />
+                                </div>
+                            </td>
+                            <td class="w100 tar red">Unit On Order</td>
+                            <td>
+                                <div class="pr10">
+                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                           />
+                                </div>
+                            </td>
+                            <td class="w100 tar red">End Date</td>
+                            <td>
+                                <div class="pr10">
+                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                           />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="w100 tar vtat"><label class="lh24">Tag</label></td>
+                <td>
+                    <div class="pr10">
+                        <textarea style="resize: vertical;" class="classic-input w100pc"></textarea>
+                    </div>
+                </td>
+                <td class="w100 tar vtat"><label class="lh24">Feature</label></td>
+                <td>
+                    <div class="pr10">
+                        <textarea style="resize: vertical;" class="classic-input w100pc"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="w100 tar vtat red"><label class="lh24 red">Content</label></td>
+                <td id="tdContent" colspan="3">
+                    <div id="txtContent" style="min-height: 100px"></div>
+                </td>
+            </tr>
+        </table>
     </div>
     <div id="tabs-2">
-        <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+        <div class="w720px">
+            <div id="AlbumItems">
+                {{for $foo=1 to 6}}
+                <div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">
+                    <div class="pt1 pb1 pl1 pr1">
+                        <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">
+                            Album item
+                        </h4>
+                        <div class="pa r8 t8">
+                            <span style="cursor: pointer" onclick="DelAlbumItem(this)">Del</span>
+                        </div>
+                        <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">
+                            <img class="w100pc" src="http://stc.nct.nixcdn.com/imgqc/2012/11/daovang_366x270-634879619817541250.gif"/>
+                        </div>
+                    </div>
+                </div>
+                {{/for}}
+            </div>
+            <div class="clear"></div>
+            <div class="tac w100pc">
+                <span style="cursor: pointer" onclick="GenAlbumItemFromContent()"><tt>Auto get images from content of product.</tt></span>
+            </div>
+            <div class="clear"></div>
+            <div class="grid_x pt12 pb12 mt12" style="border-top:1px dotted #ccc">
+                <div class="grid_3"><label class="lh24">Album item</label></div>
+                <div class="grid_10 pr32">
+                    <div class="pr10 pr">
+                        <input id="txtAddImage" class="classic-input w100pc"/>
+                        <div class="pa hover50 icon16 chooseimage chooseimage_icon"
+                             onclick="BrowseServer( 'Images:/', 'txtAddImage' );"
+                             title="Choose image from my host"
+                             >
+                        </div>
+                    </div>
+                </div>
+                <div class="grid_4">
+                    <button class="classic-button" onclick="AddAlbumItem()"><span>Add</span></button>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
     </div>
     <div id="tabs-3">
         <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
         <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
     </div>
 </div>
-<input type="button" class="classic-button" value="Back" onclick="FlexiGrid.CancelEdit();"/>
+<div class="pt8">
+    <input type="button" class="classic-button" value="Back" onclick="FlexiGrid.CancelEdit();"/>
+    <input type="button" class="classic-button" value="Save" onclick="FlexiGrid.Save();"/>
+</div>
 <script>
-$(function() {
-    $( "#tabs" ).tabs();
-});
+    $(function() {
+        $( "#tabs" ).tabs();
+        addEditorContent("txtContent");
+    });
 </script>

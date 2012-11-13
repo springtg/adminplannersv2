@@ -42,20 +42,20 @@ class video_model extends FlexiGrid_Model {
         if($count==1) return true;
         return false;
     }
-    function delete($VideoID){
-        $this->db->set('Delete', 'NOW()', FALSE);
-        $where=array("VideoID"=>$VideoID);
-        $this->db->where($where);
-        $this->db->update('tbl_video'); 
+    function delete($ID){
+        $this->db
+            ->set('Delete', 'NOW()', FALSE)
+            ->where(array("VideoID"=>$ID))
+            ->update('tbl_video');
         $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
         if($count==1) return true;
         return false;
     }
-    function retore($VideoID){
-        $this->db->set('Delete', 'NULL', FALSE);
-        $where=array("VideoID"=>$VideoID);
-        $this->db->where($where);
-        $this->db->update('tbl_video'); 
+    function retore($ID){
+        $this->db
+            ->set('Delete', 'NULL', FALSE)
+            ->where(array("VideoID"=>$ID))
+            ->update('tbl_video');
         $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
         if($count==1) return true;
         return false;
@@ -65,6 +65,23 @@ class video_model extends FlexiGrid_Model {
         $this->db->where('VideoID', $VideoID);
         $this->db->update('tbl_video', $params); 
         $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
+        if($count==1) return true;
+        return false;
+    }
+    function insert($params){
+        $count = $this->db
+            ->set('Insert', 'NOW()', FALSE)
+            ->insert('tbl_video', $params)
+            ->affected_rows(); //should return the number of rows affected by the last query
+        if($count==1) return true;
+        return false;
+    }
+    function update($ID,$params){
+        $this->db
+            ->set('Update', 'NOW()', FALSE)
+            ->where('VideoID', $ID)
+            ->update('tbl_video', $params);
+        $count =  $this->db->affected_rows(); //should return the number of rows affected by the last query
         if($count==1) return true;
         return false;
     }
@@ -101,6 +118,7 @@ class video_model extends FlexiGrid_Model {
         }elseif(isset($_SESSION["JQX-DEL-VIDEO"]) && $_SESSION["JQX-DEL-VIDEO"]==-1){
             $configs["strWhere"].=" AND `tbl_video`.`Delete` IS NOT NULL";
         }
+        $configs["strOrderBy"]=" ORDER BY `Insert` DESC";
         $configs["fields"]=array(
             "ID"=>"VideoID",
             );

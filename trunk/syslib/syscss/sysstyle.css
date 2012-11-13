@@ -33,7 +33,7 @@ img{border: none}
 .refresh_icon{
     background: url(../../images/icon/16/view_refresh.png) center no-repeat;
 }
-.chooseimage_icon{
+.chooseimage_icon,#chooseimg{
     background: url(../../images/icon/16/pictures_folder_black.png) center no-repeat;
 }
 

@@ -194,6 +194,21 @@ class product extends CI_Controller  {
             }
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
+        function GenAlbumVal(){
+            include APPPATH.'libraries/HTML_DOM/simple_html_dom.php';
+            
+            $str="<div>".html_entity_decode($_POST["str"])."</div>";
+            
+            $html = str_get_html($str);
+            // Find all images 
+            $albums=array();
+            $inputs=$html->find("input[type=text]");
+            if(is_array($inputs))
+            foreach($inputs as $element){ 
+                $albums[]=$element->value;
+            }
+            echo json_encode($albums);
+        }
         function FlexiGridData(){
             
             $data=$this->product_model->FlexiGridData();
