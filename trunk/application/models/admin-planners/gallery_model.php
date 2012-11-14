@@ -1,6 +1,6 @@
 <?php
 
-class product_model extends FlexiGrid_Model {
+class gallery_model extends FlexiGrid_Model {
 
     function __construct()
     {
@@ -8,66 +8,65 @@ class product_model extends FlexiGrid_Model {
         
     }
     function get($ID=""){
-        $where=array("ProductID"=>$ID);
-        $query=$this->db->get_where('dtb_product', $where); 
+        $where=array("ID"=>$ID);
+        $query=$this->db->get_where('tbl_gallery', $where); 
         return $query->result();
     }
     function gets(){
-        $query=$this->db->get_where('dtb_product'); 
+        $query=$this->db->get_where('tbl_gallery'); 
         return $query->result();
     }
     function update($ID,$Params){
         $this->db->set('Update', "NOW()",false)
-            ->where('ProductID', $ID)
-            ->update('dtb_product', $Params); 
+            ->where('ID', $ID)
+            ->update('tbl_gallery', $Params); 
         $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
         if($count==1) return true;
         return false;
     }
     function insert($Params){
         $this->db->set('Insert', "NOW()",false)
-            ->insert('dtb_product', $Params); 
+            ->insert('tbl_gallery', $Params); 
         $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
         if($count==1) return true;
         return false;
     }
     function delete($ID){
         $this->db->set('Delete', "NOW()",false);
-        $this->db->where('ProductID', $ID);
-        $this->db->update('dtb_product'); 
+        $this->db->where('ID', $ID);
+        $this->db->update('tbl_gallery'); 
         $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
         if($count==1) return true;
         return false;
     }
     function restore($ID){
         $this->db->set('Delete', "NULL",false);
-        $this->db->where('ProductID', $ID);
-        $this->db->update('dtb_product'); 
+        $this->db->where('ID', $ID);
+        $this->db->update('tbl_gallery'); 
         $count = $this->db->affected_rows(); //should return the number of rows affected by the last query
         if($count==1) return true;
         return false;
     }
     function FlexiGridData(){
         $configs["strQuery"]="
-            SELECT SQL_CALC_FOUND_ROWS `dtb_product`.*
-            FROM `dtb_product`
+            SELECT SQL_CALC_FOUND_ROWS `tbl_gallery`.*
+            FROM `tbl_gallery`
             ";
         $configs["strWhere"]="
             WHERE true
             ";
-        if(isset($_SESSION["JQX-DEL-PRO"]) && $_SESSION["JQX-DEL-PRO"]==0){
-            $configs["strWhere"].=" AND `dtb_product`.`Delete` IS NULL";
-        }elseif(isset($_SESSION["JQX-DEL-PRO"]) && $_SESSION["JQX-DEL-PRO"]==-1){
-            $configs["strWhere"].=" AND `dtb_product`.`Delete` IS NOT NULL";
+        if(isset($_SESSION["JQX-DEL-GAL"]) && $_SESSION["JQX-DEL-GAL"]==0){
+            $configs["strWhere"].=" AND `tbl_gallery`.`Delete` IS NULL";
+        }elseif(isset($_SESSION["JQX-DEL-GAL"]) && $_SESSION["JQX-DEL-GAL"]==-1){
+            $configs["strWhere"].=" AND `tbl_gallery`.`Delete` IS NOT NULL";
         }
         $configs["strOrderBy"]=" ORDER BY `Insert` DESC";
         $configs["fields"]=array(
-            "ID"=>"ProductID",
+            "ID"=>"ID",
             );
         $configs["filterfields"]=array(
-            "ProductName"=>"ProductName",
-            "Supplier"=>"Supplier",
-            "ProductTitle"=>"ProductTitle"
+            "Images"=>"Images",
+            "AlbumName"=>"AlbumName"
         );
         $this->init($configs);
         return $this->Binding();

@@ -257,7 +257,7 @@ ul.sysnav{
     border-right: 1px solid #BBB;height: 28px;
     position: absolute;top: 0;list-style: none;}
 ul.sysnav li{float: left;position: relative;height: 28px;border-left: 1px solid #BBB;transition: background .25s ease-in-out;-moz-transition: background .25s ease-in-out;-webkit-transition: background .25s ease-in-out;}
-ul.sysnav li a{
+ul.sysnav li a,ul.sysnav li span{
     display: inline-block;
     height: 28px;
     line-height: 28px;

@@ -1,8 +1,19 @@
 <ul class="sysnav">
     <li><a href="">Home</a></li>
-    <li><a href="{{base_url('admin-planners/settings/settings2')}}">Website Setting</a></li>
-    <li><a href="{{base_url('admin-planners/video_climb')}}">Video</a></li>
-    <li><a href="{{base_url('admin-planners/slider')}}">Slider</a></li>
+    <li><span>Website</span>
+        <ul class="l">
+            <li><a href="{{base_url('admin-planners/settings/settings2')}}">Setting</a></li>
+            <li><a href="{{base_url('admin-planners/content')}}">Pages Content</a></li>
+            
+        </ul>
+    </li>
+    <li><span>Gallery</span>
+        <ul class="l">
+            <li><a href="{{base_url('admin-planners/video_climb')}}">Video</a></li>
+            <li><a href="{{base_url('admin-planners/slider')}}">Slider</a></li>
+            <li><a href="{{base_url('admin-planners/gallery')}}">Gallery</a></li>
+        </ul>
+    </li>
     <li><a href="{{base_url('admin-planners/tour')}}">Tour</a></li>
     <li><a href="{{base_url('admin-planners/personal')}}">Commercial/Personal</a></li>
     <li><a href="{{base_url('admin-planners/product')}}">Products</a>

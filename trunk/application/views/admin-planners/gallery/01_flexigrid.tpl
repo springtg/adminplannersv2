@@ -4,7 +4,6 @@
 <link href="{{base_url()}}syslib/contextMenu/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
 <script src="{{base_url()}}syslib/nicEdit/nicEdit.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{base_url()}}syslib/ckfinder/ckfinder.js"></script>
-<script type="text/javascript" src="{{base_url()}}syslib/ckfinder/browse.js"></script>
 <div style="padding-right: 2px;padding-left: 0px;">
     <div id="frmFlexiGrid">
         <table id="FlexiGrid"></table>
@@ -45,15 +44,15 @@
         <div class="grid_6" >
             <div class="displaySetings ml4 mr-1" style="border: 1px solid #ccc">
                 <div class="lh20 fwb pl12 mb4" style="background: #ddd">Tùy chỉnh hiện thị dữ liệu</div>
-                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-PRO"]==1}}cked{{/if}}" value="1">
+                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-GAL"]==1}}cked{{/if}}" value="1">
                     <div class="grid_x w14px mr12 ic" style="height: 14px;"></div>
                     <div class="grid_5 lh16 label">Hiện tất cả dữ liệu</div>
                 </div>
-                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-PRO"]==0}}cked{{/if}}" value="0">
+                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-GAL"]==0}}cked{{/if}}" value="0">
                     <div class="grid_x w14px mr12 ic " style="height: 14px;"></div>
                     <div class="grid_5 lh16 label">Ẩn dữ liệu đã xóa</div>
                 </div>
-                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-PRO"]==-1}}cked{{/if}}" value="-1">
+                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-GAL"]==-1}}cked{{/if}}" value="-1">
                     <div class="grid_x w14px mr12 ic" style="height: 14px;"></div>
                     <div class="grid_5 lh16 label">Chỉ hiện dữ liệu đã xóa</div>
                 </div>
@@ -66,7 +65,7 @@
     var areaContent;
     var FlexiGrid=(function () {
         //Creating the demo window
-        var ccontroller="product";
+        var ccontroller="gallery";
         function _createWindows() {
             console.log("createWindows ↵ Call");
         };
@@ -320,7 +319,6 @@
                 console.log("CancelEdit ↵ Call");
                 FlexiGrid.HideDetail();
                 tab(ccontroller);
-                removeEditorContent("txtContent");
             },
             Save:function (){
                 var AlbumItems =$("#AlbumItems img").map(function() {
@@ -328,24 +326,9 @@
                 });
                 if(isrunning)return;
                 console.log("Save ↵ Call");
-                var ID,ProductName,ProductTitle,ProductImage,Category,Supplier,
-                Amount,QuantityPerUnit,UnitPrice,UnitOnOrder,StartDate,EndDate,
-                Tag,Feature,Content,Album;                                
+                var ID,AlbumName,Album;                                
                 ID = $('#txtID').val();
-                ProductName = $('#txtProductName').val();
-                ProductTitle = $('#txtTitle').val();
-                ProductImage = $('#txtImage').val();
-                Category = $('#cbxCategory').val();
-                Supplier = $('#txtSupplier').val();
-                QuantityPerUnit = $('#txtQuantity').val();
-                UnitPrice = $('#txtUnitPrice').val();
-                UnitOnOrder = $('#txtUnitOnOrder').val();
-                StartDate = $('#txtStartDate').val();
-                EndDate = $('#txtEndDate').val();
-                Amount = $('#txtAmount').val();
-                Tag = $('#txtTag').val();
-                Feature = $('#txtFeature').val();
-                Content = areaContent.instanceById('txtContent').getContent();//$('#txtContent').getCode();
+                AlbumName = $('#txtAlbumName').val();
                 Album=new Array();
                 for(var i=0;i<AlbumItems.length;i++){
                     Album[i]=AlbumItems[i];
@@ -353,20 +336,7 @@
                 var url="{{base_url()}}admin-planners/"+ccontroller+"/Save";
                 var data={
                     ID              :   ID,
-                    ProductName     :   ProductName,
-                    ProductTitle    :   ProductTitle,
-                    Image           :   ProductImage,
-                    Category        :   Category,
-                    Supplier        :   Supplier,
-                    QuantityPerUnit :   QuantityPerUnit,
-                    UnitPrice       :   UnitPrice,
-                    UnitOnOrder     :   UnitOnOrder,
-                    StartDate       :   StartDate,
-                    EndDate         :   EndDate,
-                    Amount          :   Amount,
-                    Tag             :   Tag,
-                    Feature         :   Feature,
-                    Content         :   Content,
+                    AlbumName       :   AlbumName,
                     Album           :   Album
                 }
                 console.log(data);
@@ -446,52 +416,41 @@
         $('#FlexiGrid').flexOptions({newp: 1}).flexReload();
         return false;
     });
-    function addEditorContent(ElementID){
-        if(!areaContent) {
-            areaContent = new nicEditor({fullPanel : true}).panelInstance(ElementID,{hasPanel : true});
-        }
-    }
-    function removeEditorContent(ElementID){
-        if(areaContent) {
-            areaContent.removeInstance(ElementID);
-            areaContent = null;
-        }
-    }
+    
     function UpdateItem(){
     
     }
-
-    $(document).ready(function () {
-        FlexiGrid.init();
-    
-    });
     function DelAlbumItem(obj){
         $(obj).parents("div.AlbumItem").remove();
     }
-    function AddAlbumItem(){
-        var AlbumItems =$("#AlbumItems");
-        var srcImg=$("#txtAddImage").val();
-        if(!_FcheckFilled(srcImg)){return}
-        var AlbumItem=
-        '<div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">\
-            <div class="pt1 pb1 pl1 pr1">\
-                <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">\
-                    Album item\
-                </h4>\
-                <div class="pa r8 t8">\
-                    <span style="cursor: pointer" onclick="DelAlbumItem(this)">Del</span>\
-                </div>\
-                <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">\
-                    <img class="w100pc" src="'+srcImg+'"/>\
-                </div>\
-            </div>\
-        </div>';
-        AlbumItems.append(AlbumItem);
+    function BrowseServer( startupPath ){
+            // You can use the "CKFinder" class to render CKFinder in a page:
+            var finder = new CKFinder();
+
+            // The path for the installation of CKFinder (default = "/ckfinder/").
+            finder.basePath = '../';
+
+            //Startup path in a form: "Type:/path/to/directory/"
+            finder.startupPath = startupPath;
+
+            // Name of a function which is called when a file is selected in CKFinder.
+            finder.selectActionFunction = SetFileField;
+
+            // Additional data to be passed to the selectActionFunction in a second argument.
+            // We'll use this feature to pass the Id of a field that will be updated.
+            //finder.selectActionData = functionData;
+
+            // Name of a function which is called when a thumbnail is selected in CKFinder.
+            finder.selectThumbnailActionFunction = ShowThumbnails;
+
+            // Launch CKFinder
+            finder.popup();
     }
-    function GenAlbumItemFromContent(){
-        var AlbumItems =$("#AlbumItems");
-        $("#tdContent .nicEdit-main img").each(function(){
-            var srcImg=$(this).attr("src");
+
+    // This is a sample function which is called when a file is selected in CKFinder.
+    function SetFileField( fileUrl, data ){
+        try{
+            var AlbumItems =$("#AlbumItems");
             var AlbumItem=
             '<div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">\
                 <div class="pt1 pb1 pl1 pr1">\
@@ -502,11 +461,36 @@
                         <span style="cursor: pointer" onclick="DelAlbumItem(this)">Del</span>\
                     </div>\
                     <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">\
-                        <img class="w100pc" src="'+srcImg+'"/>\
+                        <img class="w100pc" src="'+fileUrl+'"/>\
                     </div>\
                 </div>\
             </div>';
             AlbumItems.append(AlbumItem);
-        });
+        }catch(e){}
     }
+    function ShowThumbnails( fileUrl, data ){
+            // this = CKFinderAPI
+            var sFileName = this.getSelectedFile().name;
+            return false;
+    }
+    function ShowAlbumInput(){
+        $("#txtAlbumName").show();
+        $("#AlbumName").hide();
+        $("#txtAlbumName").focus();
+    }
+    function HideAlbumInput(){
+        $("#txtAlbumName").hide();
+        $("#AlbumName").show();
+        if($("#txtAlbumName").val()==""){
+            $("#txtAlbumName").val("New Album");
+            $("#AlbumName").text("New Album");
+        }else{
+            $("#AlbumName").text($("#txtAlbumName").val());
+        }
+    }
+    $(document).ready(function () {
+        FlexiGrid.init();
+    
+    });
+    
 </script>

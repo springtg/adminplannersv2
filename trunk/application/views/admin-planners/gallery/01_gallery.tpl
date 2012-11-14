@@ -45,15 +45,15 @@
         <div class="grid_6" >
             <div class="displaySetings ml4 mr-1" style="border: 1px solid #ccc">
                 <div class="lh20 fwb pl12 mb4" style="background: #ddd">Tùy chỉnh hiện thị dữ liệu</div>
-                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-PRO"]==1}}cked{{/if}}" value="1">
+                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-GAL"]==1}}cked{{/if}}" value="1">
                     <div class="grid_x w14px mr12 ic" style="height: 14px;"></div>
                     <div class="grid_5 lh16 label">Hiện tất cả dữ liệu</div>
                 </div>
-                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-PRO"]==0}}cked{{/if}}" value="0">
+                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-GAL"]==0}}cked{{/if}}" value="0">
                     <div class="grid_x w14px mr12 ic " style="height: 14px;"></div>
                     <div class="grid_5 lh16 label">Ẩn dữ liệu đã xóa</div>
                 </div>
-                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-PRO"]==-1}}cked{{/if}}" value="-1">
+                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-GAL"]==-1}}cked{{/if}}" value="-1">
                     <div class="grid_x w14px mr12 ic" style="height: 14px;"></div>
                     <div class="grid_5 lh16 label">Chỉ hiện dữ liệu đã xóa</div>
                 </div>
@@ -66,7 +66,7 @@
     var areaContent;
     var FlexiGrid=(function () {
         //Creating the demo window
-        var ccontroller="product";
+        var ccontroller="gallery";
         function _createWindows() {
             console.log("createWindows ↵ Call");
         };
@@ -446,17 +446,7 @@
         $('#FlexiGrid').flexOptions({newp: 1}).flexReload();
         return false;
     });
-    function addEditorContent(ElementID){
-        if(!areaContent) {
-            areaContent = new nicEditor({fullPanel : true}).panelInstance(ElementID,{hasPanel : true});
-        }
-    }
-    function removeEditorContent(ElementID){
-        if(areaContent) {
-            areaContent.removeInstance(ElementID);
-            areaContent = null;
-        }
-    }
+    
     function UpdateItem(){
     
     }
@@ -465,48 +455,5 @@
         FlexiGrid.init();
     
     });
-    function DelAlbumItem(obj){
-        $(obj).parents("div.AlbumItem").remove();
-    }
-    function AddAlbumItem(){
-        var AlbumItems =$("#AlbumItems");
-        var srcImg=$("#txtAddImage").val();
-        if(!_FcheckFilled(srcImg)){return}
-        var AlbumItem=
-        '<div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">\
-            <div class="pt1 pb1 pl1 pr1">\
-                <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">\
-                    Album item\
-                </h4>\
-                <div class="pa r8 t8">\
-                    <span style="cursor: pointer" onclick="DelAlbumItem(this)">Del</span>\
-                </div>\
-                <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">\
-                    <img class="w100pc" src="'+srcImg+'"/>\
-                </div>\
-            </div>\
-        </div>';
-        AlbumItems.append(AlbumItem);
-    }
-    function GenAlbumItemFromContent(){
-        var AlbumItems =$("#AlbumItems");
-        $("#tdContent .nicEdit-main img").each(function(){
-            var srcImg=$(this).attr("src");
-            var AlbumItem=
-            '<div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">\
-                <div class="pt1 pb1 pl1 pr1">\
-                    <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">\
-                        Album item\
-                    </h4>\
-                    <div class="pa r8 t8">\
-                        <span style="cursor: pointer" onclick="DelAlbumItem(this)">Del</span>\
-                    </div>\
-                    <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">\
-                        <img class="w100pc" src="'+srcImg+'"/>\
-                    </div>\
-                </div>\
-            </div>';
-            AlbumItems.append(AlbumItem);
-        });
-    }
+    
 </script>
