@@ -63,6 +63,7 @@
     </div>
 </div>
 <script type="text/javascript">
+    var areaContent;
     var FlexiGrid=(function () {
         //Creating the demo window
         var ccontroller="product";
@@ -322,38 +323,48 @@
                 removeEditorContent("txtContent");
             },
             Save:function (){
-                var AlbumItems =$("#AlbumItems img");
-                var Album;
-                for(var i=0;i<AlbumItems.length;i++){
-                    Album[i]= AlbumItems[i].src;
-                }
-                console.log(Album);return;
+                var Album =$("#AlbumItems img").map(function() {
+                    return $(this).attr("src");
+                });
+                //console.log(Album);return;
                 if(isrunning)return;
                 console.log("Save ↵ Call");
-                var ID,Key,Name,Value,link,image,url,data;                                
-                ID = $('#txt_id').val()
-                Key = $('#txt_key').val()
-                Name = $('#txt_name').val()
-                url="{{base_url()}}admin-planners/"+ccontroller+"/Save";
-                data={
-                    ID      :   ID,
-                    Key     :   Key,
-                    Name    :   Name
+                var ID,ProductName,ProductTitle,ProductImage,Category,Supplier,
+                Amount,QuantityPerUnit,UnitPrice,UnitOnOrder,StartDate,EndDate,
+                Tag,Feature,Content;                                
+                ID = $('#txtID').val();
+                ProductName = $('#txtProductName').val();
+                ProductTitle = $('#txtTitle').val();
+                ProductImage = $('#txtImage').val();
+                Category = $('#cbxCategory').val();
+                Supplier = $('#txtSupplier').val();
+                QuantityPerUnit = $('#txtQuantity').val();
+                UnitPrice = $('#txtUnitPrice').val();
+                UnitOnOrder = $('#txtUnitOnOrder').val();
+                StartDate = $('#txtStartDate').val();
+                Amount = $('#txtAmount').val();
+                Tag = $('#txtTag').val();
+                Feature = $('#txtFeature').val();
+                Content = areaContent.instanceById('txtContent').getContent();//$('#txtContent').getCode();
+                var url="{{base_url()}}admin-planners/"+ccontroller+"/Save";
+                var data={
+                    ID              :   ID,
+                    ProductName     :   ProductName,
+                    ProductTitle    :   ProductTitle,
+                    Image           :   ProductImage,
+                    Category        :   Category,
+                    Supplier        :   Supplier,
+                    QuantityPerUnit :   QuantityPerUnit,
+                    UnitPrice       :   UnitPrice,
+                    UnitOnOrder     :   UnitOnOrder,
+                    StartDate       :   StartDate,
+                    Amount          :   Amount,
+                    Tag             :   Tag,
+                    Feature         :   Feature,
+                    Content         :   Content,
+                    Album           :   Album
                 }
-                if($("#txt_link").length){
-                    data.link=$("#txt_link").val();
-                }
-                if($("#txt_image").length){
-                    data.image=$("#txt_image").val();
-                }
-                if($('#txt_value').length){
-                    try{
-                        Value = $('#txt_value').getCode()
-                    }catch(e){
-                        Value = $('#txt_value').val()
-                    }
-                    data.Value=Value;
-                }
+                console.log(data);
                 isrunning=true;
                 debugAjax(url,data,function(result){
                     isrunning=false;
@@ -430,7 +441,6 @@
         $('#FlexiGrid').flexOptions({newp: 1}).flexReload();
         return false;
     });
-    var areaContent;
     function addEditorContent(ElementID){
         if(!areaContent) {
             areaContent = new nicEditor({fullPanel : true}).panelInstance(ElementID,{hasPanel : true});

@@ -140,6 +140,10 @@ class product extends CI_Controller  {
             $this->smarty->assign('Data', $Data);
             $this->smarty->display("admin-planners/product/02_edit");
         }
+        function Save(){
+            print_r($_POST);
+        }
+
         public function Delete(){
             if(isset($_POST["ID"])){
                 $ip=  getIP();

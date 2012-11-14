@@ -5,12 +5,13 @@
         <li><a href="#tabs-3">guide</a></li>
     </ul>
     <div id="tabs-1">
+        <input type="hidden" name="txtID" id="txtID" value=""/>
         <table class="w720px">
             <tr>
                 <td class="w100 tar red">Product Name</td>
                 <td>
                     <div class="pr10">
-                        <input id="Link" type="text"  class="classic-input w100pc"
+                        <input id="txtProductName" name="txtProductName" type="text"  class="classic-input w100pc"
                                value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                />
                     </div>
@@ -18,7 +19,7 @@
                 <td class="w100 tar red">Alias</td>
                 <td>
                     <div class="pr10">
-                        <input id="Link" type="text"  class="classic-input w100pc"
+                        <input id="txtAlias" name="txtAlias" type="text"  class="classic-input w100pc"
                                value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                />
                     </div>
@@ -28,7 +29,7 @@
                 <td class="w100 tar red">Product Title</td>
                 <td>
                     <div class="pr10">
-                        <input id="Link" type="text"  class="classic-input w100pc"
+                        <input id="txtTitle" name="txtTitle" type="text"  class="classic-input w100pc"
                                value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                />
                     </div>
@@ -36,7 +37,7 @@
                 <td class="w100 tar red">Product Image</td>
                 <td>
                     <div class="pr10 pr">
-                        <input id="txtImage" type="text"  class="classic-input w100pc"
+                        <input id="txtImage" name="txtImage" type="text"  class="classic-input w100pc"
                                value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                />
                         <div class="pa hover50 icon16 chooseimage chooseimage_icon"
@@ -50,7 +51,7 @@
                 <td class="w100 tar red">Category</td>
                 <td>
 
-                    <select class="classic-select w100pc">
+                    <select id="cbxCategory" name="cbxCategory" class="classic-select w100pc">
                         <option>Unknown</option>
                     </select>
 
@@ -58,7 +59,7 @@
                 <td class="w100 tar">Supplier</td>
                 <td>
                     <div class="pr10">
-                        <input id="Link" type="text"  class="classic-input w100pc"
+                        <input id="txtSupplier" name="txtSupplier" type="text"  class="classic-input w100pc"
                                value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                />
                     </div>
@@ -71,7 +72,7 @@
                         <tr>
                             <td class="m0 p0">
                                 <div class="pr10">
-                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                    <input id="txtAmount" name="txtAmount" type="number"  class="classic-input w100pc"
                                            value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                            />
                                 </div>
@@ -79,7 +80,7 @@
                             <td class="w100 tar red">Quantity Per Unit</td>
                             <td>
                                 <div class="pr10">
-                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                    <input id="txtQuantity" name="txtQuantity" type="text"  class="classic-input w100pc"
                                            value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                            />
                                 </div>
@@ -87,7 +88,7 @@
                             <td class="w100 tar red">Start Date</td>
                             <td>
                                 <div class="pr10">
-                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                    <input id="txtStartDate" name="txtStartDate" type="text"  class="classic-input w100pc"
                                            value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                            />
                                 </div>
@@ -104,7 +105,7 @@
                         <tr>
                             <td class="m0 p0">
                                 <div class="pr10">
-                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                    <input id="txtUnitPrice" name="txtUnitPrice" type="number"  class="classic-input w100pc"
                                            value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                            />
                                 </div>
@@ -112,7 +113,7 @@
                             <td class="w100 tar red">Unit On Order</td>
                             <td>
                                 <div class="pr10">
-                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                    <input id="txtUnitOnOrder" name="txtUnitOnOrder" type="number"  class="classic-input w100pc"
                                            value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                            />
                                 </div>
@@ -120,7 +121,7 @@
                             <td class="w100 tar red">End Date</td>
                             <td>
                                 <div class="pr10">
-                                    <input id="Link" type="text"  class="classic-input w100pc"
+                                    <input id="txtEndDate" name="txtEndDate" type="text"  class="classic-input w100pc"
                                            value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
                                            />
                                 </div>
@@ -134,13 +135,13 @@
                 <td class="w100 tar vtat"><label class="lh24">Tag</label></td>
                 <td>
                     <div class="pr10">
-                        <textarea style="resize: vertical;" class="classic-input w100pc"></textarea>
+                        <textarea id="txtTag" name="txtTag" style="resize: vertical;" class="classic-input w100pc"></textarea>
                     </div>
                 </td>
                 <td class="w100 tar vtat"><label class="lh24">Feature</label></td>
                 <td>
                     <div class="pr10">
-                        <textarea style="resize: vertical;" class="classic-input w100pc"></textarea>
+                        <textarea id="txtFeature" name="txtFeature" style="resize: vertical;" class="classic-input w100pc"></textarea>
                     </div>
                 </td>
             </tr>
