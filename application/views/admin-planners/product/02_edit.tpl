@@ -5,14 +5,14 @@
         <li><a href="#tabs-3">guide</a></li>
     </ul>
     <div id="tabs-1">
-        <input type="hidden" name="txtID" id="txtID" value=""/>
+        <input type="hidden" name="txtID" id="txtID" value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->ProductID|escape:'html'}}{{/if}}"/>
         <table class="w720px">
             <tr>
                 <td class="w100 tar red">Product Name</td>
                 <td>
                     <div class="pr10">
                         <input id="txtProductName" name="txtProductName" type="text"  class="classic-input w100pc"
-                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->ProductName|escape:'html'}}{{/if}}"
                                />
                     </div>
                 </td>
@@ -20,7 +20,7 @@
                 <td>
                     <div class="pr10">
                         <input id="txtAlias" name="txtAlias" type="text"  class="classic-input w100pc"
-                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->Alias|escape:'html'}}{{/if}}"
                                />
                     </div>
                 </td>
@@ -30,7 +30,7 @@
                 <td>
                     <div class="pr10">
                         <input id="txtTitle" name="txtTitle" type="text"  class="classic-input w100pc"
-                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->ProductTitle|escape:'html'}}{{/if}}"
                                />
                     </div>
                 </td>
@@ -38,7 +38,7 @@
                 <td>
                     <div class="pr10 pr">
                         <input id="txtImage" name="txtImage" type="text"  class="classic-input w100pc"
-                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->Image|escape:'html'}}{{/if}}"
                                />
                         <div class="pa hover50 icon16 chooseimage chooseimage_icon"
                              onclick="BrowseServer( 'Images:/', 'txtImage' );"
@@ -60,7 +60,7 @@
                 <td>
                     <div class="pr10">
                         <input id="txtSupplier" name="txtSupplier" type="text"  class="classic-input w100pc"
-                               value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                               value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->Supplier|escape:'html'}}{{/if}}"
                                />
                     </div>
                 </td>
@@ -72,8 +72,8 @@
                         <tr>
                             <td class="m0 p0">
                                 <div class="pr10">
-                                    <input id="txtAmount" name="txtAmount" type="number"  class="classic-input w100pc"
-                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                    <input id="txtAmount" name="txtAmount" type="number" min="0"  class="classic-input w100pc"
+                                           value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->Amount|escape:'html'}}{{/if}}"
                                            />
                                 </div>
                             </td>
@@ -81,7 +81,7 @@
                             <td>
                                 <div class="pr10">
                                     <input id="txtQuantity" name="txtQuantity" type="text"  class="classic-input w100pc"
-                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                           value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->QuantityPerUnit|escape:'html'}}{{/if}}"
                                            />
                                 </div>
                             </td>
@@ -89,7 +89,7 @@
                             <td>
                                 <div class="pr10">
                                     <input id="txtStartDate" name="txtStartDate" type="text"  class="classic-input w100pc"
-                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                           value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->StartDate|escape:'html'}}{{/if}}"
                                            />
                                 </div>
                             </td>
@@ -105,16 +105,16 @@
                         <tr>
                             <td class="m0 p0">
                                 <div class="pr10">
-                                    <input id="txtUnitPrice" name="txtUnitPrice" type="number"  class="classic-input w100pc"
-                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                    <input id="txtUnitPrice" name="txtUnitPrice" type="number" min="0"  class="classic-input w100pc"
+                                           value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->UnitPrice|escape:'html'}}{{/if}}"
                                            />
                                 </div>
                             </td>
                             <td class="w100 tar red">Unit On Order</td>
                             <td>
                                 <div class="pr10">
-                                    <input id="txtUnitOnOrder" name="txtUnitOnOrder" type="number"  class="classic-input w100pc"
-                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                    <input id="txtUnitOnOrder" name="txtUnitOnOrder" type="number" min="0"  class="classic-input w100pc"
+                                           value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->UnitsOnOrder|escape:'html'}}{{/if}}"
                                            />
                                 </div>
                             </td>
@@ -122,7 +122,7 @@
                             <td>
                                 <div class="pr10">
                                     <input id="txtEndDate" name="txtEndDate" type="text"  class="classic-input w100pc"
-                                           value="{{if isset($Data["video"])}}{{$Data["video"]["Source"]|escape:'html'}}{{/if}}"
+                                           value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->EndDate|escape:'html'}}{{/if}}"
                                            />
                                 </div>
                             </td>
@@ -135,20 +135,20 @@
                 <td class="w100 tar vtat"><label class="lh24">Tag</label></td>
                 <td>
                     <div class="pr10">
-                        <textarea id="txtTag" name="txtTag" style="resize: vertical;" class="classic-input w100pc"></textarea>
+                        <textarea id="txtTag" name="txtTag" style="resize: vertical;" class="classic-input w100pc">{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->Tag|escape:'html'}}{{/if}}</textarea>
                     </div>
                 </td>
                 <td class="w100 tar vtat"><label class="lh24">Feature</label></td>
                 <td>
                     <div class="pr10">
-                        <textarea id="txtFeature" name="txtFeature" style="resize: vertical;" class="classic-input w100pc"></textarea>
+                        <textarea id="txtFeature" name="txtFeature" style="resize: vertical;" class="classic-input w100pc">{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->Feature|escape:'html'}}{{/if}}</textarea>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td class="w100 tar vtat red"><label class="lh24 red">Content</label></td>
                 <td id="tdContent" colspan="3">
-                    <div id="txtContent" style="min-height: 100px"></div>
+                    <div id="txtContent" style="min-height: 100px">{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->Content}}{{/if}}</div>
                 </td>
             </tr>
         </table>
@@ -156,21 +156,25 @@
     <div id="tabs-2">
         <div class="w720px">
             <div id="AlbumItems">
-                {{for $foo=1 to 6}}
-                <div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">
-                    <div class="pt1 pb1 pl1 pr1">
-                        <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">
-                            Album item
-                        </h4>
-                        <div class="pa r8 t8">
-                            <span style="cursor: pointer" onclick="DelAlbumItem(this)">Del</span>
-                        </div>
-                        <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">
-                            <img class="w100pc" src="http://stc.nct.nixcdn.com/imgqc/2012/11/daovang_366x270-634879619817541250.gif"/>
+                {{if isset($Data["OBJ"])}}
+                    {{$albums=json_decode($Data["OBJ"]->Album)}}
+                    
+                    {{for $foo=0 to count($albums)-1}}
+                    <div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">
+                        <div class="pt1 pb1 pl1 pr1">
+                            <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">
+                                Album item
+                            </h4>
+                            <div class="pa r8 t8">
+                                <span style="cursor: pointer" onclick="DelAlbumItem(this)">✖</span>
+                            </div>
+                            <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">
+                                <img class="w100pc" src="{{$albums[$foo]}}"/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {{/for}}
+                    {{/for}}
+                {{/if}}
             </div>
             <div class="clear"></div>
             <div class="tac w100pc">
@@ -205,6 +209,8 @@
 <div class="pt8">
     <input type="button" class="classic-button" value="Back" onclick="FlexiGrid.CancelEdit();"/>
     <input type="button" class="classic-button" value="Save" onclick="FlexiGrid.Save();"/>
+    <button class="green-button"><span>Try it yourself »</span></button>
+    <button class="blue-button"><span>Try it yourself »</span></button>
 </div>
 <script>
     $(function() {

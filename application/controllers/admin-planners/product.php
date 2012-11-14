@@ -50,14 +50,14 @@ class product extends CI_Controller  {
                 array(  "display"       =>"Delete"              ,"name"=>"Delete"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>true       ,"filter"=>false)
             );
             if(isset($_SESSION["ADP-USER"])){
-                if(!isset($_SESSION["user-product-setting"])){
+                if(!isset($_SESSION["admin-product-setting"])){
                     $data=$this->setting_model->getByKey("admin-product-settings");
                     if(isset($data[0])){
-                        $_SESSION["user-product-setting"]   =  objectToArray(@json_decode($data[0]->Value));
+                        $_SESSION["admin-product-setting"]   =  objectToArray(@json_decode($data[0]->Value));
 
                     }
                 }
-                $setting= $_SESSION["user-product-setting"]["colModel"];
+                $setting= $_SESSION["admin-product-setting"]["colModel"];
                 for($i=0;$i<count($colModel);$i++){
                     if(isset($setting[$colModel[$i]["name"]])){
                         $colModel[$i]["hide"]=(bool)$setting[$colModel[$i]["name"]];
@@ -113,7 +113,7 @@ class product extends CI_Controller  {
                 "Key"=>"admin-product-settings",
                 "Name"=>"admin-product-settings",
                 "Type"=>"settings",
-                "Value"=>json_encode($_SESSION["user-product-setting"])
+                "Value"=>json_encode($_SESSION["admin-product-setting"])
             );
             $this->setting_model->insert_onduplicate_update("admin-product-settings",$Params);
             $code=1;
@@ -127,7 +127,7 @@ class product extends CI_Controller  {
                 "Key"=>"admin-product-settings",
                 "Name"=>"admin-product-settings",
                 "Type"=>"settings",
-                "Value"=>json_encode($_SESSION["user-product-setting"])
+                "Value"=>json_encode($_SESSION["admin-product-setting"])
             );
             $this->setting_model->insert_onduplicate_update("admin-product-settings",$Params);
             $code=1;
@@ -136,12 +136,103 @@ class product extends CI_Controller  {
         }
         function Edit(){
             $Data=null;
+            if(isset($_POST["ID"])){
+                $pr=$this->product_model->get($_POST["ID"]);
+                if(count($pr)>0)$Data["OBJ"]=$pr[0];
+            }
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
             $this->smarty->display("admin-planners/product/02_edit");
         }
         function Save(){
-            print_r($_POST);
+            $vlows=array("\\\"","\\'");
+            $vals=array("\"","'");
+            
+            $msgs=array();
+            if( (!isset($_POST["ProductName"])) || $_POST["ProductName"]==""){
+                $msgs[]="Product Name does not empty.";
+            }
+            if( (!isset($_POST["ProductTitle"])) || $_POST["ProductTitle"]==""){
+                $msgs[]="Product Title does not empty.";
+            }
+            if( (!isset($_POST["Image"])) || $_POST["Image"]==""){
+                $msgs[]="Product Image does not empty.";
+            }
+            if( (!isset($_POST["Category"])) || $_POST["Category"]==""){
+                $msgs[]="Category Image does not empty.";
+            }
+            if( (!isset($_POST["QuantityPerUnit"])) || $_POST["QuantityPerUnit"]==""){
+                $msgs[]="QuantityPerUnit Image does not empty.";
+            }
+            if( (!isset($_POST["Amount"])) || $_POST["Amount"]=="" || !is_numeric($_POST["Amount"])){
+                $msgs[]="Amount does not empty and Amount must be numeric.";
+            }
+            if( (!isset($_POST["UnitPrice"])) || $_POST["UnitPrice"]=="" || !is_numeric($_POST["UnitPrice"])){
+                $msgs[]="UnitPrice does not empty and UnitPrice must be numeric.";
+            }
+            if( (!isset($_POST["UnitOnOrder"])) || $_POST["UnitOnOrder"]=="" || !is_numeric($_POST["UnitOnOrder"])){
+                $msgs[]="UnitOnOrder does not empty and UnitOnOrder must be numeric.";
+            }
+            if( (!isset($_POST["StartDate"])) || $_POST["StartDate"]==""){
+                $msgs[]="StartDate does not empty.";
+            }
+            if( (!isset($_POST["EndDate"])) || $_POST["EndDate"]==""){
+                $msgs[]="EndDate does not empty.";
+            }
+            if( (!isset($_POST["Content"])) || $_POST["Content"]==""){
+                $msgs[]="Content does not empty.";
+            }
+            if(count($msgs)>0){
+                $code=-44;
+                $msg="";
+                foreach ($msgs as $m){
+                    $msg.="$m<br/>";
+                }
+            }else{
+                
+                $Params=array(
+                    "ProductName"   =>$_POST["ProductName"],
+                    "ProductTitle"  =>$_POST["ProductTitle"],
+                    "Image"         =>$_POST["Image"],
+                    "Categorys"      =>$_POST["Category"],
+                    "Supplier"      =>$_POST["Supplier"],
+                    "QuantityPerUnit"=>$_POST["QuantityPerUnit"],
+                    "Amount"        =>$_POST["Amount"],
+                    "UnitPrice"     =>$_POST["UnitPrice"],
+                    "UnitsOnOrder"  =>$_POST["UnitOnOrder"],
+                    "StartDate"     =>$_POST["StartDate"],
+                    "EndDate"       =>$_POST["EndDate"],
+                    "Tag"           =>$_POST["Tag"],
+                    "Feature"       =>$_POST["Feature"],
+                    "Content"       => str_replace($vlows, $vals,$_REQUEST["Content"]),
+                    "Album"         => json_encode($_POST["Album"]),
+                    "Alias"         =>  convertUrl($_POST["ProductName"]),
+                );
+                $ip = getIP();
+                if(isset($_POST["ID"]) && $_POST["ID"]!=""){
+                    $ID=$_POST["ID"];
+                    //$Params["Log"] = "    IP : $ip \n    Action : Update \n    RowID : $ID";
+                    if($this->product_model->update($ID,$Params)){
+                        //$this->log_model->insert(array("Table" => "Video","RowID"=>$Params["VideoID"], "Action" => "Update", "Log" => $VideoParams["Log"]));
+                        $code=1;
+                        $msg="Success. Product have been updated.";
+                    }else{
+                        $code=-1;
+                        $msg="Fail. Cant update Product.";
+                    }
+                }else{
+                    //$Params["Log"]="    IP : $ip \n    Action : Insert ";
+                    if($this->product_model->insert($Params)){
+                        //$this->log_model->insert(array("Table"=>"Video","Action"=>"Insert","Log"=>$VideoParams["Log"]));
+                        $code=1;
+                        $msg="Success. Video have been added to database.";
+                    }else{
+                        $code=-1;
+                        $msg="Fail. Cant insert video to database.";
+                    }
+                }
+            }
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
 
         public function Delete(){

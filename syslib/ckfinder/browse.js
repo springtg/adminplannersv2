@@ -30,7 +30,9 @@ function BrowseServer( startupPath, functionData )
 // This is a sample function which is called when a file is selected in CKFinder.
 function SetFileField( fileUrl, data )
 {
+    try{
 	document.getElementById( data["selectActionData"] ).value = fileUrl;
+    }catch(e){}
 }
 function ShowThumbnails( fileUrl, data )
 {
@@ -43,7 +45,7 @@ function ShowThumbnails( fileUrl, data )
 //					'<a href="' + data["fileUrl"] + '" target="_blank">' + sFileName + '</a> (' + data["fileSize"] + 'KB)' +
 //				'</div>' +
 //			'</div>';
-//
+
 //	document.getElementById( 'preview' ).style.display = "";
 	// It is not required to return any value.
 	// When false is returned, CKFinder will not close automatically.
