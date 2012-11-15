@@ -96,7 +96,7 @@ class tour extends CI_Controller  {
         }
         function index(){
             $Data["tab_config"]["tabs"]=array(
-                "Tour"   =>array(
+                "tour"   =>array(
                     "display"=>"Tour"
                     ,"link"=>  base_url("admin-planners/tour")
                     ),
@@ -109,7 +109,7 @@ class tour extends CI_Controller  {
                     ,"link"=>  "javascript:FlexiGrid.ShowDetail();"
                     )
             );
-            $Data["tab_config"]["tabindex"]="Tour";
+            $Data["tab_config"]["tabindex"]="tour";
             $Data["flexigrid_settings"]["colModel"]=$this->_configs["colModel"];
             foreach ($Data["flexigrid_settings"]["colModel"] as $col){
                 $Data["admin-TOUR-settings"]["colModel"][$col["name"]]=$col["hide"];
