@@ -1,6 +1,4 @@
 <?php 
-ini_set("pcre.backtrack_limit", "300000");
-ini_set("pcre.recursion_limit", "300000");
 session_start();
 class tour extends CI_Controller  {
 
@@ -27,7 +25,7 @@ class tour extends CI_Controller  {
             $this->load->library('javascript');
             $this->load->library('session');
             $this->load->library('smarty3','','smarty');
-            $this->load->model('admin-planners/content_model','content_model');
+            $this->load->model('admin-planners/tour_model','my_model');
             $this->load->model('admin-planners/setting_model','setting_model');
             if(!isset($_SESSION["JQX-DEL-TOUR"]))$_SESSION["JQX-DEL-TOUR"]=1;
             include APPPATH . 'libraries/defu.php';
@@ -36,8 +34,9 @@ class tour extends CI_Controller  {
         function InitSetting(){
             $colModel=array(
                 array(  "display"       =>"ID"                  ,"name"=>"ID"               ,"width"=>60        ,"sortable"=>true       ,"align"=>"center"      ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Type"                ,"name"=>"Type"             ,"width"=>120       ,"sortable"=>true       ,"align"=>"center"      ,"hide"=>false      ,"filter"=>true),
                 array(  "display"       =>"Title"               ,"name"=>"Title"            ,"width"=>180       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>true ),
-                array(  "display"       =>"Alias"               ,"name"=>"Alias"            ,"width"=>180       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
+                array(  "display"       =>"Alias"               ,"name"=>"Alias"            ,"width"=>180       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>true       ,"filter"=>false),
                 array(  "display"       =>"Thumb"               ,"name"=>"Thumb"            ,"width"=>120       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
                 array(  "display"       =>"Status"              ,"name"=>"Status"           ,"width"=>100       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
                 array(  "display"       =>"Insert"              ,"name"=>"Insert"           ,"width"=>100       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
@@ -45,11 +44,16 @@ class tour extends CI_Controller  {
                 array(  "display"       =>"Delete"              ,"name"=>"Delete"           ,"width"=>100       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>true       ,"filter"=>false)
             );
             if(isset($_SESSION["ADP-USER"])){
+                if(!isset($_SESSION["tourtype"])){
+                    $data=$this->setting_model->getByKey("tourtype");
+                    if(isset($data[0])){
+                        $_SESSION["tourtype"]   =  objectToArray(@json_decode($data[0]->Value));
+                    }
+                }
                 if(!isset($_SESSION["admin-TOUR-setting"])){
                     $data=$this->setting_model->getByKey("admin-TOUR-settings");
                     if(isset($data[0])){
                         $_SESSION["admin-TOUR-setting"]   =  objectToArray(@json_decode($data[0]->Value));
-
                     }
                 }
                 if(isset($_SESSION["admin-TOUR-setting"]["colModel"])){
@@ -64,19 +68,48 @@ class tour extends CI_Controller  {
             }
             $this->_configs["colModel"]=$colModel;
         }
-        
-        function index(){
+        function type(){
             $Data["tab_config"]["tabs"]=array(
-                "content"   =>array(
-                    "display"=>"Content"
-                    ,"link"=>  base_url("admin-planners/content/page")
+                "Tour"   =>array(
+                    "display"=>"Tour"
+                    ,"link"=>  base_url("admin-planners/tour")
+                    ),
+                "TourType"   =>array(
+                    "display"=>"Tour Type"
+                    ,"link"=>  base_url("admin-planners/tour/type")
                     ),
                 "edit"   =>array(
                     "display"=>"Edit"
                     ,"link"=>  "javascript:FlexiGrid.ShowDetail();"
                     )
             );
-            $Data["tab_config"]["tabindex"]="content";
+            $Data["tab_config"]["tabindex"]="TourType";
+            if(isset($_SESSION["ADP-USER"])){
+                $this->smarty
+                    ->assign('_SESSION', $_SESSION)
+                    ->assign('Data', $Data)
+                    ->view('admin-planners/tour/03_tourtype',"JQXGRID");
+                $this->smarty->display("admin-planners/00_template");
+            }else{
+                $this->smarty->display("admin-planners/01_login");
+            }
+        }
+        function index(){
+            $Data["tab_config"]["tabs"]=array(
+                "Tour"   =>array(
+                    "display"=>"Tour"
+                    ,"link"=>  base_url("admin-planners/tour")
+                    ),
+                "TourType"   =>array(
+                    "display"=>"Tour Type"
+                    ,"link"=>  base_url("admin-planners/tour/type")
+                    ),
+                "edit"   =>array(
+                    "display"=>"Edit"
+                    ,"link"=>  "javascript:FlexiGrid.ShowDetail();"
+                    )
+            );
+            $Data["tab_config"]["tabindex"]="Tour";
             $Data["flexigrid_settings"]["colModel"]=$this->_configs["colModel"];
             foreach ($Data["flexigrid_settings"]["colModel"] as $col){
                 $Data["admin-TOUR-settings"]["colModel"][$col["name"]]=$col["hide"];
@@ -93,25 +126,64 @@ class tour extends CI_Controller  {
             //$this->setting_model->insert($Params);
             $Data["flexigrid_settings"]["filterModel"]=filterModel($Data["flexigrid_settings"]["colModel"]);
             
-            $this->smarty->assign('_SESSION', $_SESSION);
-            $this->smarty->assign('Data', $Data);
+            
             if(isset($_SESSION["ADP-USER"])){
-                $this->smarty->view('admin-planners/tour/01_flexigrid',"JQXGRID");
+                $this->smarty
+                    ->assign('_SESSION', $_SESSION)
+                    ->assign('Data', $Data)
+                    ->view('admin-planners/tour/01_flexigrid',"JQXGRID");
                 $this->smarty->display("admin-planners/00_template");
             }else{
                 $this->smarty->display("admin-planners/01_login");
             }
         }
+        function addtourtype(){
+            $Name=$_POST["Name"];
+            $Des=$_POST["Des"];
+            $tourtype=$_SESSION["tourtype"];
+            $tourtype[convertUrl($Name)]=array("Name"=>$Name,"Des"=>$Des);
+            $code=1;
+            $Params=array(
+                "Key"=>"tourtype",
+                "Name"=>"Tour Type",
+                "Type"=>"settings",
+                "Value"=>json_encode($tourtype)
+            );
+            if($this->setting_model->insert_onduplicate_update("tourtype",$Params)){
+                $_SESSION["tourtype"]=$tourtype;
+            }    
+            $msg="Tour type have been change.";
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        function deltourtype(){
+            $Name=$_POST["Name"];
+            $tourtype=$_SESSION["tourtype"];
+            unset($tourtype[convertUrl($Name)]);
+            $code=1;
+            $Params=array(
+                "Key"=>"tourtype",
+                "Name"=>"Tour Type",
+                "Type"=>"settings",
+                "Value"=>json_encode($tourtype)
+            );
+            if($this->setting_model->insert_onduplicate_update("tourtype",$Params)){
+                $_SESSION["tourtype"]=$tourtype;
+            }
+            $msg="Tour type have been change.";
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
         public function Edit(){
             $Data=null;
             if(isset($_POST["ID"])){
-                $obj=$this->content_model->get($_POST["ID"]);
+                $obj=$this->my_model->get($_POST["ID"]);
                 if(count($obj)>0){
                     $Data["OBJ"]=  $obj[0];
                 }
             }
-            $this->smarty->assign('Data', $Data);
-            $this->smarty->display('admin-planners/tour/02_edit');
+            $this->smarty
+                ->assign('_SESSION', $_SESSION)
+                ->assign('Data', $Data)
+                ->display('admin-planners/tour/02_edit');
         }
         public function ChangeColumnDisplay(){
             
@@ -128,7 +200,7 @@ class tour extends CI_Controller  {
             echo json_encode(array("code"=>$code,"msg"=>$msg));
         }
         public function ChangeDeleteDisplay(){
-            ChangeDisplay("JQX-DEL-GAL", $_POST["showDelete"]);
+            ChangeDisplay("JQX-DEL-TOUR", $_POST["showDelete"]);
             $_SESSION["user-TOUR-setting"]["display"]=$_POST["showDelete"];
             $Params=array(
                 "Key"=>"admin-TOUR-settings",
@@ -147,7 +219,7 @@ class tour extends CI_Controller  {
                 $Params=array(
                     "Status"=>$_POST["Status"]
                 );
-                    if($this->content_model->update($_POST["ID"],$Params)){
+                    if($this->my_model->update($_POST["ID"],$Params)){
                         $code=1;
                         $msg="Status' have been changed.";
                     }else{
@@ -163,7 +235,7 @@ class tour extends CI_Controller  {
         public function Delete(){
             
             if(isset($_POST["ID"])){
-                if($this->content_model->delete($_POST["ID"])){
+                if($this->my_model->delete($_POST["ID"])){
                     $code=1;
                     $msg="Record have been deleted.";
                 }else{
@@ -179,7 +251,7 @@ class tour extends CI_Controller  {
         public function Restore(){
             
             if(isset($_POST["ID"])){
-                if($this->content_model->retore($_POST["ID"])){
+                if($this->my_model->retore($_POST["ID"])){
                     $code=1;
                     $msg="Record have been retored.";
                 }else{
@@ -204,6 +276,12 @@ class tour extends CI_Controller  {
             if( (!isset($_REQUEST["Content"])) || $_REQUEST["Content"]==""){
                 $msgs[]="Content does not empty.";
             }
+//            if( (isset($_REQUEST["PriceList"])) && strlen($_REQUEST["PriceList"])>2000){
+//                $msgs[]="PriceList limit of 2000 characters.".strlen($_REQUEST["PriceList"]);
+//            }
+//            if( (isset($_REQUEST["Conditions"])) && strlen($_REQUEST["Conditions"])>2000){
+//                $msgs[]="Conditions limit of 2000 characters.";
+//            }
             //echo $_Params["Content"];return;
             if(count($msgs)>0){
                 $code=-44;
@@ -216,12 +294,14 @@ class tour extends CI_Controller  {
                     "Alias"=>  converturl($_POST["Title"]),
                     "Title"=>$_POST["Title"],
                     "Thumb"=>$_POST["Thumb"],
-                    "Type"=>"Tour",
-                    "Content"=>str_replace($vlows, $vals,$_REQUEST["Content"])
+                    "Type"=>$_POST["Type"],
+                    "Content"=>str_replace($vlows, $vals,$_REQUEST["Content"]),
+                    "PriceList"=>str_replace($vlows, $vals,$_REQUEST["PriceList"]),
+                    "Conditions"=>str_replace($vlows, $vals,$_REQUEST["Conditions"])
                     
                 );
                 if(isset($_POST["ID"]) && $_POST["ID"]!=""){
-                    if($this->content_model->update($_POST["ID"],$Params)){
+                    if($this->my_model->update($_POST["ID"],$Params)){
                         $code=1;
                         $msg="Success. Record have been updated.";
                     }else{
@@ -229,7 +309,7 @@ class tour extends CI_Controller  {
                         $msg="Fail. Cant update this Record.";
                     }
                 }else{
-                    if($this->content_model->insert($Params)){
+                    if($this->my_model->insert($Params)){
                         $code=1;
                         $msg="Success. Record have been added to database.";
                     }else{
@@ -243,7 +323,7 @@ class tour extends CI_Controller  {
         }
         function FlexiGridData(){
             
-            $data=$this->content_model->FlexiGridData_Tour();
+            $data=$this->my_model->FlexiGridData();
             header("Content-type: application/json");
             $jsonData = array('page'=>$data["page"],'total'=>$data["total_rows"],'rows'=>array());
             foreach($data["rows"] AS $row){
@@ -252,6 +332,7 @@ class tour extends CI_Controller  {
                     $entry = array('id'=>$row->ID,
                             'cell'=>array(
                                 'ID'                =>$row->ID,
+                                'Type'             =>  htmlentities_UTF8($row->Type),
                                 'Title'             =>  htmlentities_UTF8($row->Title),
                                 'Alias'             =>$row->Alias,
                                 'Thumb'             =>$row->Thumb,

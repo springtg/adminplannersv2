@@ -1147,3 +1147,18 @@ p,pre{margin: 0;line-height: 16px}
 }
 .blue-button:hover{opacity: 1;}
 .blue-button:active{top: 1px}
+.gray-button{
+    color: white;
+    background-color: #cacaca;
+    border: 1px solid white;
+    outline: 1px solid #ccc;
+    text-decoration: none;
+    padding-top: 3px; 
+    padding-bottom: 4px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 11px;
+    position: relative;
+}
+.gray-button:hover{background-color: #ababab}
+.gray-button:active{top: 1px}

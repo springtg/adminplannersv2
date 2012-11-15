@@ -45,10 +45,8 @@
         </table>
     
 <div class="pt8">
-    <input type="button" class="classic-button" value="Back" onclick="FlexiGrid.CancelEdit();"/>
-    <input type="button" class="classic-button" value="Save" onclick="FlexiGrid.Save();"/>
-    <button class="green-button"><span>Try it yourself »</span></button>
-    <button class="blue-button"><span>Try it yourself »</span></button>
+    <button class="gray-button" onclick="FlexiGrid.CancelEdit();"><span>Back</span></button>
+    <button class="green-button" onclick="FlexiGrid.Save();"><span>Save</span></button>
 </div>
 <script>
     $(function() {

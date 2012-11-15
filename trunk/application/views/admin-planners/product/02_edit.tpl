@@ -51,11 +51,20 @@
             <tr>
                 <td class="w100 tar red">Category</td>
                 <td>
-
+                    <div class="pr">
                     <select id="cbxCategory" name="cbxCategory" class="classic-select w100pc">
-                        <option>Unknown</option>
+                        <option value="Unknown">Unknown</option>
+                        {{if isset($_SESSION["productcategory"])}}
+                            {{foreach $_SESSION["productcategory"] as $k=>$v}}
+                                <option 
+                                    {{if $v["Name"]==$Data["OBJ"]->Categorys}}selected=1{{/if}}
+                                    value="{{$v["Name"]}}">{{$v["Name"]}}</option>
+                            {{/foreach}}
+                        {{/if}}
                     </select>
-
+                    <a href="{{base_url('admin-planners/product/category')}}" class="pa hover50 icon16 chooseimage more_icon"
+                            title="More type"></a>
+                    </div>
                 </td>
                 <td class="w100 tar">Supplier</td>
                 <td>
@@ -208,10 +217,8 @@
     </div>
 </div>
 <div class="pt8">
-    <input type="button" class="classic-button" value="Back" onclick="FlexiGrid.CancelEdit();"/>
-    <input type="button" class="classic-button" value="Save" onclick="FlexiGrid.Save();"/>
-    <button class="green-button"><span>Try it yourself »</span></button>
-    <button class="blue-button"><span>Try it yourself »</span></button>
+    <button class="gray-button" onclick="FlexiGrid.CancelEdit();"><span>Back</span></button>
+    <button class="green-button" onclick="FlexiGrid.Save();"><span>Save</span></button>
 </div>
 <script>
     $(function() {

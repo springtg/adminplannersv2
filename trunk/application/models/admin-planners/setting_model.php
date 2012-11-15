@@ -41,9 +41,9 @@ class setting_model extends FlexiGrid_Model {
         return false;
     }
     function insert_onduplicate_update($Name,$Params){
-        $exists = $this->db->select("ID")->where("Name", $Name)->get("adp_settings")->row_array();
+        $exists = $this->db->select("ID")->where("Key", $Name)->get("adp_settings")->row_array();
         if($exists){
-            $this->db->where("Name", $Name);
+            $this->db->where("Key", $Name);
             $this->db->update('adp_settings', $Params);
         }else{
             $this->db->insert('adp_settings', $Params); 

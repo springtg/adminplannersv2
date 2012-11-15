@@ -91,12 +91,8 @@
         {{/if}}
     </table>
     <div>
-        <input type="button" class="classic-button" value="Back" onclick="FlexiGrid.CancelEdit();"/>
-        {{if isset($Data["video"])}}
-            <input type="button" class="classic-button" value="Update" onclick="FlexiGrid.Save();"/>
-        {{else}}
-            <input type="button" class="classic-button" value="Insert" onclick="FlexiGrid.Save();"/>
-        {{/if}}
+        <button class="gray-button" onclick="FlexiGrid.CancelEdit();"><span>Back</span></button>
+        <button class="green-button" onclick="FlexiGrid.Save();"><span>Save</span></button>
     </div>
 </div>
 

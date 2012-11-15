@@ -31,6 +31,32 @@ class product extends CI_Controller  {
             if(!isset($_SESSION["JQX-DEL-PRO"]))$_SESSION["JQX-DEL-PRO"]=0;
             $this->InitSetting();
         }
+        function category(){
+            $Data["tab_config"]["tabs"]=array(
+                "product"   =>array(
+                    "display"=>"Product"
+                    ,"link"=>  base_url("admin-planners/product")
+                    ),
+                "category"   =>array(
+                    "display"=>"Category"
+                    ,"link"=>  base_url("admin-planners/product/category")
+                    ),
+                "edit"   =>array(
+                    "display"=>"Edit"
+                    ,"link"=>  "javascript:FlexiGrid.ShowDetail();"
+                    )
+            );
+            $Data["tab_config"]["tabindex"]="category";
+            if(isset($_SESSION["ADP-USER"])){
+                $this->smarty
+                    ->assign('_SESSION', $_SESSION)
+                    ->assign('Data', $Data)
+                    ->view('admin-planners/product/03_category',"JQXGRID");
+                $this->smarty->display("admin-planners/00_template");
+            }else{
+                $this->smarty->display("admin-planners/01_login");
+            }
+        }
         function InitSetting(){
             $colModel=array(
                 array(  "display"       =>"Product ID"          ,"name"=>"ProductID"        ,"width"=>60        ,"sortable"=>true       ,"align"=>"center"      ,"hide"=>false      ,"filter"=>false),
@@ -50,6 +76,12 @@ class product extends CI_Controller  {
                 array(  "display"       =>"Delete"              ,"name"=>"Delete"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>true       ,"filter"=>false)
             );
             if(isset($_SESSION["ADP-USER"])){
+                if(!isset($_SESSION["productcategory"])){
+                    $data=$this->setting_model->getByKey("productcategory");
+                    if(isset($data[0])){
+                        $_SESSION["productcategory"]   =  objectToArray(@json_decode($data[0]->Value));
+                    }
+                }
                 if(!isset($_SESSION["admin-product-setting"])){
                     $data=$this->setting_model->getByKey("admin-product-settings");
                     if(isset($data[0])){
@@ -106,6 +138,41 @@ class product extends CI_Controller  {
                 $this->smarty->display("admin-planners/01_login");
             }
 	}
+        function addcategory(){
+            $Name=$_POST["Name"];
+            $Des=$_POST["Des"];
+            $dt=$_SESSION["productcategory"];
+            $dt[convertUrl($Name)]=array("Name"=>$Name,"Des"=>$Des);
+            $code=1;
+            $Params=array(
+                "Key"=>"productcategory",
+                "Name"=>"Category of Product",
+                "Type"=>"settings",
+                "Value"=>json_encode($dt)
+            );
+            if($this->setting_model->insert_onduplicate_update("productcategory",$Params)){
+                $_SESSION["productcategory"]=$dt;
+            }  
+            $msg="Categorys have been change.";
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        function delcategory(){
+            $Name=$_POST["Name"];
+            $dt=$_SESSION["productcategory"];
+            unset($dt[convertUrl($Name)]);
+            $code=1;
+            $Params=array(
+                "Key"=>"productcategory",
+                "Name"=>"Category of Product",
+                "Type"=>"settings",
+                "Value"=>json_encode($dt)
+            );
+            if($this->setting_model->insert_onduplicate_update("productcategory",$Params)){
+                $_SESSION["productcategory"]=$dt;
+            }
+            $msg="Categorys have been change.";
+            echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
         public function ChangeColumnDisplay(){
             
             $_SESSION["user-product-setting"]["colModel"][$_POST["col"]]=$_POST["hide"]==1?true:false;
