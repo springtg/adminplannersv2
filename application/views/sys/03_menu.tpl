@@ -3,14 +3,14 @@
     <li><span>Website</span>
         <ul class="l">
             <li><a href="{{base_url('admin-planners/settings/settings2')}}">Setting</a></li>
-            <li><a href="{{base_url('admin-planners/content')}}">Pages Content</a></li>
+            <li><a href="{{base_url('admin-planners/content/page')}}">Pages Content</a></li>
             
         </ul>
     </li>
     <li><span>Gallery</span>
         <ul class="l">
             <li><a href="{{base_url('admin-planners/video_climb')}}">Video</a></li>
-            <li><a href="{{base_url('admin-planners/slider')}}">Slider</a></li>
+            <li><a href="{{base_url('admin-planners/gallery/slider')}}">Slider</a></li>
             <li><a href="{{base_url('admin-planners/gallery')}}">Gallery</a></li>
         </ul>
     </li>

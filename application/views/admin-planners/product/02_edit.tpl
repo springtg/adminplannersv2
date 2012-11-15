@@ -13,6 +13,7 @@
                     <div class="pr10">
                         <input id="txtProductName" name="txtProductName" type="text"  class="classic-input w100pc"
                                value="{{if isset($Data["OBJ"])}}{{$Data["OBJ"]->ProductName|escape:'html'}}{{/if}}"
+                               onblur="getAlias()"
                                />
                     </div>
                 </td>

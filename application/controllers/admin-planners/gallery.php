@@ -102,12 +102,12 @@ class gallery extends CI_Controller  {
 	}
         public function ChangeColumnDisplay(){
             
-            $_SESSION["user-gallery-setting"]["colModel"][$_POST["col"]]=$_POST["hide"]==1?true:false;
+            $_SESSION["admin-gallery-setting"]["colModel"][$_POST["col"]]=$_POST["hide"]==1?true:false;
             $Params=array(
                 "Key"=>"admin-gallery-settings",
                 "Name"=>"admin-gallery-settings",
                 "Type"=>"settings",
-                "Value"=>json_encode($_SESSION["user-gallery-setting"])
+                "Value"=>json_encode($_SESSION["admin-gallery-setting"])
             );
             $this->setting_model->insert_onduplicate_update("admin-gallery-settings",$Params);
             $code=1;
@@ -131,12 +131,32 @@ class gallery extends CI_Controller  {
         function Edit(){
             $Data=null;
             if(isset($_POST["ID"])){
-                $pr=$this->my_model->get($_POST["ID"]);
-                if(count($pr)>0)$Data["OBJ"]=$pr[0];
+                $obj=$this->my_model->get($_POST["ID"]);
+                if(count($obj)>0)$Data["OBJ"]=$obj[0];
             }
             $this->smarty->assign('_SESSION', $_SESSION);
             $this->smarty->assign('Data', $Data);
             $this->smarty->display("admin-planners/gallery/02_gallery_detail");
+        }
+        function Slider(){
+            $Data=null;
+            $Data["tab_config"]["tabs"]=array(
+                "slider"   =>array(
+                    "display"=>"Slider"
+                    ,"link"=>  base_url("admin-planners/gallery/slider")
+                    )
+            );
+            $Data["tab_config"]["tabindex"]="slider";
+            $obj=$this->my_model->get(1);
+            if(count($obj)>0)$Data["OBJ"]=$obj[0];
+            $this->smarty->assign('_SESSION', $_SESSION);
+            $this->smarty->assign('Data', $Data);
+            if(isset($_SESSION["ADP-USER"])){
+                $this->smarty->view('admin-planners/gallery/03_slider',"JQXGRID");
+                $this->smarty->display("admin-planners/00_template");
+            }else{
+                $this->smarty->display("admin-planners/01_login");
+            }
         }
         function Save(){
             $vlows=array("\\\"","\\'");
@@ -158,7 +178,7 @@ class gallery extends CI_Controller  {
             }else{
                 
                 $Params=array(
-                    "Album"         =>$_POST["AlbumName"],
+                    "AlbumName"         =>$_POST["AlbumName"],
                     "Amount"        =>  count($_POST["Album"]),
                     "Images"        => json_encode($_POST["Album"]),
                     "Alias"         =>  convertUrl($_POST["AlbumName"]),

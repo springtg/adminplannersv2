@@ -53,7 +53,7 @@ class gallery_model extends FlexiGrid_Model {
             FROM `tbl_gallery`
             ";
         $configs["strWhere"]="
-            WHERE true
+            WHERE ID !=1
             ";
         if(isset($_SESSION["JQX-DEL-GAL"]) && $_SESSION["JQX-DEL-GAL"]==0){
             $configs["strWhere"].=" AND `tbl_gallery`.`Delete` IS NULL";
