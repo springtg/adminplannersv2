@@ -64,5 +64,5 @@
     </div>
     <div class="clear"></div>
 </div>
-<button class="green-button" onclick="FlexiGrid.CancelEdit();"><span>Back</span></button>
+<button class="gray-button" onclick="FlexiGrid.CancelEdit();"><span>Back</span></button>
 <button class="green-button" onclick="FlexiGrid.Save();"><span>Save</span></button>

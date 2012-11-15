@@ -98,12 +98,8 @@
             </tr>
         </table>
         <div>
-            <input type="button" class="classic-button" value="Back" onclick="Cancel();"/>
-            {{if isset($Data["row"])}}
-                <input type="button" class="classic-button" value="Update" onclick="Save();"/>
-            {{else}}
-                <input type="button" class="classic-button" value="Insert" onclick="Save();"/>
-            {{/if}}
+            <button class="gray-button" onclick="Cancel();"><span>Back</span></button>
+            <button class="green-button" onclick="Save();"><span>Save</span></button>
         </div>
     </div>
 {{else}}

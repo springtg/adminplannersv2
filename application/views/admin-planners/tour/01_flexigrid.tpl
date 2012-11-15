@@ -13,6 +13,10 @@
         Loadding...
     </div>
 </div>
+<div id="draggable" class="grid_12 pa l50pc" style="top: 4px;margin-left: -240px;display: none">
+    <div id="myNicPanel" class="grid_12"></div>
+
+</div>
 <ul id="FlexiGridMenu" class="contextMenu hidden">
     <li class="add"><a href="#add">Add</a></li>
     <li class="edit"><a href="#edit">Edit</a></li>
@@ -63,7 +67,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    var areaContent;
     var FlexiGrid=(function () {
         //Creating the demo window
         var ccontroller="tour";
@@ -167,7 +170,7 @@
                 searchitems : {{json_encode($Data["flexigrid_settings"]["filterModel"])}},
                 nomsg: 'No data to display',
                 usepager: true,
-                title: 'Product',
+                title: 'Tour',
                 useRp: true,
                 rp: 15,
                 showTableToggleBtn: true,
@@ -272,6 +275,7 @@
                 console.log("Add ↵ Call");
                 if(isrunning)return;
                 FlexiGrid.ShowDetail();
+                $("#draggable").css({display:"inline-block"});
                 htmlAjax("{{base_url()}}admin-planners/"+ccontroller+"/Edit", { }, $("#frmDetail"));
                 tab("edit");
             },
@@ -313,29 +317,40 @@
                 if(isrunning)return;
                 console.log("Edit:"+ID+" ↵ Call");
                 FlexiGrid.ShowDetail();
+                $("#draggable").css({display:"inline-block"});
                 htmlAjax("{{base_url()}}admin-planners/"+ccontroller+"/Edit", { ID : ID}, $("#frmDetail"));
                 tab("edit");
+                
             },
             CancelEdit:function (){
                 console.log("CancelEdit ↵ Call");
                 FlexiGrid.HideDetail();
                 tab(ccontroller);
+                $("#draggable").css({display:"none"});
                 removeEditorContent("txtContent");
+                removeEditorContent("txtPriceList");
+                
             },
             Save:function (){
                 if(isrunning)return;
                 console.log("Save ↵ Call");
-                var ID,Title,Thumb,Content;                                
+                var ID,Title,Thumb,Content,Type;                                
                 ID = $('#txtID').val();
                 Title = $('#txtTitle').val();
                 Thumb = $('#txtThumb').val();
-                Content = areaContent.instanceById('txtContent').getContent();//$('#txtContent').getCode();
+                Type = $('#cbxType').val();
+                Content     = myNicEditor.instanceById('txtContent').getContent();//$('#txtContent').getCode();
+                PriceList   = myNicEditor.instanceById('txtPriceList').getContent();
+                Conditions  = myNicEditor.instanceById('txtConditions').getContent();
                 var url="{{base_url()}}admin-planners/"+ccontroller+"/Save";
                 var data={
                     ID              :   ID,
+                    Type            :   Type,
                     Title           :   Title,
                     Thumb           :   Thumb,
-                    Content         :   Content
+                    Content         :   Content,
+                    PriceList       :   PriceList,
+                    Conditions      :   Conditions
                 }
                 //ShowNoticeDialogMessage($("<div />").text(Content).html());return;
                 console.log(data);
@@ -415,15 +430,15 @@
         $('#FlexiGrid').flexOptions({newp: 1}).flexReload();
         return false;
     });
-    function addEditorContent(ElementID){
-        if(!areaContent) {
-            areaContent = new nicEditor({fullPanel : true}).panelInstance(ElementID,{hasPanel : true});
-        }
+    var myNicEditor = new nicEditor();
+    myNicEditor.setPanel('myNicPanel');
+    function addInstance(ElementID){
+        myNicEditor.addInstance(ElementID);
     }
+    
     function removeEditorContent(ElementID){
-        if(areaContent) {
-            areaContent.removeInstance(ElementID);
-            areaContent = null;
+        if(myNicEditor) {
+            myNicEditor.removeInstance(ElementID);
         }
     }
     function UpdateItem(){
@@ -447,7 +462,7 @@
     }
     $(document).ready(function () {
         FlexiGrid.init();
-    
+        $( "#draggable" ).draggable();
+        
     });
-    
 </script>

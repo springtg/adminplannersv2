@@ -166,7 +166,7 @@
                 searchitems : {{json_encode($Data["flexigrid_settings"]["filterModel"])}},
                 nomsg: 'No data to display',
                 usepager: true,
-                title: 'Product',
+                title: 'Video',
                 useRp: true,
                 rp: 15,
                 showTableToggleBtn: true,

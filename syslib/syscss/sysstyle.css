@@ -36,7 +36,9 @@ img{border: none}
 .chooseimage_icon,#chooseimg{
     background: url(../../images/icon/16/pictures_folder_black.png) center no-repeat;
 }
-
+.more_icon{
+    background: url(../sysimages/16/stock_toggle-preview.png) center no-repeat;
+}
 .classic-button.icon.save{
     background-image: url('../sysimages/16/action_check.png');
     background-repeat: no-repeat;
