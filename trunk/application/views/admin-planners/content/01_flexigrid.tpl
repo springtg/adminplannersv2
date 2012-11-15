@@ -45,15 +45,15 @@
         <div class="grid_6" >
             <div class="displaySetings ml4 mr-1" style="border: 1px solid #ccc">
                 <div class="lh20 fwb pl12 mb4" style="background: #ddd">Tùy chỉnh hiện thị dữ liệu</div>
-                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-GAL"]==1}}cked{{/if}}" value="1">
+                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-CONTENT"]==1}}cked{{/if}}" value="1">
                     <div class="grid_x w14px mr12 ic" style="height: 14px;"></div>
                     <div class="grid_5 lh16 label">Hiện tất cả dữ liệu</div>
                 </div>
-                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-GAL"]==0}}cked{{/if}}" value="0">
+                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-CONTENT"]==0}}cked{{/if}}" value="0">
                     <div class="grid_x w14px mr12 ic " style="height: 14px;"></div>
                     <div class="grid_5 lh16 label">Ẩn dữ liệu đã xóa</div>
                 </div>
-                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-GAL"]==-1}}cked{{/if}}" value="-1">
+                <div class="grid_x pb4 ml4 radio {{if $_SESSION["JQX-DEL-CONTENT"]==-1}}cked{{/if}}" value="-1">
                     <div class="grid_x w14px mr12 ic" style="height: 14px;"></div>
                     <div class="grid_5 lh16 label">Chỉ hiện dữ liệu đã xóa</div>
                 </div>
@@ -66,7 +66,7 @@
     var areaContent;
     var FlexiGrid=(function () {
         //Creating the demo window
-        var ccontroller="gallery";
+        var ccontroller="content";
         function _createWindows() {
             console.log("createWindows ↵ Call");
         };
@@ -320,26 +320,24 @@
                 console.log("CancelEdit ↵ Call");
                 FlexiGrid.HideDetail();
                 tab(ccontroller);
+                removeEditorContent("txtContent");
             },
             Save:function (){
-                var AlbumItems =$("#AlbumItems img").map(function() {
-                    return $(this).attr("src");
-                });
                 if(isrunning)return;
                 console.log("Save ↵ Call");
-                var ID,AlbumName,Album;                                
+                var ID,Title,Thumb,Content;                                
                 ID = $('#txtID').val();
-                AlbumName = $('#txtAlbumName').val();
-                Album=new Array();
-                for(var i=0;i<AlbumItems.length;i++){
-                    Album[i]=AlbumItems[i];
-                }
+                Title = $('#txtTitle').val();
+                Thumb = $('#txtThumb').val();
+                Content = areaContent.instanceById('txtContent').getContent();//$('#txtContent').getCode();
                 var url="{{base_url()}}admin-planners/"+ccontroller+"/Save";
                 var data={
                     ID              :   ID,
-                    AlbumName       :   AlbumName,
-                    Album           :   Album
+                    Title           :   Title,
+                    Thumb           :   Thumb,
+                    Content         :   Content
                 }
+                //ShowNoticeDialogMessage($("<div />").text(Content).html());return;
                 console.log(data);
                 isrunning=true;
                 debugAjax(url,data,function(result){
@@ -417,49 +415,35 @@
         $('#FlexiGrid').flexOptions({newp: 1}).flexReload();
         return false;
     });
-    
+    function addEditorContent(ElementID){
+        if(!areaContent) {
+            areaContent = new nicEditor({fullPanel : true}).panelInstance(ElementID,{hasPanel : true});
+        }
+    }
+    function removeEditorContent(ElementID){
+        if(areaContent) {
+            areaContent.removeInstance(ElementID);
+            areaContent = null;
+        }
+    }
     function UpdateItem(){
     
     }
-    function AddAlbumItem(){
-        var AlbumItems =$("#AlbumItems");
-        var srcImg=$("#txtAddImage").val();
-        if(!_FcheckFilled(srcImg)){return}
-        var AlbumItem=
-        '<div class="AlbumItem grid_3 mb4 mt4 ml4 mr4" style="border: 1px solid #ddd">\
-            <div class="pt1 pb1 pl1 pr1">\
-                <h4 class="pl8 pt7 pb8 pr8 ovfh mt0 mb0 mr0 ml0" style="background: #d7d7d7;margin: 0">\
-                    Album item\
-                </h4>\
-                <div class="pa r8 t8">\
-                    <span style="cursor: pointer" onclick="DelAlbumItem(this)">Del</span>\
-                </div>\
-                <div class="pl8 pr8 pt8 pb8 mt0 mb0 ml0 mr0 ovfa">\
-                    <img class="w100pc" src="'+srcImg+'"/>\
-                </div>\
-            </div>\
-        </div>';
-        AlbumItems.append(AlbumItem);
-        $("#txtAddImage").val("")
-    }
-    function DelAlbumItem(obj){
-        $(obj).parents("div.AlbumItem").remove();
-    }
-    
-    function ShowAlbumInput(){
-        $("#txtAlbumName").show();
-        $("#AlbumName").hide();
-        $("#txtAlbumName").focus();
-    }
-    function HideAlbumInput(){
-        $("#txtAlbumName").hide();
-        $("#AlbumName").show();
-        if($("#txtAlbumName").val()==""){
-            $("#txtAlbumName").val("New Album");
-            $("#AlbumName").text("New Album");
-        }else{
-            $("#AlbumName").text($("#txtAlbumName").val());
-        }
+    function getAlias(){
+        var url=baseurl+"sys/excution/getAlias";
+        var data={
+            string:$("#txtTitle").val()
+        };
+        jqxAjax(url,data,function(result){
+            isrunning=false;
+            try{
+                if(result.code>=0){
+                    $("#txtAlias").val(result.msg);
+                }
+            }catch(err){
+                
+            }
+        });
     }
     $(document).ready(function () {
         FlexiGrid.init();

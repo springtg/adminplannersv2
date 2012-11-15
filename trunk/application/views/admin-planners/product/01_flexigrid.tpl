@@ -509,4 +509,20 @@
             AlbumItems.append(AlbumItem);
         });
     }
+    function getAlias(){
+        var url=baseurl+"sys/excution/getAlias";
+        var data={
+            string:$("#txtProductName").val()
+        };
+        jqxAjax(url,data,function(result){
+            isrunning=false;
+            try{
+                if(result.code>=0){
+                    $("#txtAlias").val(result.msg);
+                }
+            }catch(err){
+                
+            }
+        });
+    }
 </script>

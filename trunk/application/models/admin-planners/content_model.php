@@ -1,6 +1,6 @@
 <?php
 
-class content_model extends jqxGrid_CI_Model {
+class content_model extends FlexiGrid_Model {
 
     function __construct()
     {
@@ -66,7 +66,53 @@ class content_model extends jqxGrid_CI_Model {
         $this->init($configs);
         return $this->jqxBinding();
     }
-    
-    
+    function FlexiGridData(){
+        $configs["strQuery"]="
+            SELECT SQL_CALC_FOUND_ROWS `tbl_content`.*
+            FROM `tbl_content`
+            ";
+        $configs["strWhere"]="
+            WHERE Type='Page'
+            ";
+        if(isset($_SESSION["JQX-DEL-CONTENT"]) && $_SESSION["JQX-DEL-CONTENT"]==0){
+            $configs["strWhere"].=" AND `tbl_content`.`Delete` IS NULL";
+        }elseif(isset($_SESSION["JQX-DEL-CONTENT"]) && $_SESSION["JQX-DEL-CONTENT"]==-1){
+            $configs["strWhere"].=" AND `tbl_content`.`Delete` IS NOT NULL";
+        }
+        $configs["strOrderBy"]=" ORDER BY `Insert` DESC";
+        $configs["fields"]=array(
+            "ID"=>"ID",
+            );
+        $configs["filterfields"]=array(
+            "Title"=>"Title",
+            "Alias"=>"Alias"
+        );
+        $this->init($configs);
+        return $this->Binding();
+    }
+    function FlexiGridData_Tour(){
+        $configs["strQuery"]="
+            SELECT SQL_CALC_FOUND_ROWS `tbl_content`.*
+            FROM `tbl_content`
+            ";
+        $configs["strWhere"]="
+            WHERE Type='Tour'
+            ";
+        if(isset($_SESSION["JQX-DEL-TOUR"]) && $_SESSION["JQX-DEL-TOUR"]==0){
+            $configs["strWhere"].=" AND `tbl_content`.`Delete` IS NULL";
+        }elseif(isset($_SESSION["JQX-DEL-TOUR"]) && $_SESSION["JQX-DEL-TOUR"]==-1){
+            $configs["strWhere"].=" AND `tbl_content`.`Delete` IS NOT NULL";
+        }
+        $configs["strOrderBy"]=" ORDER BY `Insert` DESC";
+        $configs["fields"]=array(
+            "ID"=>"ID",
+            );
+        $configs["filterfields"]=array(
+            "Title"=>"Title",
+            "Alias"=>"Alias"
+        );
+        $this->init($configs);
+        return $this->Binding();
+    }
 }
 ?>
