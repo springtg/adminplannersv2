@@ -23,7 +23,7 @@
             <li><a href="">Administrator</a></li>
         </ul>
     </li>
-    <li><a href="">Orders</a></li>
+    <li><a href="{{base_url('admin-planners/orders')}}">Orders</a></li>
     <li><a href="">Report</a></li>
     <li><a href="">Chart</a></li>
     <li><a href="">Class</a></li>
@@ -33,7 +33,7 @@
     {{if isset($_SESSION["ADP-USER"])}}
         <li class="fr"><a href="">User Manage</a></li>
         <li><a href="">Settings</a></li>
-        <li><a class="user" href="">{{$_SESSION["ADP-USER"]["Name"]}}</a>
+        <li><span class="user">{{$_SESSION["ADP-USER"]["Name"]}}</span>
             <ul class="r">
                 <li><a href="">My Account</a></li>
                 <li><a href="{{base_url('admin-planners/authority/MyAuthority')}}">My Authority</a></li>

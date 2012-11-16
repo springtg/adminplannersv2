@@ -44,7 +44,7 @@
     </div>
 </span>
 
-<div style="min-width: 960px">
+<div style="min-width: 960px;max-width: 1280px">
     <div class="syshead">
         {{include file='../sys/03_menu.tpl'}}
     </div>
@@ -76,7 +76,7 @@
     <div>
         <div class="pr" style="width: 50%;display: inline-block;float: left">
             <div class="pl20 pr20 pt12 pb12">
-                <b>Admin Planners 2.0</b><br/>
+                <b>Admin Planners 1.02</b><br/>
                 <span style="font-weight: normal">Được xây dựng và phát triển bởi <a href="javascript:$('.about-box').show();"><b>Mr. Khuong</b></a></span>
             </div>
             <div class="jfk-bubble jfk-bubble-promo grayc about-box hidden" 
@@ -101,7 +101,7 @@
             <div class="pl20 pr20 pt12 pb12">
                 Được tích hợp các control  <br/> 
                 Bộ control <a href="http://www.jqwidgets.com" target="_blank"><b>jqxWidget</b></a>  
-                Editer -    <a href="http://www.tinymce.com/" target="_blank"><b>tinyMCE</b></a> , 
+                Editor -    <a href="http://www.tinymce.com/" target="_blank"><b>tinyMCE</b></a> , 
                 File Manage - <a href="http://ckfinder.com/" target="_blank"><b>CKFinder</b></a>.
             </div>
         </div>
