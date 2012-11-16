@@ -48,12 +48,17 @@ class tour extends CI_Controller  {
                     $data=$this->setting_model->getByKey("tourtype");
                     if(isset($data[0])){
                         $_SESSION["tourtype"]   =  objectToArray(@json_decode($data[0]->Value));
+                    }else{
+                        $_SESSION["tourtype"] =array();
                     }
                 }
                 if(!isset($_SESSION["admin-TOUR-setting"])){
                     $data=$this->setting_model->getByKey("admin-TOUR-settings");
                     if(isset($data[0])){
                         $_SESSION["admin-TOUR-setting"]   =  objectToArray(@json_decode($data[0]->Value));
+                    }
+                    else{
+                        $_SESSION["admin-TOUR-setting"]["colModel"]=array();
                     }
                 }
                 if(isset($_SESSION["admin-TOUR-setting"]["colModel"])){

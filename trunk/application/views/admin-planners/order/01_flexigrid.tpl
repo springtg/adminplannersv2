@@ -11,14 +11,15 @@
     </div>
 </div>
 <ul id="FlexiGridMenu" class="contextMenu hidden">
-    <li class="add"><a href="#add">Add</a></li>
-    <li class="edit"><a href="#edit">Edit</a></li>
+    <li class="edit"><a href="#edit">Detail</a></li>
     <li class="delete"><a href="#delete">Delete</a></li>
     <li class="restore"><a href="#restore">Restore</a></li>
     <li class="status separator more"><a href="#status">Status</a>
         <ul>
-            <li class="private"><a href="#private">Private</a></li>
-            <li class="public"><a href="#public">Public</a></li>
+            <li class="Newly">      <a href="#Newly">   <font color="green">    New</font></a></li>
+            <li class="Shipping">   <a href="#Shipping"><font color="orange">   Shipping</font></a></li>
+            <li class="Finished">     <a href="#Finished">  <font color="blue">     Finish</font></a></li>
+            <li class="Canceled">     <a href="#Canceled">  <font color="red">      Cancel</font></a></li>
         </ul>
     </li>
     <li class="quit separator"><a href="#quit">Quit</a></li>
@@ -130,17 +131,25 @@
                                 console.log("Content menu : Restore\tID:"+ID+" ↵ Call");
                                 FlexiGrid.Restore(ID);
                                 break;
-                            case "public":
-                                console.log("Content menu : Public\tID:"+ID+" ↵ Call");
-                                FlexiGrid.ChangeStatus(ID,"Public");
+                            case "Newly":
+                                console.log("Content menu : Newly\tID:"+ID+" ↵ Call");
+                                FlexiGrid.ChangeStatus(ID,"Newly");
                                 break;
-                            case "private":
-                                console.log("Content menu : Private\tID:"+ID+" ↵ Call");
-                                FlexiGrid.ChangeStatus(ID,"Private");
+                            case "Shipping":
+                                console.log("Content menu : Shipping\tID:"+ID+" ↵ Call");
+                                FlexiGrid.ChangeStatus(ID,"Shipping");
+                                break;
+                            case "Finished":
+                                console.log("Content menu : Finished\tID:"+ID+" ↵ Call");
+                                FlexiGrid.ChangeStatus(ID,"Finished");
+                                break;
+                            case "Canceled":
+                                console.log("Content menu : Canceled\tID:"+ID+" ↵ Call");
+                                FlexiGrid.ChangeStatus(ID,"Canceled");
                                 break;
                         }
                     }else{
-                        ShowNoticeDialogMessage("Không hỗ trợ contact menu với nhiều item được chọn.<br/>Vui lòng chỉ chọn 1 item.");
+                        ShowNoticeDialogMessage("Sorry. We dont support multi selected item");
                     }
                 });
             }
@@ -164,7 +173,7 @@
                 usepager: true,
                 title: 'Order',
                 useRp: true,
-                rp: 15,
+                rp: 20,
                 showTableToggleBtn: true,
                 showToggleBtn: false,
                 width: $("#frmFlexiGrid").width(),//960,
@@ -178,16 +187,13 @@
                 onRowSelect: function (row, data) { 
                     $('#FlexiGridMenu').enableContextMenuItems();
                     $('#FlexiGridMenu').showContextMenuItems();
-                    if(data.Lock==1){ $('#FlexiGridMenu').disableContextMenuItems('#edit,#delete,#restore,#status,#public,#private'); }
+                    if(data.Paypal=="Paypal"){ $('#FlexiGridMenu').disableContextMenuItems('#delete,#restore,#status'); }
                     else{ 
                         try{
                             if(data.Delete.trim()!=""){ $('#FlexiGridMenu').hideContextMenuItems('#delete,#status') }
                             else if(data.Delete.trim()==""){ $('#FlexiGridMenu').hideContextMenuItems('#restore') }
                         }catch(e){ }
-                        try{
-                            if(data.Status.trim()=="Public"){ $('#FlexiGridMenu').disableContextMenuItems('#public') }
-                            else if(data.Status.trim()=="Private"){ $('#FlexiGridMenu').disableContextMenuItems('#private') }
-                        }catch(e){ }
+                        
                     }
                 } 
             });

@@ -169,7 +169,7 @@
                 usepager: true,
                 title: 'Product',
                 useRp: true,
-                rp: 15,
+                rp: 20,
                 showTableToggleBtn: true,
                 showToggleBtn: false,
                 width: $("#frmFlexiGrid").width(),//960,

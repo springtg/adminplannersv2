@@ -17,7 +17,7 @@
         position: relative;
 }
 
-.contextMenu A ,.contextMenu LI:hover UL LI A,.contextMenu LI:hover  LI A{
+.contextMenu A ,.contextMenu LI:hover UL LI A,.contextMenu LI:hover  LI A,.contextMenu SPAN ,.contextMenu LI:hover UL LI SPAN,.contextMenu LI:hover  LI SPAN{
 	color: #333;
 	text-decoration: none;
 	display: block;
@@ -30,17 +30,17 @@
 	padding-left: 28px;
 }
 
-.contextMenu LI.hover A,.contextMenu LI:hover UL LI:hover A {
+.contextMenu LI.hover A,.contextMenu LI:hover UL LI:hover A,.contextMenu LI.hover SPAN,.contextMenu LI:hover UL LI:hover SPAN {
 	color: #FFF;
 	background-color: #3399FF;
 }
 
-.contextMenu LI.disabled A {
+.contextMenu LI.disabled A ,.contextMenu LI.disabled SPAN{
 	color: #AAA;
 	cursor: default;
 }
 
-.contextMenu LI.hover.disabled A {
+.contextMenu LI.hover.disabled A,.contextMenu LI.hover.disabled SPAN {
 	background-color: transparent;
 }
 .contextMenu LI.more{background: url('images/tab_right.png') no-repeat center right}
@@ -62,11 +62,11 @@
 .contextMenu LI.paste   A { background-image: url(images/page_white_paste.png); }
 .contextMenu LI.delete  A { background-image: url(images/page_white_delete.png); }
 .contextMenu LI.restore A { background-image: url(images/page_white_delete.png); }
-.contextMenu LI.status  A { background-image: url(../sysimages/16/switch_arrow.png); }
+.contextMenu LI.status  A ,.contextMenu LI.status  SPAN{ background-image: url(../sysimages/16/switch_arrow.png); }
 .contextMenu LI.public  A,.contextMenu LI.status LI.public  A { background-image: url(../sysimages/16/unlock_green.png); }
 .contextMenu LI.private A,.contextMenu LI.status LI.private  A { background-image: url(../sysimages/16/lock_red.png); }
 .contextMenu LI.quit    A { background-image: url(images/door.png); }
 .contextMenu LI UL{display: none;position: absolute;top: 4px;left: 112px;width: 120px;}
 .contextMenu LI.disabled:hover UL{display: none}
 .contextMenu LI:hover UL{display: block}
-.contextMenu LI:hover LI A{background: none}
+.contextMenu LI:hover LI A,.contextMenu LI:hover LI SPAN{background: none}

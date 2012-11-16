@@ -34,6 +34,7 @@ class orders extends CI_Controller  {
         function InitSetting(){
             $colModel=array(
                 array(  "display"       =>"Order ID"            ,"name"=>"OrderID"          ,"width"=> 80       ,"sortable"=>true       ,"align"=>"center"      ,"hide"=>false      ,"filter"=>true),
+                array(  "display"       =>"Type"                ,"name"=>"Paypal"           ,"width"=> 80       ,"sortable"=>true       ,"align"=>"left"      ,"hide"=>false      ,"filter"=>false),
                 array(  "display"       =>"Customer ID"         ,"name"=>"CustomerID"       ,"width"=> 80       ,"sortable"=>true       ,"align"=>"center"      ,"hide"=>false      ,"filter"=>true ),
                 array(  "display"       =>"Customer Name"       ,"name"=>"CustomerName"     ,"width"=>180       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>true ),
                 array(  "display"       =>"Order Date"          ,"name"=>"OrderDate"        ,"width"=>100       ,"sortable"=>true       ,"align"=>"left"        ,"hide"=>false      ,"filter"=>false),
@@ -57,7 +58,7 @@ class orders extends CI_Controller  {
                         $_SESSION["admin-order-setting"]   =  objectToArray(@json_decode($data[0]->Value));
 
                     }else{
-                        $_SESSION["admin-order-setting"]["colModel"]=$colModel;
+                        $_SESSION["admin-order-setting"]["colModel"]=array();
                     }
                 }
                 $setting= $_SESSION["admin-order-setting"]["colModel"];
@@ -108,7 +109,7 @@ class orders extends CI_Controller  {
         
         public function ChangeColumnDisplay(){
             
-            $_SESSION["user-order-setting"]["colModel"][$_POST["col"]]=$_POST["hide"]==1?true:false;
+            $_SESSION["admin-order-setting"]["colModel"][$_POST["col"]]=$_POST["hide"]==1?true:false;
             $Params=array(
                 "Key"=>"admin-order-settings",
                 "Name"=>"admin-order-settings",
@@ -122,7 +123,7 @@ class orders extends CI_Controller  {
         }
         public function ChangeDeleteDisplay(){
             ChangeDisplay("JQX-DEL-ORDER", $_POST["showDelete"]);
-            $_SESSION["user-order-setting"]["display"]=$_POST["showDelete"];
+            $_SESSION["admin-order-setting"]["display"]=$_POST["showDelete"];
             $Params=array(
                 "Key"=>"admin-order-settings",
                 "Name"=>"admin-order-settings",
@@ -215,7 +216,8 @@ class orders extends CI_Controller  {
                                 'Status'            =>$row->Status,
                                 'Insert'            =>$row->Insert,
                                 'Update'            =>$row->Update,
-                                'Delete'            =>$row->Delete
+                                'Delete'            =>$row->Delete,
+                                'Paypal'            =>$row->Paypal
                             ),
                     );
                     $jsonData['rows'][] = $entry;

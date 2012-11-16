@@ -269,7 +269,7 @@ ul.sysnav li a,ul.sysnav li span{
 }
 ul.sysnav li{}
 ul.sysnav li:hover{background: #CCC}
-ul.sysnav li a.user{
+ul.sysnav li .user{
     background: url(../sysimg/bg-user-icon.png) no-repeat left center;padding-left: 44px}
 tt {
 background-color: #DEEAC9;

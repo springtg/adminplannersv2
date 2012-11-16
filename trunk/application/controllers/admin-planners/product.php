@@ -80,13 +80,16 @@ class product extends CI_Controller  {
                     $data=$this->setting_model->getByKey("productcategory");
                     if(isset($data[0])){
                         $_SESSION["productcategory"]   =  objectToArray(@json_decode($data[0]->Value));
+                    }else{
+                        $_SESSION["productcategory"]=array();
                     }
                 }
                 if(!isset($_SESSION["admin-product-setting"])){
                     $data=$this->setting_model->getByKey("admin-product-settings");
                     if(isset($data[0])){
                         $_SESSION["admin-product-setting"]   =  objectToArray(@json_decode($data[0]->Value));
-
+                    }else{
+                        $_SESSION["admin-product-setting"]["colModel"]=array();
                     }
                 }
                 $setting= $_SESSION["admin-product-setting"]["colModel"];
@@ -175,7 +178,7 @@ class product extends CI_Controller  {
         }
         public function ChangeColumnDisplay(){
             
-            $_SESSION["user-product-setting"]["colModel"][$_POST["col"]]=$_POST["hide"]==1?true:false;
+            $_SESSION["admin-product-setting"]["colModel"][$_POST["col"]]=$_POST["hide"]==1?true:false;
             $Params=array(
                 "Key"=>"admin-product-settings",
                 "Name"=>"admin-product-settings",
@@ -189,7 +192,7 @@ class product extends CI_Controller  {
         }
         public function ChangeDeleteDisplay(){
             ChangeDisplay("JQX-DEL-PRO", $_POST["showDelete"]);
-            $_SESSION["user-product-setting"]["display"]=$_POST["showDelete"];
+            $_SESSION["admin-product-setting"]["display"]=$_POST["showDelete"];
             $Params=array(
                 "Key"=>"admin-product-settings",
                 "Name"=>"admin-product-settings",
