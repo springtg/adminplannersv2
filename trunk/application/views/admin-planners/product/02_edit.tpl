@@ -57,7 +57,7 @@
                         {{if isset($_SESSION["productcategory"])}}
                             {{foreach $_SESSION["productcategory"] as $k=>$v}}
                                 <option 
-                                    {{if $v["Name"]==$Data["OBJ"]->Categorys}}selected=1{{/if}}
+                                    {{if isset($Data["OBJ"])}}{{if $v["Name"]==$Data["OBJ"]->Categorys}}selected=1{{/if}}{{/if}}
                                     value="{{$v["Name"]}}">{{$v["Name"]}}</option>
                             {{/foreach}}
                         {{/if}}

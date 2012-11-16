@@ -38,7 +38,7 @@
                             {{if isset($_SESSION["tourtype"])}}
                             {{foreach $_SESSION["tourtype"] as $k=>$v}}
                                 <option 
-                                    {{if $v["Name"]==$Data["OBJ"]->Type}}selected=1{{/if}}
+                                    {{if isset($Data["OBJ"])}}{{if $v["Name"]==$Data["OBJ"]->Type}}selected=1{{/if}}{{/if}}
                                     value="{{$v["Name"]|escape:'html'}}">{{$v["Name"]|escape:'html'}}</option>
                             {{/foreach}}
                             {{/if}}
