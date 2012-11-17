@@ -38,6 +38,7 @@
                     {{/for}}
                     <div class="clear"></div>
                 </div>
+                <div class="clear"></div>
             </div>
         </div>
         <div class="grid_6" >
