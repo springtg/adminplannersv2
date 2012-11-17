@@ -8,8 +8,15 @@ class order_model extends FlexiGrid_Model {
         
     }
     function get($ID=""){
-        $where=array("OrderID"=>$ID);
-        $query=$this->db->get_where('dtb_orders', $where); 
+        $query = $this->db->query("
+            SELECT dtb_orders.*,dtb_customer.CustomerName,dtb_product.ProductName
+                ,dtb_product.ProductID,dtb_order_details.UnitPrice,dtb_order_details.Quantity,dtb_order_details.Discount
+            FROM dtb_orders
+                INNER JOIN dtb_order_details ON ( dtb_orders.OrderID = dtb_order_details.OrderID )
+                    INNER JOIN dtb_product ON ( dtb_order_details.ProductID = dtb_product.ProductID )
+                INNER JOIN dtb_customer ON ( dtb_orders.CustomerID = dtb_customer.CustomerID )
+            WHERE dtb_orders.OrderID = '$ID'
+        ");
         return $query->result();
     }
     function gets(){

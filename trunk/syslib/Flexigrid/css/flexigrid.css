@@ -641,5 +641,8 @@ div.pGroup {
 .flexigrid div.fbutton .search {
 	background: url('../../sysimages/16/toolbar_find.png') no-repeat center left;
 }
+.flexigrid div.fbutton .detail {
+	background: url('../../sysimages/16/text_list_bullets.png') no-repeat center left;
+}
 .flexigrid div.fbutton span.disabled{display: none}
 .flexigrid{display: inline-block;}
