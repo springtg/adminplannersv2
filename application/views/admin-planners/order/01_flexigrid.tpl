@@ -117,7 +117,7 @@
                         switch(action){
                             case "add":
                                 console.log("Content menu : Add\tID:"+ID+" ↵ Call");
-                                FlexiGrid.Add();
+                                FlexiGrid.FlexiGridDetail();
                                 break;
                             case "edit":
                                 console.log("Content menu : Edit\tID:"+ID+" ↵ Call");
@@ -163,6 +163,7 @@
                 dataType: 'json',
                 colModel : {{json_encode($Data["flexigrid_settings"]["colModel"])}},
                 buttons : [
+                    {name: 'Detail'     , bclass: 'detail'  , onpress : FlexiGrid.FlexiGridDetail},
                     {name: 'Delete'     , bclass: 'delete'  , onpress : FlexiGrid.FlexiGridDelete},
                     {separator: true},
                     {name: 'Search'     , bclass: 'search'  , onpress : FlexiGrid.Filter },
@@ -286,8 +287,22 @@
                 //console.log("FlexiGridAdd ↵ Call");
                 FlexiGrid.Add();
             },
-            FlexiGridEdit:function(com,grid){
+            FlexiGridDetail:function(){
+                //console.log("FlexiGridAdd ↵ Call");
+                if(isrunning)return;
+                var items = $('.trSelected');
+                if(items.length==1){
+                    ID = items[0].id.substr(3);
+                    FlexiGrid.Edit(ID);
+                }else{
+                    ShowNoticeDialogMessage("Hãy chọn một(chỉ một) dòng cần xem.");
+                }
                 
+            },
+            FlexiGridEdit:function(com,grid){
+                FlexiGrid.ShowDetail();
+                htmlAjax("{{base_url()}}admin-planners/"+ccontroller+"/Edit", { }, $("#frmDetail"));
+                tab("edit");
             },
             FlexiGridDelete:function(com,grid){
                 console.log("FlexiGridDelete ↵ Call");
@@ -300,10 +315,15 @@
                 }
             },
             Edit:function (ID){
-                
+                console.log("FlexiGridEdit ↵ Call");
+                FlexiGrid.ShowDetail();
+                htmlAjax("{{base_url()}}admin-planners/"+ccontroller+"/Edit", {ID:ID }, $("#frmDetail"));
+                tab("edit");
             },
             CancelEdit:function (){
-                
+                console.log("CancelEdit ↵ Call");
+                FlexiGrid.HideDetail();
+                tab(ccontroller);
             },
             Save:function (){
                 

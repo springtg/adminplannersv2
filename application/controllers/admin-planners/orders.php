@@ -78,6 +78,10 @@ class orders extends CI_Controller  {
                 "orders"   =>array(
                     "display"=>"Orders"
                     ,"link"=>  base_url("admin-planners/orders")
+                    ),
+                "edit"   =>array(
+                    "display"=>"Order Details"
+                    ,"link"=>  "javascript:FlexiGrid.ShowDetail();"
                     )
             );
             $Data["tab_config"]["tabindex"]="orders";
@@ -92,15 +96,13 @@ class orders extends CI_Controller  {
                 "Type"=>"settings",
                 "Value"=>json_encode($Data["admin-order-settings"])
             );
-            //$exists = $this->db->select("ID")->where("ID", 10)->get()->row_array();
-            $this->setting_model->insert_onduplicate_update("admin-order-settings",$Params);
-            //$this->setting_model->insert($Params);
-            $Data["flexigrid_settings"]["filterModel"]=filterModel($Data["flexigrid_settings"]["colModel"]);
-            
-            $this->smarty->assign('_SESSION', $_SESSION);
-            $this->smarty->assign('Data', $Data);
+            $Data["flexigrid_settings"]["filterModel"]=filterModel($Data["flexigrid_settings"]["colModel"]);     
             if(isset($_SESSION["ADP-USER"])){
-                $this->smarty->view('admin-planners/order/01_flexigrid',"JQXGRID");
+                //$this->setting_model->insert_onduplicate_update("admin-order-settings",$Params);
+                $this->smarty
+                        ->assign('_SESSION', $_SESSION)
+                        ->assign('Data', $Data)
+                        ->view('admin-planners/order/01_flexigrid',"JQXGRID");
                 $this->smarty->display("admin-planners/00_template");
             }else{
                 $this->smarty->display("admin-planners/01_login");
@@ -134,6 +136,17 @@ class orders extends CI_Controller  {
             $code=1;
             $msg="Data display have been change.";
             echo json_encode(array("code"=>$code,"msg"=>$msg));
+        }
+        function Edit(){
+            $Data=null;
+            
+            if(isset($_POST["ID"])){
+                $pr=$this->my_model->get($_POST["ID"]);
+                if(count($pr)>0)$Data["OBJ"]=$pr;
+            }
+            $this->smarty->assign('_SESSION', $_SESSION);
+            $this->smarty->assign('Data', $Data);
+            $this->smarty->display("admin-planners/order/02_edit");
         }
         public function Delete(){
             if(isset($_POST["ID"])){

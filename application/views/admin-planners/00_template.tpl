@@ -44,7 +44,7 @@
     </div>
 </span>
 
-<div style="min-width: 960px;max-width: 1280px">
+<div style="min-width: 960px;max-width: 100%">
     <div class="syshead">
         {{include file='../sys/03_menu.tpl'}}
     </div>
