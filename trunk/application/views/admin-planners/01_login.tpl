@@ -94,7 +94,70 @@
                 $('#ngaokiem').dialog({ dialogClass: 'MyPopup' ,minWidth:320,resizable: false});
                 $(".MyPopup.ui-dialog").draggable('option',{ handle: "h4" });
             });
-            
+            function MyPopup(ElementID,Config){
+                this.icon='';
+                if(Config && Config.icon){
+                    this.icon = '<img style="width: 36px;height: 36px;position: absolute;top: 1px;left: 1px" src="'+Config.icon+'"/>';
+                }
+                if(Config && Config.fcolor){
+                    this.fcolor = Config.fcolor;
+                }
+                if(Config && Config.scolor){
+                    this.scolor = Config.scolor;
+                }
+                this.width=320;
+                if(Config && Config.width){
+                    this.width = Config.width;
+                }
+                
+                if(!document.getElementById("MyPopup_"+ElementID)){
+                    console.log("new");
+                    var divTag = document.createElement("div"); 
+                    divTag.style.display="none";
+                    divTag.innerHTML =
+                    '<div id="MyPopup_'+ElementID+'" style="border: 1px solid #F1D15F;width: '+this.width+'px;display: inline;float: left;position: relative;text-align:left">\
+                        <div style="position: relative;padding: 1px">\
+                            <h4 style="background: #F1D15F;padding: 11px 20px 12px 40px;margin: 0;overflow: hidden">Đăng nhập!</h4>\
+                            '+this.icon+'\
+                            <div class="bubble-closebtn" onclick="$.unblockUI();"></div>\
+                        </div>\
+                        <div class="popContent" style="padding: 20px">\
+                        </div>\
+                        <div style="padding: 0 20px 0 20px;text-align: center">\
+                            <button type="button" onclick="b();" class="orange-button"><span>Login</span></button>\
+                        </div>\
+                        <div style="padding: 0 20px 20px 20px">\
+                            <span class="error">\
+                            </span>\
+                        </div>\
+                    </div>';
+                    document.body.appendChild(divTag);
+                    $("#"+ElementID).appendTo($("#MyPopup_"+ElementID+" .popContent"));
+                }
+                var popup=document.getElementById("MyPopup_"+ElementID);
+                var w=320;
+                this.open=function(){
+                    var h=document.getElementById("MyPopup_"+ElementID).offsetHeight;
+                    console.log(w);
+                    $.blockUI({ 
+                        message:popup
+                        ,css: { 
+                            border: 'none'
+                            ,backgroundColor:'#fff'
+                            ,width:w
+                            ,left:'50%'
+                            ,top:'200px'
+                            ,margin:'-'+(h/2)+'px 0 0 -'+(w/2)+'px'
+                        }
+                        ,centerY:true
+                        ,centerX:true
+                    });
+                //$(".blue-button").appendTo($("#ngaokiem .popContent"));
+                }
+                this.close=function(){
+                    $.unblockUI();
+                }
+            }
         </script>
         <div id="ngaokiem" style="border: 1px solid #F1D15F;width: 320px;display: inline;float: left;padding: 0;margin: 0">
             <div style="position: absolute;padding: 1px;top: 0;left: 0;right: 0;">
