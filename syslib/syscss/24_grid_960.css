@@ -1162,3 +1162,22 @@ p,pre{margin: 0;line-height: 16px}
 }
 .gray-button:hover{background-color: #ababab}
 .gray-button:active{top: 1px}
+.orange-button{
+    color: white;
+    background-color: #F1B55F;
+    border: 1px solid white;
+    outline: 1px solid #F1D15F;
+    text-decoration: none;
+    padding-top: 3px; 
+    padding-bottom: 4px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 11px;
+    position: relative;
+}
+.orange-button:hover{background-color: #FFB851}
+.orange-button:active{top: 1px}
+.bubble-closebtn{
+    background:url("https://ssl.gstatic.com/ui/v1/icons/common/x_8px.png") no-repeat;
+    height:21px;opacity:.4;outline:0;position:absolute;right:4px;top:8px;width:21px}
+.bubble-closebtn:focus,.bubble-closebtn:hover{opacity:1}

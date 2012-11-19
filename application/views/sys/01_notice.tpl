@@ -58,21 +58,25 @@
     <div id="notice-dialog-message" title="Notice !"></div>
     <div id="confirm-dialog-message" title="Confirm !"></div>
 </span>
+<div id="loaddingAjax" style="position: fixed;bottom: 1px;left: 0;right:0;border: 1px solid white;z-index: 9999;display: none;
+outline: 1px solid #7A991A;">
+    <div class="proccessbar" style="height: 2px;width: 48%;background: red"></div>
+</div>
 <script>
     var isrunning=false,baseurl="{{base_url()}}";
     function ShowLoadding(){
-        $("#loadding-dialog").dialog({ 
-            headerVisible: false ,
-            closeOnEscape       : false,
-            dialogClass: 'no-close',
-            resizable: false,
-            height: 60,
-            //width: 160,
-            open                : function() { $("#loadding-dialog").hide(); }   
-        });
+        $("#loaddingAjax").show();
+        $("#loaddingAjax .proccessbar").stop(true).width(0).css({backgroundColor:"green",bottom:1})
+            .animate({width:'30%'},200)
+            .animate({width:'50%',backgroundColor:"blue"},500)
+            .animate({width:'75%',backgroundColor:"orange"},2000)
+            .animate({width:'95%',backgroundColor:"red"},5000);
     }
     function HideLoadding(){
-        $("#loadding-dialog").dialog( "close" );
+        $("#loaddingAjax .proccessbar").stop(true)
+        .animate({width:'100%',backgroundColor:"red"},500,function(){$("#loaddingAjax").hide();});
+        
+        
     }
     //--------------------------------------------------------------------------
     function ConfirmDialogMessage (confirm,title, callback) {
@@ -258,7 +262,8 @@
         obj.dialog({
             modal: true,
             //autoOpen            : false,
-            minwidth      :240,
+            minwidth      :320,
+            resizable: false,
             width      :'auto',
             title: title==undefined?"Notice message !":title,
             closeOnEscape       : false,
