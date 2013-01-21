@@ -13,7 +13,10 @@
 <div id="navigation">
     <div id="about" class="fade"><a href="{{base_url("about")}}"></a></div>
     <div id="story" class="fade"><a href="{{base_url("stories")}}"></a></div>
-    <div id="home"><a href="{{base_url("home")}}"></a></div>
+    <div id="home">
+        <a href="{{base_url("home")}}">
+            <img src="http://readtomychild.com.au/css_video/img/logo.png"/>
+        </a></div>
     <div id="request" class="fade"><a href="{{base_url("request")}}"></a></div>
     <div id="contact" class="fade"><a href="{{base_url("contact")}}"></a></div>
     <div class="clear"></div>
