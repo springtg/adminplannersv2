@@ -92,6 +92,9 @@
         </div>
     {{/if}}
     <div class="clear"></div>
+    <!-- Phần thêm vào -->
+        <div id="copyright-banner"><img src="http://readtomychild.com.au/css_video/img/copyright-banner.png" alt="copyright" /></div>
+    <!-- Phần thêm vào -->
     <div id="page">
         {{if $Data["PageIndex"]>1}}
             <a href="{{base_url()}}video/stories/page/{{$Data["PageIndex"]-1}}" class="page-previous"></a>

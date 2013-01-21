@@ -29,7 +29,6 @@ class video extends CI_Controller  {
             $this->load->model('admin-planners/log_model','log_model');
             $this->load->model('admin-planners/youtube','youtube');
             if(!isset($_SESSION["JQX-DEL-VIDEO"]))$_SESSION["JQX-DEL-VIDEO"]=0;
-            $this->load->model('admin-planners/setting_model','setting_model');
             include APPPATH . 'libraries/defu.php';
             $this->InitSetting();
         }
@@ -223,7 +222,8 @@ class video extends CI_Controller  {
                     "Source"=>$Params["Source"],
                     "Tag"=>$Params["Tag"],
                     "Embel"=>$Params["Embel"],
-                    "Length"=>$Params["Length"]
+                    "Length"=>$Params["Length"],
+                    "LinkForBook"=>$Params["LinkForBook"]
                 );
                 //$VideoParams["Embel"]=  str_replace($vlows, $vals,$_REQUEST["Params"]["Embel"]);
                 //echo"<pre>";print_r($VideoParams);echo"</pre>";return;

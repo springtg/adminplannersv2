@@ -70,6 +70,15 @@
             </td>
         </tr>
         <tr>
+            <td class="w100">Link for the book</td>
+            <td colspan="3">
+                <div class="pr10">
+                    <input type="text" id="LinkForBook" class="classic-input w100pc"
+                           value="{{if isset($Data["video"])}}{{$Data["video"]["LinkForBook"]}}{{/if}}"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
             <td class="w100">Category</td>
             <td colspan="3">
                 <div class="Categorys">

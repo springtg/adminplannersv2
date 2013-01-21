@@ -89,10 +89,10 @@
             }
             $(document).ready(function() {
                 $(".blue-button").click(function(){alert(0);});
-                //var p1=new MyPopup('abc');
-                //p1.open();
-                $('#ngaokiem').dialog({ dialogClass: 'MyPopup' ,minWidth:320,resizable: false});
-                $(".MyPopup.ui-dialog").draggable('option',{ handle: "h4" });
+                var p1=new MyPopup('abc',{ icon:'http://ngaokiem.net/templates/jv_ngaokiem_v4/images/logo.png' });
+                p1.open();
+                //$('#ngaokiem').dialog({ dialogClass: 'MyPopup' ,minWidth:320,resizable: true});
+                //$(".MyPopup.ui-dialog").draggable('option',{ handle: "h4" });
             });
             function MyPopup(ElementID,Config){
                 this.icon='';
@@ -115,15 +115,15 @@
                     var divTag = document.createElement("div"); 
                     divTag.style.display="none";
                     divTag.innerHTML =
-                    '<div id="MyPopup_'+ElementID+'" style="border: 1px solid #F1D15F;width: '+this.width+'px;display: inline;float: left;position: relative;text-align:left">\
-                        <div style="position: relative;padding: 1px">\
+                    '<div id="MyPopup_'+ElementID+'" style="border: 1px solid #F1D15F;width: '+this.width+'px;display: inline;float: left;position: relative;text-align:left;padding:0">\
+                        <div style="position: absolute;padding: 1px;top: 0;left: 0;right: 0;">\
                             <h4 style="background: #F1D15F;padding: 11px 20px 12px 40px;margin: 0;overflow: hidden">Đăng nhập!</h4>\
                             '+this.icon+'\
-                            <div class="bubble-closebtn" onclick="$.unblockUI();"></div>\
+                            <div class="bubble-closebtn" onclick="$(\'#MyPopup_'+ElementID+'\').dialog(\'close\');"></div>\
                         </div>\
-                        <div class="popContent" style="padding: 20px">\
+                        <div class="popContent" style="padding: 20px;margin-top: 36px;margin-bottom: 46px">\
                         </div>\
-                        <div style="padding: 0 20px 0 20px;text-align: center">\
+                        <div style="padding: 0px 20px 20px 20px;text-align: center;position: absolute;left: 0;bottom: 0;right: 0">\
                             <button type="button" onclick="b();" class="orange-button"><span>Login</span></button>\
                         </div>\
                         <div style="padding: 0 20px 20px 20px">\
@@ -135,27 +135,14 @@
                     $("#"+ElementID).appendTo($("#MyPopup_"+ElementID+" .popContent"));
                 }
                 var popup=document.getElementById("MyPopup_"+ElementID);
-                var w=320;
+                var w=this.width;
                 this.open=function(){
                     var h=document.getElementById("MyPopup_"+ElementID).offsetHeight;
                     console.log(w);
-                    $.blockUI({ 
-                        message:popup
-                        ,css: { 
-                            border: 'none'
-                            ,backgroundColor:'#fff'
-                            ,width:w
-                            ,left:'50%'
-                            ,top:'200px'
-                            ,margin:'-'+(h/2)+'px 0 0 -'+(w/2)+'px'
-                        }
-                        ,centerY:true
-                        ,centerX:true
-                    });
-                //$(".blue-button").appendTo($("#ngaokiem .popContent"));
+                    $(popup).dialog({ dialogClass: 'MyPopup' ,minWidth:w,resizable: true});
                 }
                 this.close=function(){
-                    $.unblockUI();
+                    $(popup).dialog('close');
                 }
             }
         </script>
@@ -165,12 +152,12 @@
                 <img style="width: 36px;height: 36px;position: absolute;top: 1px;left: 1px" src="http://ngaokiem.net/templates/jv_ngaokiem_v4/images/logo.png"/>
                 <div class="bubble-closebtn" onclick="$('#ngaokiem').dialog('close');"></div>
             </div>
-            <div class="popContent" style="padding: 20px;margin-top: 36px">
+            <div class="popContent" style="padding: 20px;margin-top: 36px;margin-bottom: 46px">
                 Sự kiện “ Liên trảm Bá Đao nhận Account Cửu Âm” vừa được phát động 
                 ngày hôm qua nhưng đã nhận được rất nhiều sự quan tâm từ quý đạo hữu, 
                 và qua đó cũng nhận được nhiều đăng ký tham gia.
             </div>
-            <div style="padding: 0 20px 0 20px;text-align: center">
+            <div style="padding: 0px 20px 20px 20px;text-align: center;position: absolute;left: 0;bottom: 0;right: 0">
                 <button type="button" onclick="b();" class="orange-button"><span>Login</span></button>
             </div>
             <div style="padding: 0 20px 20px 20px">

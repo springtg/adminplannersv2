@@ -432,6 +432,7 @@
         var Tag         =   $("#Tag"        ).val();
         var Embel       =   $("#Embel"      ).val();
         var Length       =   $("#Length"      ).val();
+        var LinkForBook       =   $("#LinkForBook"      ).val();
         var Categorys=$(".Categorys input[type=checkbox]");
         var strCategorys="";
         for(var i=0;i<Categorys.length;i++)
@@ -455,7 +456,8 @@
                 Source:Source,
                 Description:Description,
                 Tag:Tag,
-                Embel:Embel
+                Embel:Embel,
+                LinkForBook:LinkForBook
             }
         };
         if($("#VideoID").val()!=""){
