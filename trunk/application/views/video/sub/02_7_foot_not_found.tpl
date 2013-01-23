@@ -12,6 +12,10 @@
         <div id="designby" class="left">// Designed by <a href="http://www.behance.net/squalldesign" target="_blank">Squall Le</a>.</div>
         <div class="clear"></div>
     </div>
+      <div class="footer-line">
+        <div id="copyright-new" class="left">(*) Material contained on this site is protected by copyright and cannot be reproduced without permission from the applicable publisher</div>
+        <div class="clear"></div>
+    </div>
 </div>
 
 <div id="bottom-grass">
