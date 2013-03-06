@@ -30,10 +30,11 @@ class video_model extends jqxGrid_CI_Model {
         $query=$this->db->get_where('tbl_video', $where); 
         return $query->result();
     }
-    function getRelated($categorys,$tag){
+    function getRelated($video){
         $where=array(
-            "`tbl_video`.`Delete`"=>null
-            ,"`tbl_video`.`Status`"=>"Public"
+            "`tbl_video`.`Delete`"=>null,
+            "`tbl_video`.`Status`"=>"Public",
+            "`tbl_video`.`Alias` <>"=>$video["Alias"]
             );
 //        $this->db->like('Category', "a-zA-Z0-9"); 
 //        $categorys=  explode(",", $categorys);

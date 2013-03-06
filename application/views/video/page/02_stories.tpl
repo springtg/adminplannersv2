@@ -2,6 +2,10 @@
 {{include file='../sub/04_nav.tpl'}}
 <div id="container" class="round-corner stories-pad">
     <div id="big-title-stories"><p>click on the story you would like to hear</p></div>
+    <!-- Phần thêm vào -->
+        <div id="copyright-banner"><img src="{{base_url()}}css_video/img/copyright-banner_.png" alt="copyright" /></div>
+    <!-- Phần thêm vào -->
+    <div class="clear"></div>
     {{if isset($Data["Videos"])}}
         <div id="video-list">
             <div id="video-line">
@@ -92,9 +96,19 @@
         </div>
     {{/if}}
     <div class="clear"></div>
-    <!-- Phần thêm vào -->
-        <div id="copyright-banner"><img src="http://readtomychild.com.au/css_video/img/copyright-banner.png" alt="copyright" /></div>
-    <!-- Phần thêm vào -->
+    <!-- PHAN THEM VAO -->
+    <div class="left">
+            <!-- AddThis Button BEGIN --> 
+            <div class="addthis_toolbox addthis_default_style "> 
+                <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> 
+                <a class="addthis_button_tweet"></a> 
+                <a class="addthis_button_google_plusone" g:plusone:size="medium"></a> 
+                <a class="addthis_counter addthis_pill_style"></a> 
+            </div> 
+            <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e5a517830ae061f"></script> 
+            <!-- AddThis Button END -->
+    </div>
+    <!-- PHAN THEM VAO -->
     <div id="page">
         {{if $Data["PageIndex"]>1}}
             <a href="{{base_url()}}video/stories/page/{{$Data["PageIndex"]-1}}" class="page-previous"></a>

@@ -62,7 +62,7 @@ class storiesdetail extends CI_Controller  {
                 }
                 $cate=$Data["Video"]["Category"];
                 $tag=$Data["Video"]["Tag"];
-                $related=$this->video_model->getRelated($cate,$tag);
+                $related=$this->video_model->getRelated($Data["Video"]);
                 $Data["Related"]=  objectToArray($related);
                 
             }else{
