@@ -320,3 +320,4 @@ text-transform: uppercase
 #slider-panel:hover #arrow-pre,#slider-panel:hover #arrow-nex,#slider-panel:hover #slider div{display: block;opacity: 1 }
 #copyright-new {width:480px; color:#999; font-style:italic; font-size:10px; line-height:15px; margin-top:5px;}
 #copyright-banner {float:left; margin-bottom:10px;}
+#copyright-banner {margin-bottom:30px;}

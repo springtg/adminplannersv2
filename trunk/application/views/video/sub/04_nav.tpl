@@ -14,7 +14,7 @@
     <div id="about" class="fade"><a href="{{base_url("about")}}"></a></div>
     <div id="story" class="fade"><a href="{{base_url("stories")}}"></a></div>
     <div id="home">
-        <a href="{{base_url("home")}}">
+        <a href="{{base_url("home")}}" style="background: none">
             <img src="http://readtomychild.com.au/css_video/img/logo.png"/>
         </a></div>
     <div id="request" class="fade"><a href="{{base_url("request")}}"></a></div>
